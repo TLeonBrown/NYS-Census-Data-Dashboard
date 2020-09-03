@@ -27,12 +27,12 @@ def countyToJSON(county):
 	'id': county.fipsID,
 	}
 	
-	nyDataFinalDict[county.countyName] = jsonDict
+	filteredData[county.countyName] = jsonDict
 
 
 # Open .json containing county data for all counties in USA. 
 # Taken from: https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json
-with open('data/geojson-counties-fips.json', 'r') as allCountiesUSAData:
+with open('data/json/geojson-counties-fips.json', 'r') as allCountiesUSAData:
 	d = allCountiesUSAData.read()
 
 rawData = json.loads(d)
@@ -51,5 +51,5 @@ for c in nyData:
 	countyToJSON(NYCounty(cProperties['NAME'], cProperties['LSAD'], cProperties['CENSUSAREA'], cGeometry['coordinates'], c['id']))
 
 # Export the completed dict to a .json file.
-with open ('data/nyCountyGeoData.json', 'w') as jsonFile:
+with open ('data/json/nyCountyGeoData.json', 'w') as jsonFile:
 		json.dump(filteredData, jsonFile)
