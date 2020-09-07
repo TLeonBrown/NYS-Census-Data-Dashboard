@@ -1,5 +1,8 @@
-import plotly.graph_objects as go
+import json
 import numpy as np
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 
 import initializeCountyDict as icd
 
@@ -19,27 +22,24 @@ counties = {
 	'Wyoming': None, 'Yates': None,
 }
 
+# Initialize the county dictionary to be full of info from the .csv files.
 icd.initializeCounties(counties)
 
-print(counties['Westchester'].population2019)
+# Open the created geo .json file for new york counties.
+with open('data/json/nyCountyGeoData.json', 'r') as file:
+    nyCounties = json.load(file)
 
-
-from urllib.request import urlopen
-import json
-with open('data/json/nyCountyGeoData.json') as response:
-    nyCounties = json.load(response)
-
-import pandas as pd
 df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
                    dtype={"fips": str})
 
-import plotly.express as px
-
-fig = px.choropleth(df, geojson=nyCounties, locations='fips', color='unemp',
-                           color_continuous_scale="Viridis",
-                           range_color=(0, 12),
-                           scope="usa",
-                           labels={'unemp':'U.R.'}
-                          )
-# fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig = px.choropleth(
+	df,
+	geojson=nyCounties,
+	locations='fips',
+	color='unemp',
+    color_continuous_scale="Viridis",
+    range_color=(0, 12),
+    scope="usa",
+    labels={'unemp':'U.R.'}
+)
 fig.show()
