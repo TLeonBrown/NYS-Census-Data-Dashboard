@@ -1,4 +1,3 @@
-import csv
 import plotly.graph_objects as go
 import numpy as np
 
@@ -22,11 +21,25 @@ counties = {
 
 icd.initializeCounties(counties)
 
-print(counties['Westchester'].coordinates)
+print(counties['Westchester'].population2019)
 
 
-# t = np.linspace(5, 25, 300)
-# y = np.sin(t)
+from urllib.request import urlopen
+import json
+with open('data/json/nyCountyGeoData.json') as response:
+    nyCounties = json.load(response)
 
-# fig = go.Figure(data=go.Scatter(x=t, y=y, mode='markers'))
-# fig.show()
+import pandas as pd
+df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+                   dtype={"fips": str})
+
+import plotly.express as px
+
+fig = px.choropleth(df, geojson=nyCounties, locations='fips', color='unemp',
+                           color_continuous_scale="Viridis",
+                           range_color=(0, 12),
+                           scope="usa",
+                           labels={'unemp':'U.R.'}
+                          )
+# fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig.show()
