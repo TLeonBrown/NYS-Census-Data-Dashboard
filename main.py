@@ -22,6 +22,8 @@ counties = {
 
 icd.initializeCounties(counties)
 
+print(counties['Westchester'].population2010)
+
 
 # t = np.linspace(5, 25, 300)
 # y = np.sin(t)

@@ -51,7 +51,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Chautauqua-Cortland.csv', 'r') as csvFile:
 		dataChautauquaCortland = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataChautauquaCortland.append(row)
 
 		counties['Chautauqua'] = createCounty(dataChautauquaCortland, 12)
@@ -63,7 +63,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Delaware-Fulton.csv', 'r') as csvFile:
 		dataDelawareFulton = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataDelawareFulton.append(row)
 
 		counties['Delaware'] = createCounty(dataDelawareFulton, 12)
@@ -75,7 +75,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Genesee-Kings.csv', 'r') as csvFile:
 		dataGeneseeKings = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataGeneseeKings.append(row)
 
 		counties['Genesee'] = createCounty(dataGeneseeKings, 12)
@@ -87,7 +87,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Lewis-Nassau.csv', 'r') as csvFile:
 		dataLewisNassau = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataLewisNassau.append(row)
 
 		counties['Lewis'] = createCounty(dataLewisNassau, 12)
@@ -99,7 +99,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/New York-Orange.csv', 'r') as csvFile:
 		dataNewYorkOrange = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataNewYorkOrange.append(row)
 
 		counties['New York'] = createCounty(dataNewYorkOrange, 12)
@@ -111,7 +111,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Orleans-Rensselaer.csv', 'r') as csvFile:
 		dataOrleansRensselaer = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataOrleansRensselaer.append(row)
 
 		counties['Orleans'] = createCounty(dataOrleansRensselaer, 12)
@@ -123,7 +123,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Richmond-Schuyler.csv', 'r') as csvFile:
 		dataRichmondSchuyler = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataRichmondSchuyler.append(row)
 
 		counties['Richmond'] = createCounty(dataRichmondSchuyler, 4)
@@ -135,7 +135,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Seneca-Tioga.csv', 'r') as csvFile:
 		dataSenecaTioga = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataSenecaTioga.append(row)
 
 		counties['Seneca'] = createCounty(dataSenecaTioga, 12)
@@ -147,7 +147,7 @@ def initializeCounties(counties):
 
 	with open('data/csv/Tompkins-Westchester.csv', 'r') as csvFile:
 		dataTompkinsWestchester = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataTompkinsWestchester.append(row)
 
 		counties['Tompkins'] = createCounty(dataTompkinsWestchester, 12)
@@ -159,10 +159,8 @@ def initializeCounties(counties):
 
 	with open('data/csv/Wyoming-Yates.csv', 'r') as csvFile:
 		dataWyomingYates = []
-		for row in csvFile:
+		for row in csv.reader(csvFile):
 			dataWyomingYates.append(row)
 
 		counties['Wyoming'] = createCounty(dataWyomingYates, 2)
 		counties['Yates'] = createCounty(dataWyomingYates, 4)
-
-	csvFile.close()
