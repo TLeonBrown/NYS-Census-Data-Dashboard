@@ -1,13 +1,12 @@
-import csv
 import json
+from urllib.request import urlopen
 
 
 # Open .json containing county data for all counties in USA. 
 # Taken from: https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json
-with open('data/json/geojson-counties-fips.json', 'r') as allCountiesUSAData:
-	d = allCountiesUSAData.read()
+with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+    rawData = json.load(response)
 
-rawData = json.loads(d)
 nyData = []
 
 # Filter out all non-NY counties.

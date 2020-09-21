@@ -1,10 +1,11 @@
 import json
 import numpy as np
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
 
 import initializeCountyDict as icd
+
+MAPBOX_ACCESSTOKEN = 'pk.eyJ1IjoidGxlb25icm93biIsImEiOiJja2YzMHgzcjQyMmRwMnVtZjJmMzc2dnFuIn0.lxPkFzmvX7h8hH9ipbpB7A'
 
 
 # Dictionary for the combined .csv and geoJSON data of all counties.
@@ -29,17 +30,58 @@ icd.initializeCounties(counties)
 with open('data/json/nyCountyGeoData.json', 'r') as file:
     nyCounties = json.load(file)
 
-df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
-                   dtype={"fips": str})
 
-fig = px.choropleth(
-	df,
-	geojson=nyCounties,
-	locations='fips',
-	color='unemp',
-    color_continuous_scale="Viridis",
-    range_color=(0, 12),
-    scope="usa",
-    labels={'unemp':'U.R.'}
+data = go.Choroplethmapbox(
+	geojson = nyCounties,
+	locations = nyCounties.index,    #the index of this dataframe should align with the 'id' element in your geojson
+    z = nyCounties.COUNTY, #sets the color value
+    text = nyCounties.NAME,    #sets text for each shape
+    colorbar=dict(thickness=20, ticklen=3, tickformat='%',outlinewidth=0), #adjusts the format of the colorbar
+    marker_line_width=1, marker_opacity=0.7, colorscale="Viridis", #adjust format of the plot
 )
-fig.show()
+
+
+layout = go.Layout(
+	title = {
+		'text': 'New York Counties',
+		'font': {'size': 24}
+	},
+	mapbox1 = dict(
+		domain = {'x': [0, 1],'y': [0, 1]}, 
+        center = dict(lat=-36.5 , lon=145.5),
+        accesstoken = MAPBOX_ACCESSTOKEN, 
+        zoom = 6
+	),                      
+    autosize=True,
+    height=650,
+    margin=dict(l=0, r=0, t=40, b=0)
+)
+
+
+
+
+
+# import pandas as pd
+# df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv')
+
+# fig = go.Figure(
+# 	data = go.Choropleth(
+# 		locations = df['code'],
+# 		name = 'New York Counties',
+# 		z = df['total exports'].astype(float),
+# 		# geojson = nyCounties,
+# 		locationmode = 'USA-states',
+# 		colorscale = 'Greys',
+# 	),
+# )
+
+# fig.update_layout(
+# 	# font_family = , 
+# 	# font_color = ,
+# 	geo_scope = 'usa',
+
+# )
+
+# print(fig)
+# fig = go.Figure(data=data, layout=layout)
+# fig.show()
