@@ -1,6 +1,8 @@
+import csv
 import json
 import numpy as np
 import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
 
 import initializeCountyDict as icd
@@ -26,8 +28,25 @@ counties = {
 # Initialize the county dictionary to be full of info from the .csv files.
 icd.initializeCounties(counties)
 
-# Open the created geo .json file for new york counties.
+# Test: Create visualization of counties, with random colors.
 with open('data/json/nyCountyGeoData.json', 'r') as file:
     nyCounties = json.load(file)
 
+df = pd.read_csv('data/csv/dataFrame.csv', dtype = {'fips': str})
 
+fig = px.choropleth_mapbox(
+	df,
+	geojson = nyCounties,
+	locations = 'fips',
+	color = 'color',
+	color_continuous_scale = 'Viridis',
+	center = {'lat': 42.928274, 'lon': -75.838587},
+	mapbox_style = 'carto-positron',
+	zoom = 6.5,
+)
+
+fig.update_layout(
+	margin = {'r': 0, 't': 0, 'l': 0, 'b': 0},
+)
+
+fig.show()
