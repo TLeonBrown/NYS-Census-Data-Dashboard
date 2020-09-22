@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 
 import initializeCountyDict as icd
 
+# Establish free Mapbox access token for using Mapbox mapping resources.
 MAPBOX_ACCESSTOKEN = 'pk.eyJ1IjoidGxlb25icm93biIsImEiOiJja2YzMHgzcjQyMmRwMnVtZjJmMzc2dnFuIn0.lxPkFzmvX7h8hH9ipbpB7A'
 
 
@@ -32,21 +33,23 @@ icd.initializeCounties(counties)
 with open('data/json/nyCountyGeoData.json', 'r') as file:
     nyCounties = json.load(file)
 
-df = pd.read_csv('data/csv/dataFrame.csv', dtype = {'fips': str})
+# Initialize data frame created from script.
+dataframe = pd.read_csv('data/csv/dataFrame.csv', dtype = {'fips': str})
 
-fig = px.choropleth_mapbox(
-	df,
+fig = go.Figure(go.Choroplethmapbox(
 	geojson = nyCounties,
-	locations = 'fips',
-	color = 'color',
-	color_continuous_scale = 'Viridis',
-	center = {'lat': 42.928274, 'lon': -75.838587},
-	mapbox_style = 'carto-positron',
-	zoom = 6.5,
-)
+	locations = dataframe.fips,
+	z = dataframe.color,
+	colorscale = 'viridis',
+	marker_line_width = 1,
+	text = dataframe.name,
+))
 
 fig.update_layout(
-	margin = {'r': 0, 't': 0, 'l': 0, 'b': 0},
+	mapbox_style = 'carto-darkmatter',
+	mapbox_center = {'lat': 42.928274, 'lon': -75.838587},
+	mapbox_accesstoken = MAPBOX_ACCESSTOKEN,
+	mapbox_zoom = 6.5,
 )
 
 fig.show()

@@ -3,7 +3,7 @@ import json
 import random as rand
 
 
-fields = ['fips', 'color']
+fields = ['fips', 'color', 'name']
 rows = []
 
 # Open the geoJSON.
@@ -17,7 +17,10 @@ for d in nyCounties['features']:
 	row.append(d['id'])
 
 	# Append random color value.
-	row.append(rand.randint(0, 10))
+	row.append(rand.randint(0, 20))
+
+	# Append county name.
+	row.append(str(d['properties']['NAME'] + " " + d['properties']['LSAD']))
 
 	# Append row to list of all rows.
 	rows.append(row)
