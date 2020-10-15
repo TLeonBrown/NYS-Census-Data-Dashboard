@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="UTF-8">
+
 <title>CSE 495 - Tian Brown</title>
+
 <head>
   <!-- D3 Functionality -->
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <!-- My Functionality -->
+  <script src="js/data.js"></script>
   <script src="js/dashboardGeometry.js"></script>
   <!-- Materialize -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <!-- Google's custom fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
   <!-- My CSS -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <svg id="baseSVG" width="1663" height="913"></svg>
+
+  <div style="position:absolute;left:7px;top:17px;width:275px;height:880px;border:2px solid #000;" class="border" ></div>
+  <div class="scrollContainerLeft">
+    <svg class="svgLeft"></svg>
+  </div>
+      
 </body>
 
 <script>

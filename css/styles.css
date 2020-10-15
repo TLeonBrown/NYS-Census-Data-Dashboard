@@ -1,3 +1,14 @@
+.leftText {
+  fill: black;
+  text-anchor: middle;
+  font-size: 18px;
+}
+
+.leftLine {
+  stroke: black;
+  stroke-width: 1px;
+}
+
 .border {
     fill: #ffffff;
     stroke: #000000;
@@ -6,7 +17,7 @@
     filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
   }
 
-.popOutBox {
+/* .popOutBox {
     fill: #ffffff;
     -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
     filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
@@ -26,4 +37,19 @@
 
 .zoomShape {
   fill: #000000;
+} */
+
+.scrollContainerLeft {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  width: 270px;
+  height: 873px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+ }
+
+.svgLeft {
+  width: 270px;
+  height: 1500px;
 }
