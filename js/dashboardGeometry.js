@@ -8,6 +8,15 @@ POP_BOX_W = 410;
 POP_BOX_H = 550;
 ZOOM_BOX_L = 40;
 
+function toggle () {
+    var selectedBox = event.target;
+    if (selectedBox.attributes.class.value == "leftHoverBoxesSelected") {
+        selectedBox.attributes.class.value = "leftHoverBoxes";
+    }
+    else {
+        selectedBox.attributes.class.value = "leftHoverBoxesSelected";
+    }
+}
 
 
 function drawDashboardBoxes () {
@@ -18,18 +27,20 @@ function drawDashboardBoxes () {
         .attr("fill", "white")
         .attr("x", 0).attr("y", 0)
         .attr("width", 325).attr("height", 1500);
-
+    // Click-Boxes Within Scrolling Box
     for (var i = 0; i < leftSVGDataOptions.length; i++) {
+        // Draw Highlighting Rect
+        svgLeft.append("rect")
+            .attr("class", "leftHoverBoxes")
+            .attr("x", 5).attr("y", -0.5 + ATTR_TEXT_SPACING * i)
+            .attr("width", 240).attr("height", 30)
+            .on("click", toggle);
+        // Draw Text
         svgLeft.append("text")
             .attr("class", "leftText")
             .attr('x', ATTR_RECT_W / 2).attr('y', 20 + ATTR_TEXT_SPACING * i)
             .text(leftSVGDataOptions[i]);
-        svgLeft.append("line")
-            .attr("class", "leftLine")
-            .attr('x1', (ATTR_RECT_W / 2) - 120).attr('x2', (ATTR_RECT_W / 2) + 120)
-            .attr('y1', 32 + (ATTR_TEXT_SPACING * i)).attr('y2', 32 + (ATTR_TEXT_SPACING * i))
     }
-    
 
     // // Bottom Box
     // svg.append("rect")

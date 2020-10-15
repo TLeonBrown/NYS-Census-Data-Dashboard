@@ -1,7 +1,17 @@
+.border {
+    fill: #ffffff;
+    stroke: #000000;
+    stroke-width: 2px;
+    -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+    filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+}
+
 .leftText {
   fill: black;
   text-anchor: middle;
   font-size: 18px;
+  cursor: default;
+  pointer-events: none;
 }
 
 .leftLine {
@@ -9,13 +19,25 @@
   stroke-width: 1px;
 }
 
-.border {
-    fill: #ffffff;
-    stroke: #000000;
-    stroke-width: 2px;
-    -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-    filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-  }
+.leftHoverBoxes {
+  fill: white;
+  stroke: black;
+  stroke-width: 1px;
+}
+
+.leftHoverBoxes:hover {
+  fill: #69acab;
+}
+
+.leftHoverBoxes:active {
+  fill: #66ffcc;
+}
+
+.leftHoverBoxesSelected {
+  stroke: black;
+  stroke-width: 1px;
+  fill: #69acab;
+}
 
 /* .popOutBox {
     fill: #ffffff;
@@ -41,8 +63,8 @@
 
 .scrollContainerLeft {
   position: absolute;
-  left: 10px;
-  top: 20px;
+  left: 22px;
+  top: 22px;
   width: 270px;
   height: 873px;
   overflow-y: scroll;

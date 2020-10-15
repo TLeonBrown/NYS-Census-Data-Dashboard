@@ -43,3 +43,5 @@ var leftSVGDataOptions = [
     "a",
     "a",
 ]
+
+svgRects = [];
