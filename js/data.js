@@ -1,7 +1,10 @@
+// COLORS
+var SELECTED = "#69ACAB";
+
 var leftSVGDataOptions = [
     "Population",
     "Pop. % Change (10 yrs)",
-    "Population per Square Mile",
+    "Pop. per Square Mile",
     "Land Area (sq. mi.)",
     "% Pop. Under 5",
     "% Pop. Under 18",
@@ -12,30 +15,19 @@ var leftSVGDataOptions = [
     "% African American",
     "% Hispanic",
     "% White",
+    "% Foreign Born",
     "Number of Veterans",
     "Median Gross Rent",
     "Number of Households",
     "Persons per Household",
     "Avg. Commute Time",
     "Median Household Income",
+    "Per Capita Income",
     "% In Poverty",
     "Total Employment",
     "% w/ High School Degree",
     "% w/ Bachelor's Degree",
-    "Persons w/o Insurance",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
+    "Persons w/o Health Insurance",
     "a",
     "a",
     "a",
@@ -43,5 +35,3 @@ var leftSVGDataOptions = [
     "a",
     "a",
 ]
-
-svgRects = [];

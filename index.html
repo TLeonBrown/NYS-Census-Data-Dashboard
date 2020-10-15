@@ -20,16 +20,23 @@
 </head>
 
 <body>
-
-  <div style="position:absolute;left:20px;top:20px;width:275px;height:880px;border:2px solid #000;" class="border" ></div>
+  <!-- Left Box -->
+  <div style="left:10px;top:30px;width:275px;height:860px;" class="border" ></div>
   <div class="scrollContainerLeft">
     <svg class="svgLeft"></svg>
   </div>
-      
+  <!-- Main Box -->
+  <div style="left:296px;top:140px;width:1090px;height:540px;" class="border" ></div>
+  <!-- Bottom Box -->
+  <div style="left:296px;top:690px;width:1090px;height:200px;" class="border" ></div>
+  <!-- Pop-Out Box -->
+  <div style="left:1245px;top:50px;width:410px;height:550px;" class="popOutBorder" ></div>
+
 </body>
 
 <script>
-  drawDashboardBoxes();
+  setupSVG();
+  drawLeftAttributeBox();
 </script>
 
 </html>
