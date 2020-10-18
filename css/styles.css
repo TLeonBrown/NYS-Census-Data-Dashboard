@@ -18,9 +18,9 @@
 .scrollContainerLeft {
   position: absolute;
   left: 12px;
-  top: 32px;
+  top: 42px;
   width: 270px;
-  height: 855px;
+  height: 845px;
   overflow-y: scroll;
   overflow-x: hidden;
  }
@@ -67,21 +67,34 @@
   fill: #69acab;
 }
 
+.topLeftText {
+  position: absolute;
+  left: 78px;
+  top: 7px;
+  text-anchor: middle;
+  font-weight: bold;
+  font-size: 18px;
+  -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
+}
 
+.zoomButtons {
+  margin-left: 300px;
+  margin-top: 540px;
+  position: absolute;
+  z-index: 3;
+}
 
-/*
 .zoomBox {
-  fill: #eeeeee;
-  stroke: #000000;
-  stroke-width: 2px;
-  -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+  border-style: none;
+  background-color: white;
 }
 
-.zoomBox:hover {
-  fill: #bbbbbb;
+.zoomButton:hover {
+  -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
 }
 
-.zoomShape {
-  fill: #000000;
-} */
+.zoomButton:active {
+  color: white;
+}

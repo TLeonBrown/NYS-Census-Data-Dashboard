@@ -20,7 +20,7 @@ function toggleAttributeSelection () {
     if (selectedBox.attributes.class.value == "leftHoverBoxesSelected") {
         selectedBox.attributes.class.value = "leftHoverBoxes";
     }
-    else {
+    else if (selectedBox.attributes.class.value == "leftHoverBoxes") {
         selectedBox.attributes.class.value = "leftHoverBoxesSelected";
     }
 }
