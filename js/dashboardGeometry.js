@@ -12,7 +12,7 @@ ATTR_TEXT_SPACING = 35;
 
 
 var svgLeft;
-
+var zoomLevel = 1.0;
 
 // Helper Functions
 function toggleAttributeSelection () {
@@ -30,7 +30,6 @@ function toggleAttributeSelection () {
 function setupSVG () {
     svgLeft = d3.selectAll("svg").attr("class", "svgLeft");
 }
-
 
 function drawLeftAttributeBox () {
     // Left Scrolling Box
@@ -52,4 +51,14 @@ function drawLeftAttributeBox () {
             .attr('x', ATTR_RECT_W / 2 + 4).attr('y', 22 + ATTR_TEXT_SPACING * i)
             .text(leftSVGDataOptions[i]);
     }
+}
+
+function zoomIn () {
+    if (zoomLevel < 3) { zoomLevel *= 1.33; }
+    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
+}
+
+function zoomOut () {
+    if (zoomLevel > 1) { zoomLevel /= 1.33; }
+    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
 }
