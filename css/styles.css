@@ -31,6 +31,12 @@
   height: 1117px;
 }
 
+.svgMain {
+  position: absolute;
+  width: 1085px;
+  height: 535px;
+}
+
 .leftText {
   fill: black;
   text-anchor: middle;

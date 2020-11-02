@@ -14,7 +14,7 @@ var leftSVGDataOptions = [
     "% Asian American",
     "% African American",
     "% Hispanic",
-    "% White",
+    "% Caucasian",
     "% Foreign Born",
     "Number of Veterans",
     "Median Gross Rent",
@@ -35,3 +35,4 @@ var leftSVGDataOptions = [
     "a",
     "a",
 ]
+
