@@ -112,3 +112,10 @@
 #nyCountyImg {
   transform: scale(1.0);
 }
+
+.mainCountySearchContainer {
+  position: absolute;
+  width: 25%;
+  margin: 1%;
+  left: 0%;
+}

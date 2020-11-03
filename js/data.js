@@ -1,6 +1,3 @@
-// COLORS
-var SELECTED = "#69ACAB";
-
 var leftSVGDataOptions = [
     "Population",
     "Pop. % Change (10 yrs)",

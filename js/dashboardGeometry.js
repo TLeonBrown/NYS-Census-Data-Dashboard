@@ -1,13 +1,14 @@
 // Draw the dashboard's geometry and interfaces.
 
+// import { countyMouseOver, countyMouseOut, countyClick } from "./Interaction.js";
+// import { leftSVGDataOptions, polygonPos } from "./Data.js";
+
 ATTR_RECT_W = 250;
 ATTR_RECT_H = 473;
 ATTR_TEXT_SPACING = 35;
 
 var svgLeft;
 var svgMain;
-var zoomLevel = 1.0;
-var countyPolygons = {};
 
 
 
@@ -48,53 +49,6 @@ function coordsAverage (list) {
         newList.push([list[i][0] - sum0, list[i][1] - sum1]);
     }
     return newList;
-}
-
-// Zoom the map image in by one.
-function zoomIn () {
-    if (zoomLevel < 3) { zoomLevel *= 1.33; }
-    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
-}
-
-// Zoom the map image out by one.
-function zoomOut () {
-    if (zoomLevel > 1) { zoomLevel /= 1.33; }
-    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
-}
-
-// Handle mousing over a county hitbox.
-function countyMouseOver (event) {
-    if (!event.target.clicked) {
-        event.target.style.fill = "transparent";
-        event.target.style.strokeWidth = "3px";
-        event.target.style.opacity = 1.0;
-    }
-    
-}
-
-// Handle mousing out of a county hitbox.
-function countyMouseOut (event) {
-    event.target.clicked ? 'e' : event.target.style.opacity = 0.0;
-}
-
-// Handle clicking on a county hitbox.
-function countyClick (event) {
-    d3.selectAll(".countyHitbox")
-        .style("opacity", 0.0);
-    if (event.target.clicked == false || event.target.clicked == undefined) {
-        event.target.style.fill = "blue";
-        event.target.stroke = "blue";
-        event.target.style.strokeWidth = "1px";
-        event.target.clicked = true;
-    }
-    else {
-        event.target.style.fill = "transparent";
-        event.target.style.strokeWidth = "3px";
-        event.target.clicked = false;
-    }
-    event.target.style.opacity = 1.0;
-
-
 }
 
 
@@ -155,6 +109,7 @@ function drawSelectableCountyObjects (data) {
 
         // Draw the object on screen.
         svgMain.append("polygon")
+            .attr("countyName", data[i].properties.NAME)
             .attr("class", "countyHitbox")
             .attr("points", countyCoordsStr)
             .attr("opacity", 0.0)
