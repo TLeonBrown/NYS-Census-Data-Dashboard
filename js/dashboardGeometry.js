@@ -4,11 +4,12 @@ ATTR_RECT_W = 250;
 ATTR_RECT_H = 473;
 ATTR_TEXT_SPACING = 35;
 
-
 var svgLeft;
 var svgMain;
 var zoomLevel = 1.0;
 var countyPolygons = {};
+
+
 
 // Helper Functions ---------------------------------------------------------------------------
 
@@ -49,6 +50,54 @@ function coordsAverage (list) {
     return newList;
 }
 
+// Zoom the map image in by one.
+function zoomIn () {
+    if (zoomLevel < 3) { zoomLevel *= 1.33; }
+    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
+}
+
+// Zoom the map image out by one.
+function zoomOut () {
+    if (zoomLevel > 1) { zoomLevel /= 1.33; }
+    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
+}
+
+// Handle mousing over a county hitbox.
+function countyMouseOver (event) {
+    if (!event.target.clicked) {
+        event.target.style.fill = "transparent";
+        event.target.style.strokeWidth = "3px";
+        event.target.style.opacity = 1.0;
+    }
+    
+}
+
+// Handle mousing out of a county hitbox.
+function countyMouseOut (event) {
+    event.target.clicked ? 'e' : event.target.style.opacity = 0.0;
+}
+
+// Handle clicking on a county hitbox.
+function countyClick (event) {
+    d3.selectAll(".countyHitbox")
+        .style("opacity", 0.0);
+    if (event.target.clicked == false || event.target.clicked == undefined) {
+        event.target.style.fill = "blue";
+        event.target.stroke = "blue";
+        event.target.style.strokeWidth = "1px";
+        event.target.clicked = true;
+    }
+    else {
+        event.target.style.fill = "transparent";
+        event.target.style.strokeWidth = "3px";
+        event.target.clicked = false;
+    }
+    event.target.style.opacity = 1.0;
+
+
+}
+
+
 
 // Main Functions ------------------------------------------------------------------------------
 
@@ -87,12 +136,12 @@ function drawSelectableCountyObjects (data) {
     for (let i = 0; i < data.length; i++) {
         // Some of the coordinates are nested within 4 lists, some are nested within 3.
         let countyCoords;
-        console.log(data[i].properties.NAME);
+        // console.log(data[i].properties.NAME);
         if (data[i].geometry.coordinates[0][0][0][0] == undefined) {
             countyCoords = coordsAverage(data[i].geometry.coordinates[0]);
         }
         else {
-            console.log("----------no-------------");
+            // console.log("----------no-------------");
             countyCoords = coordsAverage(data[i].geometry.coordinates[0][0]);
         }
         // Append the coordinates into one long string.
@@ -102,22 +151,16 @@ function drawSelectableCountyObjects (data) {
             let coord = ((countyCoords[j][0] * 80) + polygonPos[i][0]).toFixed(1) + "," + ((countyCoords[j][1] * -100) + polygonPos[i][1]).toFixed(1) + " ";
             countyCoordsStr = countyCoordsStr.concat(coord);
         }
-        console.log(countyCoordsStr);
+        // console.log(countyCoordsStr);
 
         // Draw the object on screen.
         svgMain.append("polygon")
+            .attr("class", "countyHitbox")
             .attr("points", countyCoordsStr)
-            .attr("fill", "green")
+            .attr("opacity", 0.0)
+            .attr("stroke", "black")
+            .on("mouseover", function(d) { countyMouseOver(d); })
+            .on("mouseout", function(d) { countyMouseOut(d); })
+            .on("mousedown", function(d) { countyClick(d); });
     }
-    
-}
-
-function zoomIn () {
-    if (zoomLevel < 3) { zoomLevel *= 1.33; }
-    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
-}
-
-function zoomOut () {
-    if (zoomLevel > 1) { zoomLevel /= 1.33; }
-    document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
 }
