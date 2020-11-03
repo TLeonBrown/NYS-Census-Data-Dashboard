@@ -65,7 +65,7 @@ function setupSVG () {
 function drawLeftAttributeBox () {
     // Left Scrolling Box
     svgLeft.append("rect")
-        .attr("fill", "white")
+        .attr("fill", "#506262")
         .attr("x", 0).attr("y", 0)
         .attr("width", 325).attr("height", 1500);
     // Click-Boxes Within Scrolling Box
