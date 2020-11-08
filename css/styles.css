@@ -4,8 +4,8 @@
   --popOutBox: #6c9393; 
   --border: #888888;
   --buttonColor: teal;
-  --main: "#69acab";
-  --mainLight: "#d3dede";
+  --main: #69acab;
+  --mainLight: #d3dede;
 }
 
 .background {
@@ -16,11 +16,13 @@
 .border {
     position: absolute;
     background-color: var(--mainBox);
-    border: 3px;
-    border-style: outset;
-    border-color: var(--border);
+    border-radius: 0.35%;
     -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
     filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+}
+
+.btn, .btn-small, .btn-large {
+  background-color: var(--buttonColor);
 }
 
 .leftBox {
@@ -37,15 +39,13 @@
   height: 80%;
 }
 
-.popOutBorder {
+.bottomBox {
   position: absolute;
   background-color: var(--popOutBox);
-  -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-  left: 1165px;
-  top: 50px;
-  width: 630px;
-  height: 550px;
+  left: 73%;
+  top: 4.1%;
+  width: 26%;
+  height: 90%;
 }
 
 .scrollContainerLeft {
@@ -84,11 +84,13 @@
   height: 100%;
 }
 
+/* LEFT BOX CONTAINER */
 .leftText {
   fill: black;
   text-anchor: middle;
   font-size: 18px;
   cursor: default;
+  user-select: none;
   pointer-events: none;
 }
 
@@ -134,8 +136,13 @@
   text-anchor: middle;
   font-weight: bold;
   font-size: 18px;
+  display: flex;
+  justify-content: space-around;
+  user-select: none;
+  align-items: center;
 }
 
+/* ZOOM BUTTONS */
 .zoomButtons {
   float: left;
   margin-left: 1%;
@@ -144,7 +151,6 @@
 }
 
 .zoomButton {
-  background-color: var(--buttonColor);
   margin-bottom: 10px;
 }
 
@@ -157,17 +163,58 @@
   background-color: var(--main);
 }
 
-.mainCountySearchContainer {
-  background-color: var(--mainLight);
+/* COUNTY SEARCH BAR */
+.countyInfoContainer {
   position: absolute;
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  height: 7%;
+  padding-top: 1%;
+}
+
+.countySearchButton {
+  height: 120%;
+}
+
+.mainCountySearchContainer {
+  color: var(--mainLight);
   width: 25%;
   padding-left: 1%;
   padding-right: 1%;
-  border-style: inset;
-  border-color: var(--border);
   left: 0%;
 }
 
-#countySearchField {
-  color: white;
+#countyErrorText {
+  font-size: 16px;
+  color: var(--mainLight);
+  text-align: left;
+  margin-left: 1%;
+  margin-top: 1.4%;
 }
+
+#countySearchField {
+  color: var(--mainLight);
+  user-select: none;
+}
+
+.mouseTooltip {
+  height: 20px;
+  fill: var(--background);
+  stroke-linecap: "round";
+  pointer-events: none;
+  -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+}
+
+.mouseTooltipText {
+  user-select: none;
+}
+
+/* .countyDisplayTextTitle {
+
+}
+
+.countyDisplayTextInfo {
+
+} */

@@ -5,7 +5,6 @@ var zoomLevel = 1.0;
 
 // Zoom the map image in by one.
 function zoomIn () {
-    console.log("e");
     if (zoomLevel < 3) { zoomLevel *= 1.33; }
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
@@ -18,8 +17,43 @@ function zoomOut () {
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
 
+// Draw county name tooltip that hovers by the mouse.
+function drawMouseTooltip (event) {
+    svgMain = d3.select(".svgMain");
+    // Get mouse position.
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    // Get the name of the county we're hovering over.
+    let countyName = event.target.attributes.countyName.nodeValue;
+    // Generate the tooltip box.
+    svgMain.append("rect")
+        .attr("class", "mouseTooltip")
+        .attr("x", mouseX + 10).attr("y", mouseY - 10)
+        .attr("width", countyName.length * 10)
+    svgMain.append("text")
+        .text(countyName)
+        .attr("class", "mouseTooltipText")
+        .attr("x", mouseX + 13).attr("y", mouseY + 3)
+        .attr("font-weight", "bold").attr("fill", "white")
+}
+
+// Update the hovering tooltip that stays near the mouse when it is above a county.
+function updateTooltip (event) {
+    if (event.target.tagName == "polygon") {
+        // Get mouse coordinates.
+        mouseX = Math.round(d3.pointer(event)[0]);
+        mouseY = Math.round(d3.pointer(event)[1]);
+        // Update the tooltip position.
+        d3.select(".mouseTooltip").attr("x", mouseX + 10).attr("y", mouseY - 10);
+        d3.select(".mouseTooltipText").attr("x", mouseX + 13).attr("y", mouseY + 3);
+    } 
+}
+
 // Handle mousing over a county hitbox.
 function countyMouseOver (event) {
+    d3.selectAll(".mouseTooltip").remove();
+    d3.selectAll(".mouseTooltipText").remove();
+    drawMouseTooltip(event);
     if (!event.target.clicked) {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
@@ -33,34 +67,46 @@ function countyMouseOut (event) {
 }
 
 // Handle clicking on a county hitbox.
-function countyClick (event) {
+function countyClick (target) {
     d3.selectAll(".countyHitbox").style("opacity", 0.0);
-    if (event.target.clicked == false || event.target.clicked == undefined) {
-        event.target.style.fill = "blue";
-        event.target.stroke = "blue";
-        event.target.style.strokeWidth = "1px";
-        event.target.clicked = true;
+    if (target.clicked == false || target.clicked == undefined) {
+        target.style.fill = "red";
+        target.style.strokeWidth = "0px";
+        target.clicked = true;
     }
     else {
-        event.target.style.fill = "transparent";
-        event.target.style.strokeWidth = "3px";
-        event.target.clicked = false;
+        target.style.fill = "transparent";
+        target.style.strokeWidth = "3px";
+        target.clicked = false;
     }
-    event.target.style.opacity = 1.0;
+    target.style.opacity = 1.0;
 }
 
 // Handle searching for a county.
 function countySearch (event) {
     // Get the text in the search field.
     let searchText = document.getElementById("countySearchField").value;
-    // Make sure we only search on enter press.
-    if (event.keyCode == 13) {
+    // Make sure we only search on enter press, or by clicking the search button.
+    if (event.keyCode == 13 || event.type === "click") {
+        if (searchText === "") {
+            d3.selectAll(".countyHitbox").style("opacity", 0.0);
+        }
         // Search through each county object and look for matching names.
         let counties = d3.selectAll(".countyHitbox")._groups[0];
         for (let i = 0; i < counties.length; i++) {
+            // Case 1: Text matches a county name.
             if (searchText.toUpperCase() == counties[i].attributes[0].value.toUpperCase()) {
-                console.log(searchText);
+                d3.selectAll(".countyHitbox").style("opacity", 0.0);
+                counties[i].style.fill = "red";
+                counties[i].style.strokeWidth = "0px";
+                counties[i].clicked = true;
+                counties[i].style.opacity = 1.0;
+                document.getElementById("countyErrorText").innerHTML = "";
+                return;
             }
         }  
+        // Case 2: Text does not match any county names.
+        document.getElementById("countyErrorText").innerHTML = "Invalid county name.";
+        return;
     }
 }

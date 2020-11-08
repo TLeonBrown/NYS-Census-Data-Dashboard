@@ -25,7 +25,7 @@
 
 <body class="background">
     <!-- Top Left Text -->
-    <div class="topLeftText">Select Up to 16</div>
+    <div class="topLeftText">Select Up to 16 <i class="materialIcon material-icons">add_box</i></div>
     <!-- Left Box -->
     <div class="border leftBox"></div>
     <div class="scrollContainerLeft">
@@ -40,18 +40,26 @@
         <br>
         <div class="zoomButton waves-effect waves-light btn" onclick="zoomOut()"><i class="material-icons">remove</i></div>
       </div>
-      <div class="mainCountySearchContainer">
-        <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
-      </div>
       <!-- New York Map -->
       <div id="nyCountyBox">
         <img id="nyCountyImg" src="img/NY county map original.svg"></img>
         <svg id="svgMain" class="svgMain"></svg>
       </div>
+      <!-- Search Bar -->
+      <div class="countyInfoContainer">
+        <div class="mainCountySearchContainer">
+          <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
+        </div>
+        <div class="countySearchButton waves-effect waves-light btn-large" onclick="countySearch(event)"><i class="material-icons">search</i></div>
+        <p id="countyErrorText"></p>
+      </div>
     </div>
     
     <!-- Pop-Out Box -->
-    <div class="popOutBorder" ></div>
+    <div class="border bottomBox" >
+      <p class="countyDisplayTextTitle">Cayuga County</p>
+      <p class="countyDisplayTextInfo">wefwefwfwfwe</p>
+    </div>
 </body>
 
 <script>

@@ -1,8 +1,5 @@
 // Draw the dashboard's geometry and interfaces.
 
-// import { countyMouseOver, countyMouseOut, countyClick } from "./Interaction.js";
-// import { leftSVGDataOptions, polygonPos } from "./Data.js";
-
 ATTR_RECT_W = "12vmin";
 ATTR_RECT_H = 473;
 ATTR_TEXT_SPACING = 35;
@@ -59,6 +56,8 @@ function coordsAverage (list) {
 function setupSVG () {
     svgLeft = d3.select(".svgLeft");
     svgMain = d3.select(".svgMain");
+    svgMain.on("mousemove", function(d) { updateTooltip(d); })
+
 }
 
 // Draw the scroll bar and other objects in the left-hand box.
@@ -88,19 +87,17 @@ function drawLeftAttributeBox () {
 function drawSelectableCountyObjects (data) {
     // Fix all the polygon positions in the data dict.
     for (let i = 0; i < polygonPos.length; i++) {
-        polygonPos[i][0] -= 68;
-        polygonPos[i][1] += 97;
+        polygonPos[i][0] -= 66;
+        polygonPos[i][1] += 99;
     }
     // Iterate through each element in the GeoJSON.
     for (let i = 0; i < data.length; i++) {
         // Some of the coordinates are nested within 4 lists, some are nested within 3.
         let countyCoords;
-        // console.log(data[i].properties.NAME);
         if (data[i].geometry.coordinates[0][0][0][0] == undefined) {
             countyCoords = coordsAverage(data[i].geometry.coordinates[0]);
         }
         else {
-            // console.log("----------no-------------");
             countyCoords = coordsAverage(data[i].geometry.coordinates[0][0]);
         }
         // Append the coordinates into one long string.
@@ -110,7 +107,6 @@ function drawSelectableCountyObjects (data) {
             let coord = ((countyCoords[j][0] * 80) + polygonPos[i][0]).toFixed(1) + "," + ((countyCoords[j][1] * -100) + polygonPos[i][1]).toFixed(1) + " ";
             countyCoordsStr = countyCoordsStr.concat(coord);
         }
-        // console.log(countyCoordsStr);
 
         // Draw the object on screen.
         svgMain.append("polygon")
@@ -121,6 +117,6 @@ function drawSelectableCountyObjects (data) {
             .attr("stroke", "black")
             .on("mouseover", function(d) { countyMouseOver(d); })
             .on("mouseout", function(d) { countyMouseOut(d); })
-            .on("mousedown", function(d) { countyClick(d); });
+            .on("mousedown", function(d) { countyClick(d.target); });
     }
 }
