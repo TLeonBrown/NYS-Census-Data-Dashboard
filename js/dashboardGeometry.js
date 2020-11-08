@@ -3,7 +3,7 @@
 // import { countyMouseOver, countyMouseOut, countyClick } from "./Interaction.js";
 // import { leftSVGDataOptions, polygonPos } from "./Data.js";
 
-ATTR_RECT_W = 250;
+ATTR_RECT_W = "12vmin";
 ATTR_RECT_H = 473;
 ATTR_TEXT_SPACING = 35;
 
@@ -73,19 +73,24 @@ function drawLeftAttributeBox () {
         // Draw Highlighting Rect
         svgLeft.append("rect")
             .attr("class", "leftHoverBoxes")
-            .attr("x", 7).attr("y", 1.5 + ATTR_TEXT_SPACING * i)
-            .attr("width", 240).attr("height", 30)
+            .attr("x", "0.5vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
+            .attr("width", "23vmin").attr("height", 30)
             .on("click", toggleAttributeSelection);
         // Draw Text
         svgLeft.append("text")
             .attr("class", "leftText")
-            .attr('x', ATTR_RECT_W / 2 + 4).attr('y', 22 + ATTR_TEXT_SPACING * i)
+            .attr('x', ATTR_RECT_W).attr('y', 22 + ATTR_TEXT_SPACING * i)
             .text(leftSVGDataOptions[i]);
     }
 }
 
 // Draw all of the county objects in the screen through the GeoJSON coordinates.
 function drawSelectableCountyObjects (data) {
+    // Fix all the polygon positions in the data dict.
+    for (let i = 0; i < polygonPos.length; i++) {
+        polygonPos[i][0] -= 68;
+        polygonPos[i][1] += 97;
+    }
     // Iterate through each element in the GeoJSON.
     for (let i = 0; i < data.length; i++) {
         // Some of the coordinates are nested within 4 lists, some are nested within 3.

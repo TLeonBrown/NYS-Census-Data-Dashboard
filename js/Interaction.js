@@ -8,12 +8,14 @@ function zoomIn () {
     console.log("e");
     if (zoomLevel < 3) { zoomLevel *= 1.33; }
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
+    document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
 
 // Zoom the map image out by one.
 function zoomOut () {
     if (zoomLevel > 1) { zoomLevel /= 1.33; }
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
+    document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
 
 // Handle mousing over a county hitbox.
@@ -22,8 +24,7 @@ function countyMouseOver (event) {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
         event.target.style.opacity = 1.0;
-    }
-    
+    }  
 }
 
 // Handle mousing out of a county hitbox.

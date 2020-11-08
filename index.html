@@ -40,20 +40,18 @@
         <br>
         <div class="zoomButton waves-effect waves-light btn" onclick="zoomOut()"><i class="material-icons">remove</i></div>
       </div>
+      <div class="mainCountySearchContainer">
+        <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
+      </div>
       <!-- New York Map -->
-      <div style="left:0px;top:0;width:1085px;height:535px;" id="nyCountyBox">
-        <img id="nyCountyImg" src="img/NY county map.svg"></img>
-        <svg class="svgMain"></svg>
-        <div class="mainCountySearchContainer">
-          <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
-        </div>
+      <div id="nyCountyBox">
+        <img id="nyCountyImg" src="img/NY county map original.svg"></img>
+        <svg id="svgMain" class="svgMain"></svg>
       </div>
     </div>
     
-    <!-- Bottom Box -->
-    <div style="left:296px;top:690px;width:1090px;height:200px;" class="border" ></div>
     <!-- Pop-Out Box -->
-    <div style="left:1245px;top:50px;width:630px;height:550px;" class="popOutBorder" ></div>
+    <div class="popOutBorder" ></div>
 </body>
 
 <script>

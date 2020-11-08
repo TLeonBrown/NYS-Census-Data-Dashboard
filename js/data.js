@@ -24,7 +24,7 @@ var leftSVGDataOptions = [
     "Total Employment",
     "% w/ High School Degree",
     "% w/ Bachelor's Degree",
-    "Persons w/o Health Insurance",
+    "% w/o Insurance",
     "a",
     "a",
     "a",
