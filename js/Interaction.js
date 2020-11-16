@@ -19,6 +19,15 @@ function zoomOut () {
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
 
+// Clear all selections.
+function clearSelections () {
+    d3.selectAll(".mouseTooltip").remove();
+    d3.selectAll(".mouseTooltipText").remove();
+    d3.selectAll(".countyHitbox").style("opacity", 0.0);
+    selectedCounties = 0;
+    document.getElementById("countyDisplayTextTitle").innerHTML = "";
+}
+
 // Draw county name tooltip that hovers by the mouse.
 function drawMouseTooltip (event) {
     svgMain = d3.select(".svgMain");
@@ -75,7 +84,8 @@ document.onkeydown = function (event) { if (event.key === "Shift" && !event.repe
 document.onkeyup = function (event) { if (event.key === "Shift") shift = false; }
 
 // Handle clicking on a county hitbox.
-function countyClick (event) {
+function clickOnACountyHitbox (event) {
+    let countyName = event.target.attributes.countyName.nodeValue + " County";
     if (!shift) {
         d3.selectAll(".countyHitbox").style("opacity", 0.0);
         selectedCounties = 0;
@@ -83,20 +93,23 @@ function countyClick (event) {
     if (selectedCounties >= 3) {
         return;
     }
+    // Successfully select county.
     if (event.target.clicked == false || event.target.clicked == undefined) {
-        event.target.style.fill = "red";
-        event.target.style.strokeWidth = "0px";
+        event.target.style.fill = "#4dffc3";
+        // event.target.style.strokeWidth = "1px";
         event.target.clicked = true;
+        document.getElementById("countyDisplayTextTitle").innerHTML = countyName;
         selectedCounties++;
     }
+    // Successfully unselect county.
     else {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
         event.target.clicked = false;
+        document.getElementById("countyDisplayTextTitle").innerHTML = "";
         selectedCounties--;
     }
     event.target.style.opacity = 1.0;
-    console.log(selectedCounties);
 }
 
 // Handle searching for a county.

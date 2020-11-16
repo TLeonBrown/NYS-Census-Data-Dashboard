@@ -40,6 +40,10 @@
         <br>
         <div class="zoomButton waves-effect waves-light btn" onclick="zoomOut()"><i class="material-icons">remove</i></div>
       </div>
+      <!-- Clear Selection Button -->
+      <div class="clearSelectionButton">
+        <div class="waves-effect waves-light btn" onclick="clearSelections()">Clear Selections</div>
+      </div>
       <!-- New York Map -->
       <div id="nyCountyBox">
         <img id="nyCountyImg" src="img/NY county map original.svg"></img>
@@ -57,15 +61,15 @@
     
     <!-- Pop-Out Box -->
     <div class="border bottomBox" >
-      <p class="countyDisplayTextTitle">Cayuga County</p>
-      <p class="countyDisplayTextInfo">wefwefwfwfwe</p>
+      <p id="countyDisplayTextTitle">Cayuga County</p>
+      <p id="countyDisplayTextInfo">wefwefwfwfwe</p>
     </div>
 </body>
 
 <script>
   setupSVG();
   drawLeftAttributeBox();
-  loadGeoJSON();
+  loadGeoJSONData();
 </script>
 
 </html>
