@@ -1,6 +1,8 @@
 // Handle user interaction.
 
 var zoomLevel = 1.0;
+var shift = false;
+var selectedCounties = 0;
 
 
 // Zoom the map image in by one.
@@ -63,23 +65,38 @@ function countyMouseOver (event) {
 
 // Handle mousing out of a county hitbox.
 function countyMouseOut (event) {
+    d3.selectAll(".mouseTooltip").remove();
+    d3.selectAll(".mouseTooltipText").remove();
     event.target.clicked ? 'e' : event.target.style.opacity = 0.0;
 }
 
+// Handle pressing the shift key to select multiple counties.
+document.onkeydown = function (event) { if (event.key === "Shift" && !event.repeat) shift = true; }
+document.onkeyup = function (event) { if (event.key === "Shift") shift = false; }
+
 // Handle clicking on a county hitbox.
-function countyClick (target) {
-    d3.selectAll(".countyHitbox").style("opacity", 0.0);
-    if (target.clicked == false || target.clicked == undefined) {
-        target.style.fill = "red";
-        target.style.strokeWidth = "0px";
-        target.clicked = true;
+function countyClick (event) {
+    if (!shift) {
+        d3.selectAll(".countyHitbox").style("opacity", 0.0);
+        selectedCounties = 0;
+    }
+    if (selectedCounties >= 3) {
+        return;
+    }
+    if (event.target.clicked == false || event.target.clicked == undefined) {
+        event.target.style.fill = "red";
+        event.target.style.strokeWidth = "0px";
+        event.target.clicked = true;
+        selectedCounties++;
     }
     else {
-        target.style.fill = "transparent";
-        target.style.strokeWidth = "3px";
-        target.clicked = false;
+        event.target.style.fill = "transparent";
+        event.target.style.strokeWidth = "3px";
+        event.target.clicked = false;
+        selectedCounties--;
     }
-    target.style.opacity = 1.0;
+    event.target.style.opacity = 1.0;
+    console.log(selectedCounties);
 }
 
 // Handle searching for a county.

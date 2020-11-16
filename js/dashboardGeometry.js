@@ -117,6 +117,6 @@ function drawSelectableCountyObjects (data) {
             .attr("stroke", "black")
             .on("mouseover", function(d) { countyMouseOver(d); })
             .on("mouseout", function(d) { countyMouseOut(d); })
-            .on("mousedown", function(d) { countyClick(d.target); });
+            .on("mousedown", function(d) { countyClick(d); });
     }
 }
