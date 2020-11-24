@@ -111,10 +111,3 @@ function drawLeftAttributeBox () {
             .text(leftSVGDataOptions[i]);
     }
 }
-
-// Load a GeoJSON from a file.
-function loadGeoJSONData () {
-    d3.json("./data/json/nyCountyGeoData.json").then(function (data) {
-        drawSelectableCountyObjects(data.features);
-    });
-}
