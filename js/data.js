@@ -1,3 +1,5 @@
+// Store large data structures and other miscellaneous data.
+
 var leftSVGDataOptions = [
     "Population",
     "Pop. % Change (10 yrs)",

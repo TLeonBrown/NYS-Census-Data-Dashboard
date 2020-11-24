@@ -1,4 +1,4 @@
-// Handle user interaction.
+// Handle user interaction with the dashboard.
 
 var zoomLevel = 1.0;
 var shift = false;
@@ -85,7 +85,7 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
-    let countyName = event.target.attributes.countyName.nodeValue + " County";
+    let countyName = event.target.attributes.countyName.nodeValue;
     if (!shift) {
         d3.selectAll(".countyHitbox").style("opacity", 0.0);
         selectedCounties = 0;
@@ -98,7 +98,8 @@ function clickOnACountyHitbox (event) {
         event.target.style.fill = "#4dffc3";
         // event.target.style.strokeWidth = "1px";
         event.target.clicked = true;
-        document.getElementById("countyDisplayTextTitle").innerHTML = countyName;
+        document.getElementById("countyDisplayTextTitle").innerHTML = countyName + " County";
+        document.getElementById("countyDisplayTextInfo").innerHTML = "Land area (sq.mi.): " + countyCSVInfo[countyName]["Land area in square miles, 2010"];
         selectedCounties++;
     }
     // Successfully unselect county.
