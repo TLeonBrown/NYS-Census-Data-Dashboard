@@ -4,6 +4,7 @@ ATTR_TEXT_SPACING = 35;
 
 var svgLeft;
 var svgMain;
+var numSelectedAttributes = 0;
 
 
 
@@ -11,12 +12,27 @@ var svgMain;
 
 // Toggle the selection status of objects in the left-hand box.
 function toggleAttributeSelection () {
+    // Clear all selected counties to avoid user confusion.
+    clearSelections();
+    countyInfoString = "";
+    document.getElementById("countyDisplayTextInfo").innerHTML = countyInfoString;
     var selectedBox = event.target;
-    if (selectedBox.attributes.class.value == "leftHoverBoxesSelected") {
-        selectedBox.attributes.class.value = "leftHoverBoxes";
+    var classVal = selectedBox.className.baseVal;
+    var classValIndex = classVal.substring(classVal.indexOf(" "));
+    // Deselect
+    if (selectedBox.attributes.class.value.includes("leftHoverBoxesSelected")) {
+        selectedBox.attributes.class.value = "leftHoverBoxes " + classValIndex;
+        numSelectedAttributes--;
+        selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(classValIndex)]), 1);
     }
-    else if (selectedBox.attributes.class.value == "leftHoverBoxes") {
-        selectedBox.attributes.class.value = "leftHoverBoxesSelected";
+    // Select
+    else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
+        selectedBox.attributes.class.value = "leftHoverBoxesSelected " + classValIndex;
+        numSelectedAttributes++;
+        selectedAttributes.push(attributes[Number(classValIndex)]);
+    }
+    else if (numSelectedAttributes >= 16) {
+        // Do something intuitive for when the user selects more than 16.
     }
 }
 
@@ -97,10 +113,10 @@ function drawLeftAttributeBox () {
         .attr("x", 0).attr("y", 0)
         .attr("width", 325).attr("height", 1500);
     // Click-Boxes Within Scrolling Box
-    for (var i = 0; i < leftSVGDataOptions.length; i++) {
+    for (var i = 0; i < attributes.length; i++) {
         // Draw Highlighting Rect
         svgLeft.append("rect")
-            .attr("class", "leftHoverBoxes")
+            .attr("class", "leftHoverBoxes " + i)
             .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
             .attr("width", "25.5vmin").attr("height", 30)
             .on("click", toggleAttributeSelection);
@@ -108,6 +124,6 @@ function drawLeftAttributeBox () {
         svgLeft.append("text")
             .attr("class", "leftText")
             .attr('x', "13.2vmin").attr('y', 22 + ATTR_TEXT_SPACING * i)
-            .text(leftSVGDataOptions[i]);
+            .text(attributes[i]);
     }
 }

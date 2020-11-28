@@ -1,13 +1,13 @@
 // Store large data structures and other miscellaneous data.
 
-var leftSVGDataOptions = [
+var attributes = [
     "Population",
     "Pop. % Change (10 yrs)",
     "Pop. per Square Mile",
     "Land Area (sq. mi.)",
     "% Pop. Under 5",
     "% Pop. Under 18",
-    "% Pop. Over 65",
+    "% Pop. 65 And Over",
     "% Female",
     "% American Indian",
     "% Asian American",
@@ -15,25 +15,58 @@ var leftSVGDataOptions = [
     "% Hispanic",
     "% Caucasian",
     "% Foreign Born",
-    "Number of Veterans",
+    "# of Veterans",
     "Median Gross Rent",
-    "Number of Households",
+    "# of Households",
     "Persons per Household",
     "Avg. Commute Time",
     "Median Household Income",
     "Per Capita Income",
     "% In Poverty",
+    "% With a Disability Under 65",
     "Total Employment",
+    "Total Empl. % Change (1 yr)",
     "% w/ High School Degree",
     "% w/ Bachelor's Degree",
-    "% w/o Insurance",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-    "a",
-]
+    "% w/o Insurance Under 65",
+    "# of Firms",
+    "# of Minority-Owned Firms",
+];
+
+var attributesToCSV = {
+    "Population": "Population estimates, July 1, 2019, (V2019)",
+    "Pop. % Change (10 yrs)": "Population, percent change - April 1, 2010 (estimates base) to July 1, 2019, (V2019)",
+    "Pop. per Square Mile": "Population per square mile, 2010",
+    "Land Area (sq. mi.)": "Land area in square miles, 2010",
+    "% Pop. Under 5": "Persons under 5 years, percent",
+    "% Pop. Under 18": "Persons under 18 years, percent",
+    "% Pop. 65 And Over": "Persons 65 years and over, percent",
+    "% Female": "Female persons, percent",
+    "% American Indian": "American Indian and Alaska Native alone, percent",
+    "% Asian American": "Asian alone, percent",
+    "% African American": "Black or African American alone, percent",
+    "% Hispanic": "Hispanic or Latino, percent",
+    "% Caucasian": "White alone, percent",
+    "% Foreign Born": "Foreign born persons, percent, 2014-2018",
+    "# of Veterans": "Veterans, 2014-2018",
+    "Median Gross Rent": "Median gross rent, 2014-2018",
+    "# of Households": "Households, 2014-2018",
+    "Persons per Household": "Persons per household, 2014-2018",
+    "Avg. Commute Time": "Mean travel time to work (minutes), workers age 16 years+, 2014-2018",
+    "Median Household Income": "Median household income (in 2018 dollars), 2014-2018",
+    "Per Capita Income": "Per capita income in past 12 months (in 2018 dollars), 2014-2018",
+    "% In Poverty": "Persons in poverty, percent",
+    "% With a Disability Under 65": "With a disability, under age 65 years, percent, 2014-2018",
+    "Total Employment": "Total employment, 2018:",
+    "Total Employment % Change, 1 Year": "Total employment, percent change, 2017-2018",
+    "% w/ High School Degree": "High school graduate or higher, percent of persons age 25 years+, 2014-2018",
+    "% w/ Bachelor's Degree": "Bachelor's degree or higher, percent of persons age 25 years+, 2014-2018",
+    "% w/o Insurance Under 65": "Persons without health insurance, under age 65 years, percent",
+    "# of Firms": "All firms, 2012",
+    "# of Minority-Owned Firms": "Minority-owned firms, 2012",
+}
+
+var selectedAttributes = [];
 
 var polygonPos = [
     [365, 325],
@@ -98,7 +131,7 @@ var polygonPos = [
     [737, 190],
     [9999, 9999],
     [305, 320],
-]
+];
 
 var countyCSVInfo = {
 	'Albany': {}, 'Allegany': {}, 'Bronx': {}, 'Broome': {}, 'Cattaraugus': {}, 'Cayuga': {},
@@ -112,4 +145,4 @@ var countyCSVInfo = {
 	'Seneca': {}, 'St. Lawrence': {}, 'Steuben': {}, 'Suffolk': {}, 'Sullivan': {}, 'Tioga': {},
 	'Tompkins': {}, 'Ulster': {}, 'Warren': {}, 'Washington': {}, 'Wayne': {}, 'Westchester': {},
 	'Wyoming': {}, 'Yates': {}
-}
+};

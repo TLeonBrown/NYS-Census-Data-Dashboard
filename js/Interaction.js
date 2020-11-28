@@ -86,6 +86,7 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
     let countyName = event.target.attributes.countyName.nodeValue;
+    let countyInfoString = "";
     if (!shift) {
         d3.selectAll(".countyHitbox").style("opacity", 0.0);
         selectedCounties = 0;
@@ -93,21 +94,27 @@ function clickOnACountyHitbox (event) {
     if (selectedCounties >= 3) {
         return;
     }
-    // Successfully select county.
+    // Select county
     if (event.target.clicked == false || event.target.clicked == undefined) {
         event.target.style.fill = "#4dffc3";
-        // event.target.style.strokeWidth = "1px";
         event.target.clicked = true;
         document.getElementById("countyDisplayTextTitle").innerHTML = countyName + " County";
-        document.getElementById("countyDisplayTextInfo").innerHTML = "Land area (sq.mi.): " + countyCSVInfo[countyName]["Land area in square miles, 2010"];
+        // For each selected attribute, display its respective value.
+        for (let i = 0; i < selectedAttributes.length; i++) {
+            let csvAttrName = attributesToCSV[selectedAttributes[i]];
+            countyInfoString += `<p>` + selectedAttributes[i] + ".........." + countyCSVInfo[countyName][csvAttrName] + `</p>`;
+        }
+        document.getElementById("countyDisplayTextInfo").innerHTML = countyInfoString;
         selectedCounties++;
     }
-    // Successfully unselect county.
+    // Unselect county
     else {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
         event.target.clicked = false;
         document.getElementById("countyDisplayTextTitle").innerHTML = "";
+        countyInfoString = "";
+        document.getElementById("countyDisplayTextInfo").innerHTML = countyInfoString;
         selectedCounties--;
     }
     event.target.style.opacity = 1.0;
