@@ -3,6 +3,7 @@
 var zoomLevel = 1.0;
 var shift = false;
 var selectedCounties = 0;
+var countyInfoString = "";
 
 
 // Zoom the map image in by one.
@@ -19,13 +20,41 @@ function zoomOut () {
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
 
+// Toggle the selection status of objects in the left-hand box.
+function toggleAttributeSelection () {
+    // Clear all selected counties to avoid user confusion.
+    clearSelections();
+    var selectedBox = event.target;
+    var classVal = selectedBox.className.baseVal;
+    var classValIndex = classVal.substring(classVal.indexOf(" "));
+    // Deselect
+    if (selectedBox.attributes.class.value.includes("leftHoverBoxesSelected")) {
+        selectedBox.attributes.class.value = "leftHoverBoxes " + classValIndex;
+        numSelectedAttributes--;
+        selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(classValIndex)]), 1);
+    }
+    // Select
+    else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
+        selectedBox.attributes.class.value = "leftHoverBoxesSelected " + classValIndex;
+        numSelectedAttributes++;
+        selectedAttributes.push(attributes[Number(classValIndex)]);
+    }
+    else if (numSelectedAttributes >= 16) {
+        // Do something intuitive for when the user selects more than 16.
+    }
+}
+
 // Clear all selections.
 function clearSelections () {
     d3.selectAll(".mouseTooltip").remove();
     d3.selectAll(".mouseTooltipText").remove();
     d3.selectAll(".countyHitbox").style("opacity", 0.0);
     selectedCounties = 0;
+    shift = false;
     document.getElementById("countyDisplayTextTitle").innerHTML = "";
+    countyInfoStringLeft = countyInfoStringRight = "";
+    document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft;
+    document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
 }
 
 // Draw county name tooltip that hovers by the mouse.
@@ -86,7 +115,7 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
     let countyName = event.target.attributes.countyName.nodeValue;
-    let countyInfoString = "";
+    countyInfoStringLeft = countyInfoStringRight = "";
     if (!shift) {
         d3.selectAll(".countyHitbox").style("opacity", 0.0);
         selectedCounties = 0;
@@ -102,9 +131,11 @@ function clickOnACountyHitbox (event) {
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoString += `<p>` + selectedAttributes[i] + ".........." + countyCSVInfo[countyName][csvAttrName] + `</p>`;
+            countyInfoStringLeft += `<p>` + selectedAttributes[i] + ": " + `</p>`;
+            countyInfoStringRight += `<p>` + countyCSVInfo[countyName][csvAttrName] + `</p>`;
         }
-        document.getElementById("countyDisplayTextInfo").innerHTML = countyInfoString;
+        document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
+        document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
         selectedCounties++;
     }
     // Unselect county
@@ -114,7 +145,8 @@ function clickOnACountyHitbox (event) {
         event.target.clicked = false;
         document.getElementById("countyDisplayTextTitle").innerHTML = "";
         countyInfoString = "";
-        document.getElementById("countyDisplayTextInfo").innerHTML = countyInfoString;
+        document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
+        document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
         selectedCounties--;
     }
     event.target.style.opacity = 1.0;

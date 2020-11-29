@@ -10,32 +10,6 @@ var numSelectedAttributes = 0;
 
 // Helper Functions ---------------------------------------------------------------------------
 
-// Toggle the selection status of objects in the left-hand box.
-function toggleAttributeSelection () {
-    // Clear all selected counties to avoid user confusion.
-    clearSelections();
-    countyInfoString = "";
-    document.getElementById("countyDisplayTextInfo").innerHTML = countyInfoString;
-    var selectedBox = event.target;
-    var classVal = selectedBox.className.baseVal;
-    var classValIndex = classVal.substring(classVal.indexOf(" "));
-    // Deselect
-    if (selectedBox.attributes.class.value.includes("leftHoverBoxesSelected")) {
-        selectedBox.attributes.class.value = "leftHoverBoxes " + classValIndex;
-        numSelectedAttributes--;
-        selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(classValIndex)]), 1);
-    }
-    // Select
-    else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
-        selectedBox.attributes.class.value = "leftHoverBoxesSelected " + classValIndex;
-        numSelectedAttributes++;
-        selectedAttributes.push(attributes[Number(classValIndex)]);
-    }
-    else if (numSelectedAttributes >= 16) {
-        // Do something intuitive for when the user selects more than 16.
-    }
-}
-
 // Take the average of a list of coordinates and subtract each value from the average.
 function coordsAverage (list) {
     // Find average.

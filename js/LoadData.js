@@ -129,6 +129,5 @@ function loadAllCSVData () {
                 countyCSVInfo["Yates"][data[i]["Fact"]] = data[i]["Yates County, New York"];
             }
         });
-    console.log(countyCSVInfo);
-    
+    // console.log(countyCSVInfo);
 }

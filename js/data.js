@@ -34,8 +34,8 @@ var attributes = [
 ];
 
 var attributesToCSV = {
-    "Population": "Population estimates, July 1, 2019, (V2019)",
-    "Pop. % Change (10 yrs)": "Population, percent change - April 1, 2010 (estimates base) to July 1, 2019, (V2019)",
+    "Population": "Population estimates, July 1, 2019,  (V2019)",
+    "Pop. % Change (10 yrs)": "Population, percent change - April 1, 2010 (estimates base) to July 1, 2019,  (V2019)",
     "Pop. per Square Mile": "Population per square mile, 2010",
     "Land Area (sq. mi.)": "Land area in square miles, 2010",
     "% Pop. Under 5": "Persons under 5 years, percent",
@@ -57,11 +57,11 @@ var attributesToCSV = {
     "Per Capita Income": "Per capita income in past 12 months (in 2018 dollars), 2014-2018",
     "% In Poverty": "Persons in poverty, percent",
     "% With a Disability Under 65": "With a disability, under age 65 years, percent, 2014-2018",
-    "Total Employment": "Total employment, 2018:",
-    "Total Employment % Change, 1 Year": "Total employment, percent change, 2017-2018",
+    "Total Employment": "Total employment, 2018",
+    "Total Empl. % Change (1 yr)": "Total employment, percent change, 2017-2018",
     "% w/ High School Degree": "High school graduate or higher, percent of persons age 25 years+, 2014-2018",
     "% w/ Bachelor's Degree": "Bachelor's degree or higher, percent of persons age 25 years+, 2014-2018",
-    "% w/o Insurance Under 65": "Persons without health insurance, under age 65 years, percent",
+    "% w/o Insurance Under 65": "Persons  without health insurance, under age 65 years, percent",
     "# of Firms": "All firms, 2012",
     "# of Minority-Owned Firms": "Minority-owned firms, 2012",
 }
