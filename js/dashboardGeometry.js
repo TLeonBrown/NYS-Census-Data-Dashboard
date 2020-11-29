@@ -29,41 +29,64 @@ function coordsAverage (list) {
     return newList;
 }
 
+// Draw a county polygon to the screen.
+function drawCountyPolygon (name, coords) {
+    svgMain.append("polygon")
+    .attr("countyName", name)
+    .attr("class", "countyHitbox")
+    .attr("points", coords)
+    .attr("opacity", 0.0)
+    .attr("stroke", "black")
+    .on("mouseover", function(d) { countyMouseOver(d); })
+    .on("mouseout", function(d) { countyMouseOut(d); })
+    .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+}
+
 // Draw all of the county objects in the screen through the GeoJSON coordinates.
 function drawSelectableCountyObjects (data) {
+    var regularCounties = [];
+    var weirdCounties = [];
     // Fix all the polygon positions in the data dict.
-    for (let i = 0; i < polygonPos.length; i++) {
-        polygonPos[i][0] += 3;
-        polygonPos[i][1] += 111;
+    for (let i = 0; i < polygonPosRegular.length; i++) {
+        polygonPosRegular[i][0] += 3;
+        polygonPosRegular[i][1] += 111;
     }
-    // Iterate through each element in the GeoJSON.
+    for (let i = 0; i < polygonPosWeird.length; i++) {
+        polygonPosWeird[i][0] += 3;
+        polygonPosWeird[i][1] += 111;
+    }
+    // Sort every county based on its coordinate properties.
     for (let i = 0; i < data.length; i++) {
-        // Some of the coordinates are nested within 4 lists, some are nested within 3.
-        let countyCoords;
-        if (data[i].geometry.coordinates[0][0][0][0] == undefined) {
-            countyCoords = coordsAverage(data[i].geometry.coordinates[0]);
-        }
-        else {
-            countyCoords = coordsAverage(data[i].geometry.coordinates[0][0]);
-        }
-        // Append the coordinates into one long string.
+        if (data[i].geometry.coordinates[0][0][0][0] === undefined) { regularCounties.push(data[i]); }
+        else { weirdCounties.push(data[i]); }
+    }
+
+    // Handle regular counties.
+    for (let i = 0; i < regularCounties.length; i++) {
+        let countyCoords = coordsAverage(regularCounties[i].geometry.coordinates[0]);
+        //  Append the coordinates into one long string.
         let countyCoordsStr = "";
         for (let j = 0; j < countyCoords.length; j++) {
             // Use translation numbers from Data list to move county into the proper position.
-            let coord = ((countyCoords[j][0] * 80) + polygonPos[i][0]).toFixed(1) + "," + ((countyCoords[j][1] * -100) + polygonPos[i][1]).toFixed(1) + " ";
+            let coord = ((countyCoords[j][0] * 80) + polygonPosRegular[i][0]).toFixed(1) + "," + ((countyCoords[j][1] * -100) + polygonPosRegular[i][1]).toFixed(1) + " ";
             countyCoordsStr = countyCoordsStr.concat(coord);
         }
-
         // Draw the object on screen.
-        svgMain.append("polygon")
-            .attr("countyName", data[i].properties.NAME)
-            .attr("class", "countyHitbox")
-            .attr("points", countyCoordsStr)
-            .attr("opacity", 0.0)
-            .attr("stroke", "black")
-            .on("mouseover", function(d) { countyMouseOver(d); })
-            .on("mouseout", function(d) { countyMouseOut(d); })
-            .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+        drawCountyPolygon(regularCounties[i].properties.NAME, countyCoordsStr);
+    }
+
+    // Handle weird counties.
+    for (let i = 0; i < weirdCounties.length; i++) {
+        let countyCoords = weirdCounties[i].geometry.coordinates;
+        countyCoords = coordsAverage(countyCoords[countyCoords.length - 1][0]);
+        let countyCoordsStr = "";
+        for (let j = 0; j < countyCoords.length; j++) {
+            // Use translation numbers from Data list to move county into the proper position.
+            let coord = ((countyCoords[j][0] * 80) + polygonPosWeird[i][0]).toFixed(1) + "," + ((countyCoords[j][1] * -100) + polygonPosWeird[i][1]).toFixed(1) + " ";
+            countyCoordsStr = countyCoordsStr.concat(coord);
+        }
+        // Draw the object on screen.
+        drawCountyPolygon(weirdCounties[i].properties.NAME, countyCoordsStr);   
     }
 }
 
