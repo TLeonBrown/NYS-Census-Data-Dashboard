@@ -10,7 +10,7 @@ function loadGeoJSONData () {
     });
 }
 
-// Load the data from all CSV files.
+// Load the data from the CSV files.
 function loadAllCSVData () {
     d3.csv("./data/csv/Albany-Cayuga.csv")
         .then(function(data) {
@@ -129,5 +129,13 @@ function loadAllCSVData () {
                 countyCSVInfo["Yates"][data[i]["Fact"]] = data[i]["Yates County, New York"];
             }
         });
+    // State CSV Data.
+    d3.csv("./data/csv/New-York-State.csv")
+        .then(function(data) {
+            for (let i = 0; i < NUM_USEFUL_CSV_ROWS; i++) {
+                newYorkStateCSVInfo[data[i]["Fact"]] = data[i]["New York"];
+            }
+        });
     // console.log(countyCSVInfo);
+    // console.log(newYorkStateCSVInfo);
 }

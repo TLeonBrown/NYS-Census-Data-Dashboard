@@ -124,3 +124,6 @@ function drawLeftAttributeBox () {
             .text(attributes[i]);
     }
 }
+
+
+// Render New York State data to the screen.

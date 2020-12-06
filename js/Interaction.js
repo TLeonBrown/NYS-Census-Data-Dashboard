@@ -4,6 +4,24 @@ var zoomLevel = 1.0;
 var shift = false;
 var selectedCounties = 0;
 var countyInfoString = "";
+var viewCounty = true;
+
+// Toggle between State View and County View.
+function toggleStateOrCounty () {
+    viewCounty = !viewCounty;
+    // State View
+    if (!viewCounty) {
+        clearSelections();
+        // For each selected attribute, display its respective value.
+        for (let i = 0; i < selectedAttributes.length; i++) {
+            let csvAttrName = attributesToCSV[selectedAttributes[i]];
+            countyInfoStringLeft += `<p>` + selectedAttributes[i] + ": " + `</p>`;
+            countyInfoStringRight += `<p>` + newYorkStateCSVInfo[csvAttrName] + `</p>`;
+        }
+        document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
+        document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
+    }
+}
 
 
 // Zoom the map image in by one.
@@ -51,7 +69,7 @@ function clearSelections () {
     d3.selectAll(".countyHitbox").style("opacity", 0.0);
     selectedCounties = 0;
     shift = false;
-    document.getElementById("countyDisplayTextTitle").innerHTML = "";
+    document.getElementById("countyDisplayTextTitle").innerHTML = "New York State";
     countyInfoStringLeft = countyInfoStringRight = "";
     document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft;
     document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
@@ -143,7 +161,7 @@ function clickOnACountyHitbox (event) {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
         event.target.clicked = false;
-        document.getElementById("countyDisplayTextTitle").innerHTML = "";
+        document.getElementById("countyDisplayTextTitle").innerHTML = "New York State";
         countyInfoString = "";
         document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
         document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;

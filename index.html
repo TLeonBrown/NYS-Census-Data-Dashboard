@@ -32,37 +32,52 @@
     <div class="scrollContainerLeft">
       <svg class="svgLeft"></svg>
     </div>
-
     <!-- Main Box -->
     <div class="border mainBox" >
-      <!-- Zoom Buttons -->
-      <div class="zoomButtons">
-        <div class="zoomButton waves-effect waves-light btn" onclick="zoomIn()"><i class="material-icons">add</i></div>
-        <br>
-        <div class="zoomButton waves-effect waves-light btn" onclick="zoomOut()"><i class="material-icons">remove</i></div>
-      </div>
-      <!-- Clear Selection Button -->
-      <div class="clearSelectionButton">
-        <div class="waves-effect waves-light btn" onclick="clearSelections()">Clear Selections</div>
-      </div>
+
       <!-- New York Map -->
       <div id="nyCountyBox">
         <img id="nyCountyImg" src="img/NY county map original.svg"></img>
         <svg id="svgMain" class="svgMain"></svg>
       </div>
-      <!-- Search Bar -->
-      <div class="countyInfoContainer">
-        <div class="mainCountySearchContainer">
-          <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
+
+      <div class="mainBoxUI">
+        <div class="mainBoxUITop">
+          <!-- Search Bar -->
+          <div class="countyInfoContainer">
+            <div class="mainCountySearchContainer">
+              <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
+            </div>
+            <div class="countySearchButton waves-effect waves-light btn-large" onclick="countySearch(event)"><i class="material-icons">search</i></div>
+            <p id="countyErrorText"></p>
+          </div>
+          <!-- State/County Toggle -->
+          <div class="switch">
+            <label>State<input type="checkbox" checked onClick="toggleStateOrCounty()"><span class="lever"></span>County</label>
+          </div>
         </div>
-        <div class="countySearchButton waves-effect waves-light btn-large" onclick="countySearch(event)"><i class="material-icons">search</i></div>
-        <p id="countyErrorText"></p>
+
+        <div class="mainBoxUIBottom">
+          <!-- Zoom Buttons -->
+          <div class="zoomButtons">
+            <div class="zoomButton waves-effect waves-light btn" onclick="zoomIn()"><i class="material-icons">add</i></div>
+            <br>
+            <div class="zoomButton waves-effect waves-light btn" onclick="zoomOut()"><i class="material-icons">remove</i></div>
+          </div>
+          <!-- Clear Selection Button -->
+          <div class="clearSelectionButton">
+            <div class="waves-effect waves-light btn" onclick="clearSelections()">Clear Selections</div>
+          </div>
+        </div>
+
       </div>
+
+
     </div>
     
     <!-- Pop-Out Box -->
     <div class="border bottomBox" >
-      <p id="countyDisplayTextTitle"></p>
+      <p id="countyDisplayTextTitle">New York State</p>
       <div class="countyDataRows">
           <div id="countyDisplayTextInfoLeft"></div>
           <div id="countyDisplayTextInfoRight"></div>
