@@ -4,7 +4,7 @@ Tian Brown
 
 111597217
 
-Stony Brook University - CSE 495 Fall 2020
+Stony Brook University - CSE 495 Fall 2020, CSE 496 Spring 2021
 
 Professor Paul Fodor
 
