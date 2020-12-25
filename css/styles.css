@@ -1,10 +1,10 @@
 :root{
-  --background: #2e3838; 
-  --mainBox: #506262; 
-  --popOutBox: #6c9393; 
+  --background: #202327; 
+  --mainBox: #454e61; 
+  --popOutBox: #5b7994; 
   --border: #888888;
-  --buttonColor: teal;
-  --main: #69acab;
+  --buttonColor: #64b5f6;
+  --main: #2979ff;
   --mainLight: #d3dede;
 }
 
@@ -23,6 +23,10 @@
 
 .btn, .btn-small, .btn-large {
   background-color: var(--buttonColor);
+}
+
+.btn:hover, .btn-small:hover, .btn-large:hover {
+  background-color: var(--main);
 }
 
 .leftBox {
@@ -77,7 +81,7 @@
 }
 
 #nyCountyImg {
-  filter: hue-rotate(150deg);
+  filter: hue-rotate(180deg);
 }
 
 .svgMain {
@@ -130,6 +134,24 @@
   border-width: 2px;
 }
 
+.infoButton {
+  user-select: none;
+  color: var(--mainLight);
+  position: absolute;
+  left: 0.6%;
+  top: 95.5%;
+}
+
+.infoButton:hover {
+  color: var(--main);
+  cursor: pointer;
+}
+
+.infoButton:active {
+  color: var(--buttonColor);
+  cursor: pointer;
+}
+
 .topLeftText {
   color: white;
   position: absolute;
@@ -176,6 +198,7 @@
   margin-top: 5%;
   margin-left: 1%;
   margin-bottom: 2%;
+  color: var(--main);
 }
 
 .mainBoxUITop {
@@ -262,17 +285,25 @@
 }
 
 #countyDisplayTextInfoLeft, #countyDisplayTextInfoRight {
-  width: 50%;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #countyDisplayTextInfoLeft {
+  width: 65%;
   text-align: left;
   margin-left: 4%;
 }
 
 #countyDisplayTextInfoRight {
+  width: 35%;
   text-align: right;
   margin-right: 4%;
   font-style: italic;
+  margin-bottom: -1%;
+}
+
+/* INFO SCREEN */
+.infoText {
+  color: var(--mainLight);
+  margin-left: 2%;
 }

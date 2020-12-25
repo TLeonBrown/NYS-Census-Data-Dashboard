@@ -6,6 +6,7 @@ var selectedCounties = 0;
 var countyInfoString = "";
 var viewCounty = true;
 
+
 // Toggle between State View and County View.
 function toggleStateOrCounty () {
     viewCounty = !viewCounty;
@@ -20,6 +21,12 @@ function toggleStateOrCounty () {
         }
         document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
         document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
+        document.getElementById("nyCountyImg").style.filter = "contrast(500%) drop-shadow(3px 3px 0px black) brightness(70%)";
+    }
+    // County View
+    else {
+        document.getElementById("nyCountyImg").style.filter = "hue-rotate(180deg)";
+        clearSelections();
     }
 }
 
@@ -109,14 +116,16 @@ function updateTooltip (event) {
 
 // Handle mousing over a county hitbox.
 function countyMouseOver (event) {
-    d3.selectAll(".mouseTooltip").remove();
-    d3.selectAll(".mouseTooltipText").remove();
-    drawMouseTooltip(event);
-    if (!event.target.clicked) {
-        event.target.style.fill = "transparent";
-        event.target.style.strokeWidth = "3px";
-        event.target.style.opacity = 1.0;
-    }  
+    if (viewCounty) {
+        d3.selectAll(".mouseTooltip").remove();
+        d3.selectAll(".mouseTooltipText").remove();
+        drawMouseTooltip(event);
+        if (!event.target.clicked) {
+            event.target.style.fill = "transparent";
+            event.target.style.strokeWidth = "3px";
+            event.target.style.opacity = 1.0;
+        }  
+    }
 }
 
 // Handle mousing out of a county hitbox.
@@ -161,7 +170,7 @@ function clickOnACountyHitbox (event) {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
         event.target.clicked = false;
-        document.getElementById("countyDisplayTextTitle").innerHTML = "New York State";
+        document.getElementById("countyDisplayTextTitle").innerHTML = "Select a County";
         countyInfoString = "";
         document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
         document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
@@ -197,4 +206,10 @@ function countySearch (event) {
         document.getElementById("countyErrorText").innerHTML = "Invalid county name.";
         return;
     }
+}
+
+
+// Show the dashboard information.
+function showDashboardInfo () {
+    console.log("info");
 }

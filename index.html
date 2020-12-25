@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="UTF-8">
 
-<title>CSE 495 - Tian Brown</title>
+<title>Census Data Dashboard - Home</title>
 
 <head>
   <!-- D3 Functionality -->
@@ -15,13 +15,10 @@
   <script src="js/DashboardGeometry.js"></script>
   <script src="js/LoadData.js"></script>
   <!-- Materialize -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
   <!-- My CSS -->
   <link rel="stylesheet" href="css/styles.css">
-  <!-- jQuery/PapaParse -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 
 <body class="background">
@@ -32,6 +29,7 @@
     <div class="scrollContainerLeft">
       <svg class="svgLeft"></svg>
     </div>
+    <a class="infoButton modal-trigger" href="/info"><i class="materialIcon small material-icons">info</i></a>
     <!-- Main Box -->
     <div class="border mainBox" >
 
@@ -69,20 +67,19 @@
             <div class="waves-effect waves-light btn" onclick="clearSelections()">Clear Selections</div>
           </div>
         </div>
-
       </div>
-
-
     </div>
     
     <!-- Pop-Out Box -->
     <div class="border bottomBox" >
-      <p id="countyDisplayTextTitle">New York State</p>
+      <p id="countyDisplayTextTitle">Select a County</p>
       <div class="countyDataRows">
           <div id="countyDisplayTextInfoLeft"></div>
           <div id="countyDisplayTextInfoRight"></div>
       </div>
     </div>
+
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 
 <script>
