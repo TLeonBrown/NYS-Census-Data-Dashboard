@@ -155,6 +155,7 @@ function clickOnACountyHitbox (event) {
         event.target.style.fill = "#4dffc3";
         event.target.clicked = true;
         document.getElementById("countyDisplayTextTitle").innerHTML = countyName + " County";
+        document.getElementById("countyTabTitle1").innerHTML = countyName;
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
