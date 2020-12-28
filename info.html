@@ -5,16 +5,18 @@
 <title>Census Data Dashboard - Info</title>
 
 <head>
-    <!-- Materialize -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!-- Fomantic - You MUST include jQuery before Fomantic -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
+    <script src="/semantic/dist/semantic.min.js"></script>
     <!-- My CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="background">
     <div class="infoText">
-        <h2>INFO</h2>
+        <br>
+        <h1>INFO</h1>
         This dashboard was developed in order to create a clean, intuitive dashboard, capable of displaying census data for
         every county in New York State.
         <br><br>
@@ -22,10 +24,8 @@
         <br><br>
         With this dashboard, I hope that users can gain a deeper understanding into the population and demographics of New York State.
         <br><br>
-        <h2>CREDITS</h2>
-        <h5>Created By:</h5>
-        <a style="font-weight: bold" target="_blank" href="https://tleonbrown.github.io/">Tian Brown</a>
-        <br>
+        <h1>CREDITS</h1>
+        <h5>Created By: <a style="font-weight: bold" target="_blank" href="https://tleonbrown.github.io/">Tian Brown</a></h5>
         CSE 495 & CSE 496
         <br>
         Stony Brook University Class of 2021
@@ -33,7 +33,7 @@
         Faculty Advisor: Professor <a style="font-weight: bold" target="_blank" href="https://www.cs.stonybrook.edu/people/faculty/PaulFodor">Paul Fodor</a>
         <br><br>
         <div onclick="location.href = 'index.html'">
-            <input type="button" class="waves-effect waves-light btn" value="Home"></input>
+            <button class="ui button">Home</button>
         </div>
     </div>
     

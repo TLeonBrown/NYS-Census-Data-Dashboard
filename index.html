@@ -14,22 +14,23 @@
   <script src="js/Data.js"></script>
   <script src="js/DashboardGeometry.js"></script>
   <script src="js/LoadData.js"></script>
-  <!-- Materialize -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <!-- Fomantic - You MUST include jQuery before Fomantic -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
+  <script src="/semantic/dist/semantic.min.js"></script>
   <!-- My CSS -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="background">
     <!-- Top Left Text -->
-    <div class="topLeftText">Select Up to 16&nbsp;<i class="materialIcon material-icons">add_box</i></div>
+    <div class="topLeftText">Select Up to 16&nbsp;<i class="plus icon"></i></div>
     <!-- Left Box -->
     <div class="border leftBox"></div>
     <div class="scrollContainerLeft">
       <svg class="svgLeft"></svg>
     </div>
-    <a class="infoButton modal-trigger" href="/info"><i class="materialIcon small material-icons">info</i></a>
+    <a class="infoButton" href="/info"><i class="info circle icon"></i></a>
     <!-- Main Box -->
     <div class="border mainBox" >
 
@@ -49,22 +50,25 @@
             <div class="countySearchButton waves-effect waves-light btn-large" onclick="countySearch(event)"><i class="material-icons">search</i></div>
             <p id="countyErrorText"></p>
           </div>
-          <!-- State/County Toggle -->
-          <div class="switch">
-            <label>State<input type="checkbox" checked onClick="toggleStateOrCounty()"><span class="lever"></span>County</label>
+        <!-- State/County Toggle -->
+        <div class="stateCountyToggle">
+          <div class="stateView">State View</div>
+          <div class="ui slider checkbox">
+            <input type="checkbox" checked="checked" onclick="toggleStateOrCounty()">
+            <label style="font-weight: bold;">County View</label>
           </div>
+        </div>
         </div>
 
         <div class="mainBoxUIBottom">
           <!-- Zoom Buttons -->
           <div class="zoomButtons">
-            <div class="zoomButton waves-effect waves-light btn" onclick="zoomIn()"><i class="material-icons">add</i></div>
-            <br>
-            <div class="zoomButton waves-effect waves-light btn" onclick="zoomOut()"><i class="material-icons">remove</i></div>
+            <div class="zoomButton"><button class="ui button icon primary" onclick="zoomIn()"><i class="plus icon"></i></button></div>
+            <div class="zoomButton"><button class="ui button icon secondary" onclick="zoomOut()"><i class="minus icon"></i></button></div>
           </div>
           <!-- Clear Selection Button -->
           <div class="clearSelectionButton">
-            <div class="waves-effect waves-light btn" onclick="clearSelections()">Clear Selections</div>
+            <button class="ui button icon primary" onclick="clearSelections()">Clear Selections</button>
           </div>
         </div>
       </div>
@@ -72,21 +76,19 @@
     
     <!-- Pop-Out Box -->
     <div class="border bottomBox" >
-
+<!-- 
       <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
         <li class="tab"><a href="#county1" class="active" id="countyTabTitle1"></a></li>
         <li class="tab"><a href="#county2" id="countyTabTitle2">Test 2</a></li>
         <li class="tab"><a href="#county3" id="countyTabTitle3">Test 3</a></li>
       </ul>
-      
+       -->
       <p id="countyDisplayTextTitle">Select a County</p>
       <div class="countyDataRows">
           <div id="countyDisplayTextInfoLeft"></div>
           <div id="countyDisplayTextInfoRight"></div>
       </div>
     </div>
-
-    <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 
 <script>
