@@ -10,9 +10,9 @@
   <script src="https://d3js.org/d3-dsv.v2.min.js"></script>
   <script src="https://d3js.org/d3-fetch.v2.min.js"></script>
   <!-- My Functionality -->
-  <script src="js/Interaction.js"></script>
-  <script src="js/Data.js"></script>
   <script src="js/DashboardGeometry.js"></script>
+  <script src="js/Data.js"></script>
+  <script src="js/Interaction.js"></script>
   <script src="js/LoadData.js"></script>
   <!-- Fomantic - You MUST include jQuery before Fomantic -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
@@ -44,10 +44,12 @@
         <div class="mainBoxUITop">
           <!-- Search Bar -->
           <div class="countyInfoContainer">
-            <div class="mainCountySearchContainer">
-              <input id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)"></input>
+            <div class="ui inverted transparent icon input countySearch">
+              <input type="text" id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)">
+              <button class="ui icon button primary" onclick="countySearch(event)">
+                <i class="search icon"></i>
+              </button>
             </div>
-            <div class="countySearchButton waves-effect waves-light btn-large" onclick="countySearch(event)"><i class="material-icons">search</i></div>
             <p id="countyErrorText"></p>
           </div>
         <!-- State/County Toggle -->
@@ -55,7 +57,7 @@
           <div class="stateView">State View</div>
           <div class="ui slider checkbox">
             <input type="checkbox" checked="checked" onclick="toggleStateOrCounty()">
-            <label style="font-weight: bold;">County View</label>
+            <label>County View</label>
           </div>
         </div>
         </div>
@@ -68,21 +70,29 @@
           </div>
           <!-- Clear Selection Button -->
           <div class="clearSelectionButton">
-            <button class="ui button icon primary" onclick="clearSelections()">Clear Selections</button>
+            <button class="ui button primary" onclick="clearSelections()">Clear Selections</button>
           </div>
         </div>
       </div>
     </div>
     
     <!-- Pop-Out Box -->
-    <div class="border bottomBox" >
-<!-- 
-      <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
-        <li class="tab"><a href="#county1" class="active" id="countyTabTitle1"></a></li>
-        <li class="tab"><a href="#county2" id="countyTabTitle2">Test 2</a></li>
-        <li class="tab"><a href="#county3" id="countyTabTitle3">Test 3</a></li>
-      </ul>
-       -->
+    <div class="border rightBox" >
+      <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="first">First</a>
+        <a class="item " data-tab="second">Second</a>
+        <a class="item" data-tab="third">Third</a>
+      </div>
+      <div class="ui bottom attached tab segment active" data-tab="first">
+        First
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="second">
+        Second
+      </div>
+      <div class="ui bottom attached tab segment" data-tab="third">
+        Third
+      </div>
+
       <p id="countyDisplayTextTitle">Select a County</p>
       <div class="countyDataRows">
           <div id="countyDisplayTextInfoLeft"></div>
@@ -91,11 +101,17 @@
     </div>
 </body>
 
+<!-- Run all functions that are required on startup. -->
 <script>
   setupSVG();
   drawLeftAttributeBox();
   loadGeoJSONData();
   loadAllCSVData();
+</script>
+
+<!-- jQuery Script for switching tabs. -->
+<script>
+  $('.menu .item').tab();
 </script>
 
 </html>

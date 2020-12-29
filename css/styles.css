@@ -1,10 +1,9 @@
 :root{
   --background: #202327; 
-  --mainBox: #454e61; 
-  --popOutBox: #5b7994; 
+  --boxColor: #454e61; 
   --border: #888888;
   --buttonColor: #64b5f6;
-  --main: #2979ff;
+  --main: #1e81cd;
   --mainLight: #d3dede;
 }
 
@@ -14,38 +13,30 @@
 }
 
 .border {
-    position: absolute;
-    background-color: var(--mainBox);
-    border-radius: 0.35%;
-    -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-    filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
-}
-
-.btn, .btn-small, .btn-large {
-  background-color: var(--buttonColor);
-}
-
-.btn:hover, .btn-small:hover, .btn-large:hover {
-  background-color: var(--main);
+  position: absolute;
+  background-color: var(--boxColor);
+  border-radius: 0.35%;
+  -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
 }
 
 .leftBox {
   left: 0.5%;
   top: 4.1%;
-  width: 14.3%;
+  width: 16.3%;
   height: 90%;
 }
 
 .mainBox {
-  left: 15.4%;
-  top: 14%;
-  width: 56.8%;
+  left: 17.4%;
+  top: 9.1%;
+  width: 54.8%;
   height: 80%;
 }
 
-.bottomBox {
+.rightBox {
   position: absolute;
-  background-color: var(--popOutBox);
+  background-color: var(--boxColor);
   left: 73%;
   top: 4.1%;
   width: 26%;
@@ -58,7 +49,7 @@
   position: absolute;
   left: 0.6%;
   top: 4.5%;
-  width: 14%;
+  width: 16%;
   height: 89%;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -67,7 +58,7 @@
 
 .svgLeft {
   width: 100%;
-  height: 120%;
+  height: 124%;
 }
 
 #nyCountyBox {
@@ -100,38 +91,16 @@
   pointer-events: none;
 }
 
-.leftLine {
-  stroke: black;
-  stroke-width: 1px;
-}
-
 .leftHoverBoxes {
   fill: #dddddd;
 }
 
 .leftHoverBoxes:hover {
-  fill: #b3ffff;
+  fill: var(--buttonColor);
 }
 
-.leftHoverBoxes:active {
-  fill: #00e6e6;
-  border-style: solid;
-  border-color: black;
-  border-width: 2px;
-}
-
-.leftHoverBoxesSelected {
-  fill: #00e6e6;
-  border-style: solid;
-  border-color: black;
-  border-width: 2px;
-}
-
-.leftHoverBoxesSelected:active {
-  fill: #00e6e6;
-  border-style: solid;
-  border-color: black;
-  border-width: 2px;
+.leftHoverBoxes:active, .leftHoverBoxesSelected, .leftHoverBoxesSelected:active {
+  fill: var(--main);
 }
 
 .infoButton {
@@ -139,7 +108,8 @@
   color: var(--mainLight);
   position: absolute;
   left: 0.6%;
-  top: 95.5%;
+  top: 96%;
+  font-size: 25px;
 }
 
 .infoButton:hover {
@@ -169,7 +139,7 @@
 /* MAIN BOX UI */
 .mainBoxUI {
   height: 100%;
-  margin-top: -69%;
+  margin-top: -71.5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -183,7 +153,7 @@
 }
 
 .zoomButton {
-  margin-bottom: 10%;
+  margin-bottom: 12%;
 }
 
 .zoomButton:hover {
@@ -191,26 +161,22 @@
   filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
 }
 
-.zoomButton:active {
-  background-color: var(--main);
-}
-
 /* STATE/COUNTY TOGGLE */
 .stateCountyToggle {
-  margin-top: 5%;
-  margin-left: 1%;
+  margin-top: 1%;
+  margin-left: -1.5%;
   margin-bottom: 2%;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 25%;
   padding: 1%;
+  font-weight: bold;
 }
 
 .stateView {
   margin-top: -1%;
   margin-right: 6%;
-  font-weight: bold;
 }
 
 .mainBoxUITop {
@@ -232,18 +198,16 @@
 
 /* CLEAR SELECTION BUTTON */
 .clearSelectionButton {
-  margin-right: 0%;
   text-align: center;
   margin-bottom: 1%;
+  z-index: 55;
 }
 
 /* COUNTY SEARCH BAR */
 .countyInfoContainer {
   display: flex;
   justify-content: left;
-  width: 100%;
-  height: 7%;
-  z-index: 56;
+  width: 40%;
 }
 
 .mainCountySearchContainer {
@@ -260,11 +224,6 @@
   text-align: left;
   margin-left: 1%;
   margin-top: 1.4%;
-}
-
-#countySearchField {
-  color: var(--mainLight);
-  user-select: none;
 }
 
 .mouseTooltip {
@@ -323,3 +282,26 @@
   color: var(--mainLight);
   margin-left: 2%;
 }
+
+/* SCROLL BARS */
+ /* width */
+ .scrollContainerLeft::-webkit-scrollbar {
+  width: 18px;
+}
+
+/* Track */
+.scrollContainerLeft::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.scrollContainerLeft::-webkit-scrollbar-thumb {
+  background: var(--main);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollContainerLeft::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} 

@@ -48,11 +48,11 @@ function drawSelectableCountyObjects (data) {
     var weirdCounties = [];
     // Fix all the polygon positions in the data dict.
     for (let i = 0; i < polygonPosRegular.length; i++) {
-        polygonPosRegular[i][0] += 3;
+        polygonPosRegular[i][0] -= 17;
         polygonPosRegular[i][1] += 111;
     }
     for (let i = 0; i < polygonPosWeird.length; i++) {
-        polygonPosWeird[i][0] += 3;
+        polygonPosWeird[i][0] -= 17;
         polygonPosWeird[i][1] += 111;
     }
     // Sort every county based on its coordinate properties.
@@ -115,12 +115,12 @@ function drawLeftAttributeBox () {
         svgLeft.append("rect")
             .attr("class", "leftHoverBoxes " + i)
             .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
-            .attr("width", "25.5vmin").attr("height", 30)
+            .attr("width", "29.5vmin").attr("height", 30)
             .on("click", toggleAttributeSelection);
         // Draw Text
         svgLeft.append("text")
             .attr("class", "leftText")
-            .attr('x', "13.2vmin").attr('y', 22 + ATTR_TEXT_SPACING * i)
+            .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
             .text(attributes[i]);
     }
 }

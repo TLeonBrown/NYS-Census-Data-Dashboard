@@ -124,7 +124,10 @@ function countyMouseOver (event) {
             event.target.style.fill = "transparent";
             event.target.style.strokeWidth = "3px";
             event.target.style.opacity = 1.0;
-        }  
+        }
+        if (selectedCounties >= 3) {
+            event.target.style.stroke = "grey";
+        }
     }
 }
 
@@ -151,11 +154,11 @@ function clickOnACountyHitbox (event) {
         return;
     }
     // Select county
+    console.log("select county")
     if (event.target.clicked == false || event.target.clicked == undefined) {
         event.target.style.fill = "#4dffc3";
         event.target.clicked = true;
         document.getElementById("countyDisplayTextTitle").innerHTML = countyName + " County";
-        document.getElementById("countyTabTitle1").innerHTML = countyName;
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
@@ -186,8 +189,10 @@ function countySearch (event) {
     let searchText = document.getElementById("countySearchField").value;
     // Make sure we only search on enter press, or by clicking the search button.
     if (event.keyCode == 13 || event.type === "click") {
+        // Handle empty search.
         if (searchText === "") {
             d3.selectAll(".countyHitbox").style("opacity", 0.0);
+            return;
         }
         // Search through each county object and look for matching names.
         let counties = d3.selectAll(".countyHitbox")._groups[0];
@@ -205,12 +210,7 @@ function countySearch (event) {
         }  
         // Case 2: Text does not match any county names.
         document.getElementById("countyErrorText").innerHTML = "Invalid county name.";
+        d3.selectAll(".countyHitbox").style("opacity", 0.0);
         return;
     }
-}
-
-
-// Show the dashboard information.
-function showDashboardInfo () {
-    console.log("info");
 }
