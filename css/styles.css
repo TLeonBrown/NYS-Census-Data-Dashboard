@@ -16,7 +16,6 @@
   position: absolute;
   background-color: var(--boxColor);
   border-radius: 0.35%;
-  -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
   filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
 }
 
@@ -36,13 +35,29 @@
 
 .rightBox {
   position: absolute;
-  background-color: var(--boxColor);
+  background-color: var(--background);
+  filter: none;
   left: 73%;
   top: 4.1%;
   width: 26%;
   height: 90%;
-  padding-left: 1%;
-  padding-right: 1%;
+}
+
+.tabContainer {
+  border-width: 0px !important;
+  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5)) !important;
+}
+
+.tabHeader {
+  background-color: var(--main) !important;
+  color: white !important;
+}
+
+.tabBody {
+  background-color: var(--boxColor) !important;
+  height: 95%;
+  border-width: 0px !important;
+  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5)) !important;
 }
 
 .scrollContainerLeft {

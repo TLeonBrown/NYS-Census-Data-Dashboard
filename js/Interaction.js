@@ -76,7 +76,24 @@ function clearSelections () {
     d3.selectAll(".countyHitbox").style("opacity", 0.0);
     selectedCounties = 0;
     shift = false;
-    document.getElementById("countyDisplayTextTitle").innerHTML = "New York State";
+    // Reset Tabs
+    let tabHeader1 = document.getElementById("tabHeader1");
+    let tabHeader2 = document.getElementById("tabHeader2");
+    let tabHeader3 = document.getElementById("tabHeader3");
+    let tabBody1 = document.getElementById("tabBody1");
+    let tabBody2 = document.getElementById("tabBody2");
+    let tabBody3 = document.getElementById("tabBody3");
+    tabHeader2.style.display = "none";
+    tabHeader3.style.display = "none";
+    tabHeader2.classList.remove("active");
+    tabBody2.classList.remove("active");
+    tabHeader3.classList.remove("active");
+    tabBody3.classList.remove("active");
+    tabHeader1.classList.add("active");
+    tabBody1.classList.add("active");
+    tabHeader1.innerHTML = "Select a County";
+    tabBody1.innerHTML = "";
+    // Reset County Info
     countyInfoStringLeft = countyInfoStringRight = "";
     document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft;
     document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
@@ -126,7 +143,8 @@ function countyMouseOver (event) {
             event.target.style.opacity = 1.0;
         }
         if (selectedCounties >= 3) {
-            event.target.style.stroke = "grey";
+            if (shift) { event.target.style.stroke = "grey"; }
+            else { event.target.style.stroke = "black"; }
         }
     }
 }
@@ -144,6 +162,13 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
+    // Tab Stuff
+    let tabHeader1 = document.getElementById("tabHeader1");
+    let tabHeader2 = document.getElementById("tabHeader2");
+    let tabHeader3 = document.getElementById("tabHeader3");
+    let tabBody1 = document.getElementById("tabBody1");
+    let tabBody2 = document.getElementById("tabBody2");
+    let tabBody3 = document.getElementById("tabBody3");
     let countyName = event.target.attributes.countyName.nodeValue;
     countyInfoStringLeft = countyInfoStringRight = "";
     if (!shift) {
@@ -154,11 +179,13 @@ function clickOnACountyHitbox (event) {
         return;
     }
     // Select county
-    console.log("select county")
     if (event.target.clicked == false || event.target.clicked == undefined) {
         event.target.style.fill = "#4dffc3";
+        if (selectedCounties >= 3) {
+            event.target.style.stroke = "black";
+            selectedCounties = 0;
+        }
         event.target.clicked = true;
-        document.getElementById("countyDisplayTextTitle").innerHTML = countyName + " County";
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
@@ -168,13 +195,51 @@ function clickOnACountyHitbox (event) {
         document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
         document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;
         selectedCounties++;
+        // Handle tab selection.
+        switch (selectedCounties) {
+            case 2:
+                // Show Data
+                tabHeader2.innerHTML = countyName;
+                tabHeader2.style.display = "block";
+                tabBody2.innerHTML = countyName + " County";
+                // Set Tab 2 to Active
+                tabHeader1.classList.remove("active");
+                tabBody1.classList.remove("active");
+                tabHeader2.classList.add("active");
+                tabBody2.classList.add("active");
+                break;
+            case 3:
+                // Show Data
+                tabHeader3.innerHTML = countyName;
+                tabHeader3.style.display = "block";
+                tabBody3.innerHTML = countyName + " County";
+                // Set Tab 2 to Active
+                tabHeader2.classList.remove("active");
+                tabBody2.classList.remove("active");
+                tabHeader3.classList.add("active");
+                tabBody3.classList.add("active");
+                break;
+            default:
+                tabHeader1.innerHTML = countyName;
+                tabHeader2.style.display = "none";
+                tabHeader3.style.display = "none";
+                tabBody1.innerHTML = countyName + " County";
+                // Set Tab 1 to Active
+                tabHeader2.classList.remove("active");
+                tabBody2.classList.remove("active");
+                tabHeader3.classList.remove("active");
+                tabBody3.classList.remove("active");
+                tabHeader1.classList.add("active");
+                tabBody1.classList.add("active");
+                break;
+        }
     }
     // Unselect county
     else {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
         event.target.clicked = false;
-        document.getElementById("countyDisplayTextTitle").innerHTML = "Select a County";
+        document.getElementById("tabHeader1").innerHTML = "Select a County";
         countyInfoString = "";
         document.getElementById("countyDisplayTextInfoLeft").innerHTML = countyInfoStringLeft
         document.getElementById("countyDisplayTextInfoRight").innerHTML = countyInfoStringRight;

@@ -78,22 +78,14 @@
     
     <!-- Pop-Out Box -->
     <div class="border rightBox" >
-      <div class="ui top attached tabular menu">
-        <a class="item active" data-tab="first">First</a>
-        <a class="item " data-tab="second">Second</a>
-        <a class="item" data-tab="third">Third</a>
+      <div class="tabContainer ui top attached tabular menu">
+        <a id="tabHeader1" class="tabHeader item active" data-tab="first" style="display: block">Select a County</a>
+        <a id="tabHeader2" class="tabHeader item" data-tab="second" style="display: none">Second</a>
+        <a id="tabHeader3" class="tabHeader item" data-tab="third" style="display: none">Third</a>
       </div>
-      <div class="ui bottom attached tab segment active" data-tab="first">
-        First
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="second">
-        Second
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="third">
-        Third
-      </div>
-
-      <p id="countyDisplayTextTitle">Select a County</p>
+      <div id="tabBody1" class="tabBody ui bottom attached tab segment active" data-tab="first"></div>
+      <div id="tabBody2" class="tabBody ui bottom attached tab segment" data-tab="second"></div>
+      <div id="tabBody3" class="tabBody ui bottom attached tab segment" data-tab="third"></div>
       <div class="countyDataRows">
           <div id="countyDisplayTextInfoLeft"></div>
           <div id="countyDisplayTextInfoRight"></div>
