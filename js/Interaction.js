@@ -7,13 +7,13 @@ var countyInfoString = "";
 var viewCounty = true;
 
 
-function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoStringLeft, countyInfoStringRight) {
+function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
     switch (selectedCounties) {
         case 2:
             // Show Data
             tabHeader2.innerHTML = countyName;
             tabHeader2.style.display = "block";
-            tabBody2.innerHTML = countyInfoStringLeft + " " + countyInfoStringRight;
+            tabBody2.innerHTML = countyInfoString;
             // Set Tab 2 to Active
             tabHeader1.classList.remove("active");
             tabBody1.classList.remove("active");
@@ -24,7 +24,7 @@ function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tab
             // Show Data
             tabHeader3.innerHTML = countyName;
             tabHeader3.style.display = "block";
-            tabBody3.innerHTML = countyInfoStringLeft + ".\t." + countyInfoStringRight;
+            tabBody3.innerHTML = countyInfoString;
             // Set Tab 2 to Active
             tabHeader2.classList.remove("active");
             tabBody2.classList.remove("active");
@@ -35,9 +35,7 @@ function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tab
             tabHeader1.innerHTML = countyName;
             tabHeader2.style.display = "none";
             tabHeader3.style.display = "none";
-            console.log(countyInfoStringLeft);
-            console.log(countyInfoStringRight);
-            tabBody1.innerHTML = countyInfoStringLeft + countyInfoStringRight;
+            tabBody1.innerHTML = countyInfoString;
             // Set Tab 1 to Active
             tabHeader2.classList.remove("active");
             tabBody2.classList.remove("active");
@@ -60,8 +58,7 @@ function toggleStateOrCounty () {
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoStringLeft += `<p>` + selectedAttributes[i] + ": " + `</p>`;
-            countyInfoStringRight += `<p>` + newYorkStateCSVInfo[csvAttrName] + `</p>`;
+            countyInfoString += `<p>` + selectedAttributes[i] + ": " + countyCSVInfo[countyName][csvAttrName] + `</p>`;
         }
         document.getElementById("nyCountyImg").style.filter = "contrast(500%) drop-shadow(3px 3px 0px black) brightness(70%)";
     }
@@ -136,7 +133,7 @@ function clearSelections () {
     tabHeader1.innerHTML = "Select a County";
     tabBody1.innerHTML = "";
     // Reset County Info
-    countyInfoStringLeft = countyInfoStringRight = "";
+    countyInfoString = "";
 }
 
 // Draw county name tooltip that hovers by the mouse.
@@ -210,7 +207,7 @@ function clickOnACountyHitbox (event) {
     let tabBody2 = document.getElementById("tabBody2");
     let tabBody3 = document.getElementById("tabBody3");
     let countyName = event.target.attributes.countyName.nodeValue;
-    countyInfoStringLeft = countyInfoStringRight = "";
+    countyInfoString = "";
     if (!shift) {
         d3.selectAll(".countyHitbox").style("opacity", 0.0);
         selectedCounties = 0;
@@ -229,11 +226,10 @@ function clickOnACountyHitbox (event) {
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoStringLeft += `<p>` + selectedAttributes[i] + ": " + `</p>`;
-            countyInfoStringRight += `<p>` + countyCSVInfo[countyName][csvAttrName] + `</p>`;
+            countyInfoString += `<p>` + selectedAttributes[i] + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + countyCSVInfo[countyName][csvAttrName] + `</p>`;
         }
         selectedCounties++;
-        updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoStringLeft, countyInfoStringRight);
+        updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
     }
     // Unselect county
     else {
@@ -244,7 +240,7 @@ function clickOnACountyHitbox (event) {
         countyInfoString = "";
         if (shift) { selectedCounties--; }
         if (selectedCounties == 0) { countyName = "Select a County"; }
-        updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoStringLeft, countyInfoStringRight);
+        updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
 
     }
     event.target.style.opacity = 1.0;

@@ -65,8 +65,12 @@
   min-height: 100%;
   max-height: 100%;
   border-width: 0px !important;
+  font-size: 18px !important;
   filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5)) !important;
-  display: flex;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-align: center;
+  color: white !important;
 }
 
 #tabHeader1 { background-color: var(--tabHeader1) !important; }
@@ -75,15 +79,15 @@
 
 #tabHeader3 { background-color: var(--tabHeader3) !important; }
 
+#tabHeader1:hover, #tabHeader2:hover, #tabHeader3:hover {
+  background-color: var(--buttonColor) !important;
+}
+
 #tabBody1 { background-color: var(--tabBody1) !important; }
 
 #tabBody2 { background-color: var(--tabBody2) !important; }
 
 #tabBody3 { background-color: var(--tabBody3) !important; }
-
-#tabHeader1:hover, #tabHeader2:hover, #tabHeader3:hover {
-  background-color: var(--buttonColor) !important;
-}
 
 .scrollContainerLeft {
   position: absolute;
