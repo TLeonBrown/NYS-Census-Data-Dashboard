@@ -3,14 +3,11 @@
   --boxColor: #454e61; 
   --border: #888888;
   --buttonColor: #64b5f6;
-  --main: #1e81cd;
+  --main: #218cde;
   --mainLight: #d3dede;
-  --tabHeader1: var(--main);
-  --tabHeader2: #1e4acc;
-  --tabHeader3: #1e1ecc;
-  --tabBody1: var(--boxColor);
-  --tabBody2: #3f4c69;
-  --tabBody3: #374972;
+  --tab1: #218cde;
+  --tab2: #4ea3e4;
+  --tab3: #7abaeb;
 }
 
 .background {
@@ -50,7 +47,7 @@
 }
 
 .tabContainer {
-  border-width: 2px !important;
+  border-width: 0px !important;
 }
 
 .tabHeader {
@@ -65,29 +62,25 @@
   min-height: 100%;
   max-height: 100%;
   border-width: 0px !important;
-  font-size: 18px !important;
+  font-size: 20px !important;
   filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5)) !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-align: center;
-  color: white !important;
+  color: black !important;
+  margin-top: 3%;
 }
 
-#tabHeader1 { background-color: var(--tabHeader1) !important; }
+#tabHeader1, #tabBody1 { background-color: var(--tab1) !important; color: white !important; }
 
-#tabHeader2 { background-color: var(--tabHeader2) !important; }
+#tabHeader2, #tabBody2 { background-color: var(--tab2) !important; }
 
-#tabHeader3 { background-color: var(--tabHeader3) !important; }
+#tabHeader3, #tabBody3 { background-color: var(--tab3) !important; }
 
 #tabHeader1:hover, #tabHeader2:hover, #tabHeader3:hover {
-  background-color: var(--buttonColor) !important;
+  background-color: white !important;
+  color: black !important;
 }
-
-#tabBody1 { background-color: var(--tabBody1) !important; }
-
-#tabBody2 { background-color: var(--tabBody2) !important; }
-
-#tabBody3 { background-color: var(--tabBody3) !important; }
 
 .scrollContainerLeft {
   position: absolute;
@@ -341,11 +334,11 @@
 
 /* Handle */
 .scrollContainerLeft::-webkit-scrollbar-thumb {
-  background: var(--main);
+  background: var(--buttonColor);
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .scrollContainerLeft::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--main);
 } 

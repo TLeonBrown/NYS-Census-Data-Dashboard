@@ -217,7 +217,7 @@ function clickOnACountyHitbox (event) {
     }
     // Select county
     if (event.target.clicked == false || event.target.clicked == undefined) {
-        event.target.style.fill = "#4dffc3";
+        event.target.style.fill = "var(--main)";
         if (selectedCounties >= 3) {
             event.target.style.stroke = "black";
             selectedCounties = 0;
@@ -226,7 +226,11 @@ function clickOnACountyHitbox (event) {
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoString += `<p>` + selectedAttributes[i] + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + countyCSVInfo[countyName][csvAttrName] + `</p>`;
+            countyInfoString += `<p>` + selectedAttributes[i] + " ";
+            for (let j = 45; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
+                countyInfoString += ". ";
+            }
+            countyInfoString += countyCSVInfo[countyName][csvAttrName] + `</p>`;
         }
         selectedCounties++;
         updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
