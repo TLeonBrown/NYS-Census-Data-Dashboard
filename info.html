@@ -32,12 +32,26 @@
         <br>
         Faculty Advisor: Professor <a style="font-weight: bold" target="_blank" href="https://www.cs.stonybrook.edu/people/faculty/PaulFodor">Paul Fodor</a>
         <br><br>
-        <div onclick="location.href = 'index.html'">
-            <button class="ui button primary">Home</button>
+        <h1>DATA SOURCES</h1>
+        County statistics were taken from:
+        <a href="https://www.census.gov/quickfacts/fact/table/US/PST045219" target="_blank">U.S. Census Bureau QuickFacts website</a>
+        <br><br>
+        Geographic coordinate data used for drawing county outlines taken from: 
+        <a href="https://github.com/plotly/datasets/blob/master/geojson-counties-fips.json" target="_blank">geojson-counties-fips.json</a>
+        <br><br>
+        <a class="downloadFilesLink" target="_blank" onclick="downloadFiles()" download>Download All Source Data Files (zipped)</a>
+        <br><br>
+
+        <div class="homeButtonInfo" onclick="location.href = 'index.html'">
+            <button class="ui button massive primary">Home</button>
         </div>
     </div>
     
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script>
+        function downloadFiles () {
+            window.open("./data.zip");
+        }
+    </script>
 </body>
 
 </html>
