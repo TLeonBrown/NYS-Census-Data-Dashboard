@@ -2,7 +2,8 @@
 
 var zoomLevel = 1.0;
 var shift = false;
-var selectedCounties = 0;
+var numSelectedCounties = 0;
+var selectedCounties = [];
 var countyInfoString = "";
 var viewCounty = true;
 
@@ -113,7 +114,7 @@ function clearSelections () {
     d3.selectAll(".mouseTooltip").remove();
     d3.selectAll(".mouseTooltipText").remove();
     d3.selectAll(".countyHitbox").style("opacity", 0.0);
-    selectedCounties = 0;
+    numSelectedCounties = 0;
     shift = false;
     // Reset Tabs
     let tabHeader1 = document.getElementById("tabHeader1");
@@ -158,6 +159,7 @@ function drawMouseTooltip (event) {
 
 // Update the hovering tooltip that stays near the mouse when it is above a county.
 function updateTooltip (event) {
+    // let countyName = event.target.attributes.countyName.nodeValue;
     if (event.target.tagName == "polygon") {
         // Get mouse coordinates.
         mouseX = Math.round(d3.pointer(event)[0]);
@@ -166,65 +168,84 @@ function updateTooltip (event) {
         d3.select(".mouseTooltip").attr("x", mouseX + 10).attr("y", mouseY - 10);
         d3.select(".mouseTooltipText").attr("x", mouseX + 13).attr("y", mouseY + 3);
     } 
+    // Make tooltip a lighter grey if you cannot select the county.
+    if (shift && numSelectedCounties >= 3 && selectedCounties.indexOf(d3.select(".mouseTooltipText").text()) == -1) {
+        d3.select(".mouseTooltip").attr("fill", "grey");
+    }
+    else {
+        d3.select(".mouseTooltip").attr("fill", "var(--background)");
+    }
 }
 
 // Handle mousing over a county hitbox.
 function countyMouseOver (event) {
+    let countyName = event.target.attributes.countyName.nodeValue;
+    event.target.style.stroke = "black";
     if (viewCounty) {
         d3.selectAll(".mouseTooltip").remove();
         d3.selectAll(".mouseTooltipText").remove();
         drawMouseTooltip(event);
-        if (!event.target.clicked) {
+        // If the county is selected, highlight it.
+        if (selectedCounties.indexOf(countyName) == -1) {
             event.target.style.fill = "transparent";
             event.target.style.strokeWidth = "3px";
             event.target.style.opacity = 1.0;
         }
-        if (selectedCounties >= 3) {
-            if (shift) { event.target.style.stroke = "grey"; }
+        if (numSelectedCounties >= 3) {
+            if (shift && selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
             else { event.target.style.stroke = "black"; }
         }
     }
 }
 
+
 // Handle mousing out of a county hitbox.
 function countyMouseOut (event) {
+    let countyName = event.target.attributes.countyName.nodeValue;
     d3.selectAll(".mouseTooltip").remove();
     d3.selectAll(".mouseTooltipText").remove();
-    event.target.clicked ? 'e' : event.target.style.opacity = 0.0;
+    selectedCounties.indexOf(countyName) != -1 ? 'e' : event.target.style.opacity = 0.0;
 }
+
 
 // Handle pressing the shift key to select multiple counties.
 document.onkeydown = function (event) { if (event.key === "Shift" && !event.repeat) shift = true; }
 document.onkeyup = function (event) { if (event.key === "Shift") shift = false; }
 
+
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
-    // Tab Stuff
+    // Tab stuff.
     let tabHeader1 = document.getElementById("tabHeader1");
     let tabHeader2 = document.getElementById("tabHeader2");
     let tabHeader3 = document.getElementById("tabHeader3");
     let tabBody1 = document.getElementById("tabBody1");
     let tabBody2 = document.getElementById("tabBody2");
     let tabBody3 = document.getElementById("tabBody3");
+    // Get county's name.
     let countyName = event.target.attributes.countyName.nodeValue;
     countyInfoString = "";
+    // Deselect all counties if shift key is not held.
     if (!shift) {
         d3.selectAll(".countyHitbox").style("opacity", 0.0);
-        selectedCounties = 0;
+        numSelectedCounties = 0;
     }
-    if (selectedCounties >= 3) {
-        return;
-    }
+    // If you're trying to select a fourth county, don't do that.
+    if (numSelectedCounties >= 3 && shift) { return; }
     // Select county
-    if (event.target.clicked == false || event.target.clicked == undefined) {
+    if (selectedCounties.indexOf(countyName) == -1) {
+        // If you're not shift-selecting an additional county, erase and re-add the singular selected county.
+        if (!shift) { selectedCounties = []; }
+        selectedCounties.push(countyName);
+        // Style the county polygon properly.
         event.target.style.fill = "var(--main)";
-        if (selectedCounties >= 3) {
+        if (numSelectedCounties >= 3) {
             event.target.style.stroke = "black";
-            selectedCounties = 0;
+            numSelectedCounties = 0;
         }
-        event.target.clicked = true;
         // For each selected attribute, display its respective value.
         for (let i = 0; i < selectedAttributes.length; i++) {
+            // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
             countyInfoString += `<p>` + selectedAttributes[i] + " ";
             for (let j = 45; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
@@ -232,24 +253,31 @@ function clickOnACountyHitbox (event) {
             }
             countyInfoString += countyCSVInfo[countyName][csvAttrName] + `</p>`;
         }
-        selectedCounties++;
-        updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
+        // Set the tab to display the right stuff.
+        numSelectedCounties++;
+        updateTabGUI(countyName, numSelectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
     }
     // Unselect county
     else {
+        selectedCounties.pop(countyName);
+        // If you're not shift-selecting an additional county, clear all county selections.
+        if (!shift) { selectedCounties = []; }
+        // Un-style the county properly.
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "3px";
-        event.target.clicked = false;
+        // Set the tab to display properly.
         tabHeader1.innerHTML = "Select a County";
         countyInfoString = "";
-        if (shift) { selectedCounties--; }
-        if (selectedCounties == 0) { countyName = "Select a County"; }
-        updateTabGUI(countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
+        if (shift) { numSelectedCounties--; }
+        if (numSelectedCounties == 0) { countyName = "Select a County"; }
+        updateTabGUI(countyName, numSelectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
 
     }
     event.target.style.opacity = 1.0;
-    console.log("Number of selected counties: " + selectedCounties);
+    console.log("Number of selected counties: " + numSelectedCounties);
+    console.log("Selected counties: " + selectedCounties);
 }
+
 
 // Handle searching for a county.
 function countySearch (event) {

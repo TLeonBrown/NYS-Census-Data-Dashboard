@@ -116,6 +116,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 /* LEFT BOX CONTAINER */
@@ -271,7 +272,6 @@
 
 .mouseTooltip {
   height: 20px;
-  fill: var(--background);
   stroke-linecap: "round";
   pointer-events: none;
   -webkit-filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
