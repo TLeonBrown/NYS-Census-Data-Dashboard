@@ -1,4 +1,4 @@
-// Store large data structures and other miscellaneous data.
+// Store large data structures and other miscellaneous information that does not change.
 
 var attributes = [
     "Population",
@@ -65,8 +65,6 @@ var attributesToCSV = {
     "Number of Firms": "All firms, 2012",
     "Number of Minority-Owned Firms": "Minority-owned firms, 2012",
 }
-
-var selectedAttributes = [];
 
 var polygonPosRegular = [
     [365, 325],

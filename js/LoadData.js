@@ -136,6 +136,4 @@ function loadAllCSVData () {
                 newYorkStateCSVInfo[data[i]["Fact"]] = data[i]["New York"];
             }
         });
-    // console.log(countyCSVInfo);
-    // console.log(newYorkStateCSVInfo);
 }

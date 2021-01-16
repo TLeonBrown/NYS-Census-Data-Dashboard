@@ -110,6 +110,7 @@
 
 #nyCountyImg {
   filter: hue-rotate(180deg);
+  user-select: none;
 }
 
 .svgMain {

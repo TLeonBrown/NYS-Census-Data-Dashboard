@@ -7,9 +7,6 @@ var svgMain;
 var numSelectedAttributes = 0;
 
 
-
-// Helper Functions ---------------------------------------------------------------------------
-
 // Take the average of a list of coordinates and subtract each value from the average.
 function coordsAverage (list) {
     // Find average.
@@ -29,6 +26,7 @@ function coordsAverage (list) {
     return newList;
 }
 
+
 // Draw a county polygon to the screen.
 function drawCountyPolygon (name, coords) {
     svgMain.append("polygon")
@@ -41,6 +39,7 @@ function drawCountyPolygon (name, coords) {
     .on("mouseout", function(d) { countyMouseOut(d); })
     .on("mousedown", function(d) { clickOnACountyHitbox(d); });
 }
+
 
 // Draw all of the county objects in the screen through the GeoJSON coordinates.
 function drawSelectableCountyObjects (data) {
@@ -91,9 +90,6 @@ function drawSelectableCountyObjects (data) {
 }
 
 
-
-// Main Functions ------------------------------------------------------------------------------
-
 // Instantiate SVG objects in the dashboard.
 function setupSVG () {
     svgLeft = d3.select(".svgLeft");
@@ -101,6 +97,7 @@ function setupSVG () {
     svgMain.on("mousemove", function(d) { updateTooltip(d); })
 
 }
+
 
 // Draw the scroll bar and other objects in the left-hand box.
 function drawLeftAttributeBox () {
@@ -124,6 +121,3 @@ function drawLeftAttributeBox () {
             .text(attributes[i]);
     }
 }
-
-
-// Render New York State data to the screen.

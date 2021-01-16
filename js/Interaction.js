@@ -2,6 +2,7 @@
 
 var zoomLevel = 1.0;
 var shift = false;
+var selectedAttributes = [];
 var numSelectedCounties = 0;
 var selectedCounties = [];
 var countyInfoString = "";
@@ -46,7 +47,6 @@ function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tab
             tabBody1.classList.add("active");
             break;
     }
-    return;
 }
 
 
@@ -74,19 +74,23 @@ function toggleStateOrCounty () {
 // Zoom the map image in by one.
 function zoomIn () {
     if (zoomLevel < 3) { zoomLevel *= 1.33; }
+    Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
+
 
 // Zoom the map image out by one.
 function zoomOut () {
     if (zoomLevel > 1) { zoomLevel /= 1.33; }
+    Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
 }
 
+
 // Toggle the selection status of objects in the left-hand box.
-function toggleAttributeSelection () {
+function toggleAttributeSelection (event) {
     // Clear all selected counties to avoid user confusion.
     clearSelections();
     var selectedBox = event.target;
@@ -109,12 +113,14 @@ function toggleAttributeSelection () {
     }
 }
 
+
 // Clear all selections.
 function clearSelections () {
     d3.selectAll(".mouseTooltip").remove();
     d3.selectAll(".mouseTooltipText").remove();
     d3.selectAll(".countyHitbox").style("opacity", 0.0);
     numSelectedCounties = 0;
+    selectedCounties = [];
     shift = false;
     // Reset Tabs
     let tabHeader1 = document.getElementById("tabHeader1");
@@ -137,6 +143,7 @@ function clearSelections () {
     countyInfoString = "";
 }
 
+
 // Draw county name tooltip that hovers by the mouse.
 function drawMouseTooltip (event) {
     svgMain = d3.select(".svgMain");
@@ -157,6 +164,7 @@ function drawMouseTooltip (event) {
         .attr("font-weight", "bold").attr("fill", "white")
 }
 
+
 // Update the hovering tooltip that stays near the mouse when it is above a county.
 function updateTooltip (event) {
     // let countyName = event.target.attributes.countyName.nodeValue;
@@ -176,6 +184,7 @@ function updateTooltip (event) {
         d3.select(".mouseTooltip").attr("fill", "var(--background)");
     }
 }
+
 
 // Handle mousing over a county hitbox.
 function countyMouseOver (event) {
@@ -238,7 +247,9 @@ function clickOnACountyHitbox (event) {
         if (!shift) { selectedCounties = []; }
         selectedCounties.push(countyName);
         // Style the county polygon properly.
-        event.target.style.fill = "var(--main)";
+        if (numSelectedCounties == 0) { event.target.style.fill = "var(--tab1)"; }
+        else if (numSelectedCounties == 1) { event.target.style.fill = "var(--tab2)"; }
+        else { event.target.style.fill = "var(--tab3)"; }
         if (numSelectedCounties >= 3) {
             event.target.style.stroke = "black";
             numSelectedCounties = 0;
@@ -274,8 +285,8 @@ function clickOnACountyHitbox (event) {
 
     }
     event.target.style.opacity = 1.0;
-    console.log("Number of selected counties: " + numSelectedCounties);
-    console.log("Selected counties: " + selectedCounties);
+    // console.log("Number of selected counties: " + numSelectedCounties);
+    // console.log("Selected counties: " + selectedCounties);
 }
 
 
