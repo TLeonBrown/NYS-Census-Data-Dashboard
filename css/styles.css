@@ -3,7 +3,6 @@
   --boxColor: #454e61; 
   --border: #888888;
   --buttonColor: #64b5f6;
-  --main: #218cde;
   --mainLight: #d3dede;
   --tab1: #218cde;
   --tab2: #4ea3e4;
@@ -139,7 +138,7 @@
 }
 
 .leftHoverBoxes:active, .leftHoverBoxesSelected, .leftHoverBoxesSelected:active {
-  fill: var(--main);
+  fill: var(--tab1);
 }
 
 .infoButton {
@@ -152,7 +151,7 @@
 }
 
 .infoButton:hover {
-  color: var(--main);
+  color: var(--tab1);
   cursor: pointer;
 }
 
@@ -252,7 +251,7 @@
 .countyInfoContainer {
   display: flex;
   justify-content: left;
-  width: 40%;
+  width: 30vw;
 }
 
 .mainCountySearchContainer {
@@ -263,14 +262,16 @@
   left: 0%;
 }
 
-#countyErrorText {
+.countyErrorTextContainer {
   font-size: 16px;
   color: var(--mainLight);
   text-align: left;
   margin-left: 1%;
   margin-top: 1.4%;
+  width: 300px;
 }
 
+/* MAIN MAP UI */
 .mouseTooltip {
   height: 20px;
   stroke-linecap: "round";
@@ -356,5 +357,5 @@
 
 /* Handle on hover */
 .scrollContainerLeft::-webkit-scrollbar-thumb:hover {
-  background: var(--main);
+  background: var(--tab1);
 } 

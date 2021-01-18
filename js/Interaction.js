@@ -55,13 +55,17 @@ function toggleStateOrCounty () {
     viewCounty = !viewCounty;
     // State View
     if (!viewCounty) {
-        clearSelections();
-        // For each selected attribute, display its respective value.
-        for (let i = 0; i < selectedAttributes.length; i++) {
-            let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoString += `<p>` + selectedAttributes[i] + ": " + countyCSVInfo[countyName][csvAttrName] + `</p>`;
-        }
+        // Grey out the NYS map & clear everything.
         document.getElementById("nyCountyImg").style.filter = "contrast(500%) drop-shadow(3px 3px 0px black) brightness(70%)";
+        clearSelections();
+        // De-Select all selected attributes.
+        let selectedAttributeElements = document.getElementsByClassName("leftHoverBoxesSelected")
+        for (let i = 0; i < selectedAttributeElements.length; i++) {
+            let index = selectedAttributeElements[i].className.baseVal.slice(-1);
+            selectedAttributeElements[i].className.baseVal = "leftHoverBoxes " + index;
+            selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(index)]), 1);
+            numSelectedAttributes--;
+        }
     }
     // County View
     else {
@@ -98,18 +102,33 @@ function toggleAttributeSelection (event) {
     var classValIndex = classVal.substring(classVal.indexOf(" "));
     // Deselect
     if (selectedBox.attributes.class.value.includes("leftHoverBoxesSelected")) {
-        selectedBox.attributes.class.value = "leftHoverBoxes " + classValIndex;
+        selectedBox.attributes.class.value = "leftHoverBoxes" + classValIndex;
         numSelectedAttributes--;
         selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(classValIndex)]), 1);
     }
     // Select
     else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
-        selectedBox.attributes.class.value = "leftHoverBoxesSelected " + classValIndex;
+        selectedBox.attributes.class.value = "leftHoverBoxesSelected" + classValIndex;
         numSelectedAttributes++;
         selectedAttributes.push(attributes[Number(classValIndex)]);
     }
     else if (numSelectedAttributes >= 16) {
         // Do something intuitive for when the user selects more than 16.
+    }
+    // If we're in state mode, immediately display the value.
+    if (!viewCounty) {
+        // For each selected attribute, display its respective value.
+        for (let i = 0; i < selectedAttributes.length; i++) {
+            // Build the string that displays the county's selected attribute.
+            let csvAttrName = attributesToCSV[selectedAttributes[i]];
+            countyInfoString += `<p>` + selectedAttributes[i] + " ";
+            for (let j = 45; j >= (selectedAttributes[i].length + newYorkStateCSVInfo[csvAttrName].toString().length); j--) {
+                countyInfoString += ". ";
+            }
+            countyInfoString += newYorkStateCSVInfo[csvAttrName] + `</p>`;
+        }
+        // Set the tab to display the right stuff.
+        updateTabGUI("New York State", 1, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
     }
 }
 
@@ -197,7 +216,7 @@ function countyMouseOver (event) {
         // If the county is selected, highlight it.
         if (selectedCounties.indexOf(countyName) == -1) {
             event.target.style.fill = "transparent";
-            event.target.style.strokeWidth = "3px";
+            event.target.style.strokeWidth = "6px";
             event.target.style.opacity = 1.0;
         }
         if (numSelectedCounties >= 3) {
@@ -275,7 +294,7 @@ function clickOnACountyHitbox (event) {
         if (!shift) { selectedCounties = []; }
         // Un-style the county properly.
         event.target.style.fill = "transparent";
-        event.target.style.strokeWidth = "3px";
+        event.target.style.strokeWidth = "6px";
         // Set the tab to display properly.
         tabHeader1.innerHTML = "Select a County";
         countyInfoString = "";
@@ -292,6 +311,11 @@ function clickOnACountyHitbox (event) {
 
 // Handle searching for a county.
 function countySearch (event) {
+    // If we're in state mode, do not allow search.
+    if (!viewCounty) {
+        document.getElementById("countyErrorText").innerHTML = "Cannot search in state mode.";
+        return;
+    }
     // Get the text in the search field.
     let searchText = document.getElementById("countySearchField").value;
     // Make sure we only search on enter press, or by clicking the search button.
