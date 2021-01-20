@@ -56,7 +56,7 @@ function toggleStateOrCounty () {
     // State View
     if (!viewCounty) {
         // Grey out the NYS map & clear everything.
-        document.getElementById("nyCountyImg").style.filter = "contrast(500%) drop-shadow(3px 3px 0px black) brightness(70%)";
+        document.getElementById("nyCountyImg").style.filter = "contrast(0%) drop-shadow(0px 0px 15px grey) brightness(100%)";
         clearSelections();
         // De-Select all selected attributes.
         let selectedAttributeElements = document.getElementsByClassName("leftHoverBoxesSelected")
@@ -69,7 +69,7 @@ function toggleStateOrCounty () {
     }
     // County View
     else {
-        document.getElementById("nyCountyImg").style.filter = "hue-rotate(180deg)";
+        document.getElementById("nyCountyImg").style.filter = "drop-shadow(0px 0px 15px var(--tab1))";
         clearSelections();
     }
 }
@@ -108,6 +108,8 @@ function toggleAttributeSelection (event) {
     }
     // Select
     else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
+        // Prevent user from registering a click on a divider.
+        if (attributes[Number(classValIndex)] === "------------------") { return; }
         selectedBox.attributes.class.value = "leftHoverBoxesSelected" + classValIndex;
         numSelectedAttributes++;
         selectedAttributes.push(attributes[Number(classValIndex)]);

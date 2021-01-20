@@ -103,21 +103,28 @@ function setupSVG () {
 function drawLeftAttributeBox () {
     // Left Scrolling Box
     svgLeft.append("rect")
-        .attr("fill", "#455a6e")
+        .attr("fill", "#202327")
         .attr("x", 0).attr("y", 0)
-        .attr("width", 325).attr("height", 1500);
+        .attr("width", 325).attr("height", 500);
     // Click-Boxes Within Scrolling Box
     for (var i = 0; i < attributes.length; i++) {
-        // Draw Highlighting Rect
-        svgLeft.append("rect")
-            .attr("class", "leftHoverBoxes " + i)
-            .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
-            .attr("width", "29.5vmin").attr("height", 30)
-            .on("click", toggleAttributeSelection);
-        // Draw Text
-        svgLeft.append("text")
-            .attr("class", "leftText")
-            .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
-            .text(attributes[i]);
+        // Handle dividers.
+        if (attributes[i] === "------------------") {
+            svgLeft.append("rect")
+            .attr("class", "leftDivider")
+        }
+        else {
+            // Draw Highlighting Rect
+            svgLeft.append("rect")
+                .attr("class", "leftHoverBoxes " + i)
+                .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
+                .attr("width", "29.5vmin").attr("height", 30)
+                .on("click", toggleAttributeSelection);
+            // Draw Text
+            svgLeft.append("text")
+                .attr("class", "leftText")
+                .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
+                .text(attributes[i]);
+        }
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="UTF-8">
 
-<title>Census Data Dashboard - Home</title>
+<title>NY County Dashboard - Home</title>
 
 <head>
   <!-- D3 Functionality -->
@@ -24,19 +24,30 @@
 
 <body class="background">
     <!-- Top Left Text -->
-    <div class="topLeftText">Select Up to 16&nbsp;<i class="plus icon"></i></div>
+    <div class="topLeftAttributeFilter">
+      
+    </div>
     <!-- Left Box -->
-    <div class="border leftBox"></div>
-    <div class="scrollContainerLeft">
-      <svg class="svgLeft"></svg>
+    <div class="leftBox">
+      <div class="ui divider leftSmallDivider dividerTop1"></div>
+      <div class="ui divider leftDivider dividerTop2"></div>
+      <div class="scrollContainerLeft">
+        <svg class="svgLeft"></svg>
+      </div>
+      <div class="ui divider leftDivider dividerBottom1"></div>
+      <div class="ui divider leftSmallDivider dividerBottom2"></div>
     </div>
     <a class="infoButton" href="/info"><i class="info circle icon"></i></a>
+
     <!-- Main Box -->
+    <div class="border topTitle">
+      <p>NYS Counties - Census Data Dashboard</p>
+    </div>
     <div class="border mainBox" >
 
       <!-- New York Map -->
       <div id="nyCountyBox">
-        <img id="nyCountyImg" src="img/NY county map original.svg"></img>
+        <img id="nyCountyImg" src="img/NYS County Map.svg"></img>
         <svg id="svgMain" class="svgMain"></svg>
       </div>
 
@@ -54,6 +65,7 @@
               <p id="countyErrorText"></p>
             </div>
           </div>
+
         <!-- State/County Toggle -->
         <div class="stateCountyToggle">
           <div class="stateView">State View</div>
@@ -85,21 +97,9 @@
         <a id="tabHeader2" class="tabHeader item" data-tab="second" style="display: none">Second</a>
         <a id="tabHeader3" class="tabHeader item" data-tab="third" style="display: none">Third</a>
       </div>
-      <div id="tabBody1" class="tabBody ui bottom attached tab segment active" data-tab="first">
-
-      </div>
-
-      <div id="tabBody2" class="tabBody ui bottom attached tab segment" data-tab="second">
-
-      </div>
-
-      <div id="tabBody3" class="tabBody ui bottom attached tab segment" data-tab="third">
-
-      </div>
-      <div id="countyDisplayTextInfoLeft"></div>
-      <div id="countyDisplayTextInfoRight"></div>
-      <!-- <div class="countyDataRows"> -->
-      <!-- </div> -->
+      <div id="tabBody1" class="tabBody ui bottom attached tab segment active" data-tab="first"></div>
+      <div id="tabBody2" class="tabBody ui bottom attached tab segment" data-tab="second"> </div>
+      <div id="tabBody3" class="tabBody ui bottom attached tab segment" data-tab="third"></div>
     </div>
 </body>
 
