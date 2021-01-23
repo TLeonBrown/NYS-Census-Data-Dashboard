@@ -60,10 +60,15 @@
   text-align: center;
   color: white;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   background-color: var(--background);
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+}
+
+.personalLink {
+  color: var(--mainLight);
 }
 
 .rightBox {
@@ -131,7 +136,7 @@
 
 .svgLeft {
   width: 100%;
-  height: 137%;
+  height: 141%;
 }
 
 .leftText, .leftCategoryDividerText {
@@ -292,17 +297,26 @@
 /* STATE/COUNTY TOGGLE */
 .svgNYSContainer {
   position: absolute;
-  align-items: center;
-  width: 9vw;
-  height: 3vw;
-  top: 23%;
-  left: 23%;
-  background-color: white;
+  width: 12.5%;
+  height: 6.5%;
+  left: 25%;
+  top: 25%;
+  border: 1px solid var(--background);
+  filter: drop-shadow(0px 0px 15px var(--tab1));
 }
 
 .svgNYS {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  z-index: 36;
+  background-color: white;
+}
+
+.viewEntireStateText {
+  user-select: none;
+  pointer-events: none;
+  font-weight: bold;
 }
 
 .mainBoxUITop {

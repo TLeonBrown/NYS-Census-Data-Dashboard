@@ -55,6 +55,8 @@ function zoomIn () {
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
+    // document.getElementById("svgNYS").style.transform = "translate(" + (-60 * zoomLevel) + "px, " + (-60 * zoomLevel) + "px";
+    console.log(zoomLevel)
 }
 
 
@@ -64,6 +66,9 @@ function zoomOut () {
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
+    // document.getElementById("svgNYS").style.transform = "translate(" + (60 * zoomLevel) + "px, " + (60 * zoomLevel) + "px";
+    console.log(zoomLevel)
+
 }
 
 
@@ -126,28 +131,33 @@ function clearSelections () {
 
 // Draw county name tooltip that hovers by the mouse.
 function drawMouseTooltip (event) {
+    // Get the name of the county we're hovering over.
+    let countyName = event.target.attributes.countyName.nodeValue;
+    if (countyName === "New York State") { return; }
     svgMain = d3.select(".svgMain");
     // Get mouse position.
     mouseX = d3.pointer(event)[0];
     mouseY = d3.pointer(event)[1];
-    // Get the name of the county we're hovering over.
-    let countyName = event.target.attributes.countyName.nodeValue;
     // Generate the tooltip box.
     svgMain.append("rect")
         .attr("class", "mouseTooltip")
         .attr("x", mouseX + 10).attr("y", mouseY - 10)
-        .attr("width", countyName.length * 10)
+        .attr("width", countyName.length * 10);
     svgMain.append("text")
         .text(countyName)
         .attr("class", "mouseTooltipText")
         .attr("x", mouseX + 13).attr("y", mouseY + 3)
-        .attr("font-weight", "bold").attr("fill", "white")
+        .attr("font-weight", "bold").attr("fill", "white");
 }
 
 
 // Update the hovering tooltip that stays near the mouse when it is above a county.
 function updateTooltip (event) {
-    // let countyName = event.target.attributes.countyName.nodeValue;
+    // Get the county's name, if possible.
+    let countyName = undefined;
+    if (event.target.attributes.countyName === undefined) { return; }
+    else { countyName = event.target.attributes.countyName.nodeValue; }
+    // Update tooltip position.
     if (event.target.tagName == "polygon") {
         // Get mouse coordinates.
         mouseX = Math.round(d3.pointer(event)[0]);
@@ -155,13 +165,18 @@ function updateTooltip (event) {
         // Update the tooltip position.
         d3.select(".mouseTooltip").attr("x", mouseX + 10).attr("y", mouseY - 10);
         d3.select(".mouseTooltipText").attr("x", mouseX + 13).attr("y", mouseY + 3);
+
     } 
     // Make tooltip a lighter grey if you cannot select the county.
-    if (shift && numSelectedCounties >= 3 && selectedCounties.indexOf(d3.select(".mouseTooltipText").text()) == -1) {
+    if (shift && numSelectedCounties >= 3 && selectedCounties.indexOf(countyName) == -1) {
+        // Make county outline grey if it cannot be selected.
+        if (selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
         d3.select(".mouseTooltip").attr("fill", "grey");
     }
     else {
+        // Keep tooltip & county color normal if you can select it.
         d3.select(".mouseTooltip").attr("fill", "var(--background)");
+        event.target.style.stroke = "black";
     }
 }
 
@@ -178,10 +193,6 @@ function countyMouseOver (event) {
         event.target.style.fill = "transparent";
         event.target.style.strokeWidth = "6px";
         event.target.style.opacity = 1.0;
-    }
-    if (numSelectedCounties >= 3) {
-        if (shift && selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
-        else { event.target.style.stroke = "black"; }
     }
 }
 

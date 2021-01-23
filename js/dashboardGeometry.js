@@ -40,17 +40,21 @@ function drawCountyPolygon (name, coords) {
         .on("mouseout", function(d) { countyMouseOut(d); })
         .on("mousedown", function(d) { clickOnACountyHitbox(d); });
 }
-
 function drawNYSRect () {
     svgNYS.append("polygon")
         .attr("countyName", "New York State")
         .attr("class", "countyHitbox")
-        .attr("points", "3,3, 170,3, 170,60, 3,60")
+        .attr("points", "3,3, 127,3, 127,45, 3,45")
         .attr("opacity", 0.0)
         .attr("stroke", "black")
         .on("mouseover", function(d) { countyMouseOver(d); })
         .on("mouseout", function(d) { countyMouseOut(d); })
         .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+    svgNYS.append("text")
+        .attr("class", "viewEntireStateText")
+        .text("View Entire State")
+        .attr("x", "10px").attr("y", "27px")
+        .attr("pointerEvents", "none")
 }
 
 

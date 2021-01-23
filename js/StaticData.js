@@ -17,7 +17,7 @@ var attributes = [
     "% of Pop. Under 5",
     "% of Pop. Under 18",
     "% of Pop. 65 And Over",
-    "!SOCIO-ECONOMIC FACTORS",
+    "!SOCIOECONOMIC FACTORS",
     "Number of Households",
     "Persons per Household",
     "Median Household Income",
