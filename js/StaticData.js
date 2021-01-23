@@ -1,10 +1,11 @@
 // Store large data structures and other miscellaneous information that does not change.
 
 var attributes = [
-    "Population",
+    "!POPULATION STATISTICS",
+    "Total Population",
     "Population % Change (10 yrs)",
     "Population per Square Mile",
-    "------------------",
+    "!DEMOGRAPHICS",
     "% Female",
     "% American Indian",
     "% Asian American",
@@ -16,7 +17,7 @@ var attributes = [
     "% of Pop. Under 5",
     "% of Pop. Under 18",
     "% of Pop. 65 And Over",
-    "------------------",
+    "!SOCIO-ECONOMIC FACTORS",
     "Number of Households",
     "Persons per Household",
     "Median Household Income",
@@ -28,7 +29,7 @@ var attributes = [
     "Total Empl. % Change (1 year)",
     "Number of Firms",
     "Number of Minority-Owned Firms",
-    "------------------",
+    "!MISCELLANEOUS",
     "Average Commute Time",
     "Land Area (sq. mi.)",
     "Number of Veterans",
@@ -37,7 +38,7 @@ var attributes = [
 ];
 
 var attributesToCSV = {
-    "Population": "Population estimates, July 1, 2019,  (V2019)",
+    "Total Population": "Population estimates, July 1, 2019,  (V2019)",
     "Population % Change (10 yrs)": "Population, percent change - April 1, 2010 (estimates base) to July 1, 2019,  (V2019)",
     "Population per Square Mile": "Population per square mile, 2010",
     "Land Area (sq. mi.)": "Land area in square miles, 2010",
@@ -57,7 +58,7 @@ var attributesToCSV = {
     "Persons per Household": "Persons per household, 2014-2018",
     "Average Commute Time": "Mean travel time to work (minutes), workers age 16 years+, 2014-2018",
     "Median Household Income": "Median household income (in 2018 dollars), 2014-2018",
-    "Per Capita Income": "Per capita income in past 12 months (in 2018 dollars), 2014-2018",
+    "Income Per Capita": "Per capita income in past 12 months (in 2018 dollars), 2014-2018",
     "% In Poverty": "Persons in poverty, percent",
     "% With a Disability Under 65": "With a disability, under age 65 years, percent, 2014-2018",
     "Total Employment": "Total employment, 2018",

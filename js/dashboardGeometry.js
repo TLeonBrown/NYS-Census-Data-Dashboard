@@ -103,15 +103,19 @@ function setupSVG () {
 function drawLeftAttributeBox () {
     // Left Scrolling Box
     svgLeft.append("rect")
-        .attr("fill", "#202327")
+        .attr("fill", "var(--background)")
         .attr("x", 0).attr("y", 0)
         .attr("width", 325).attr("height", 500);
     // Click-Boxes Within Scrolling Box
     for (var i = 0; i < attributes.length; i++) {
         // Handle dividers.
-        if (attributes[i] === "------------------") {
+        if (attributes[i][0] === "!") {
             svgLeft.append("rect")
-            .attr("class", "leftDivider")
+                .attr("class", "leftCategoryDivider")
+            svgLeft.append("text")
+                .attr("class", "leftCategoryDividerText")
+                .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
+                .text(attributes[i].substring(1));
         }
         else {
             // Draw Highlighting Rect

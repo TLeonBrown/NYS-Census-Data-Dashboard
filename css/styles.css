@@ -1,3 +1,4 @@
+/* GENERAL STUFF */
 :root{
   --background: #202327; 
   --boxColor: #454e61; 
@@ -20,6 +21,9 @@
   filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
 }
 
+
+
+/* BOX LAYOUTS */
 .leftBox {
   left: 0.5%;
   top: 4.1%;
@@ -27,7 +31,7 @@
   height: 90%;
 }
 
-.topTitle {
+.topBox {
   left: 17.4%;
   top: 2%;
   width: 54.8%;
@@ -48,6 +52,20 @@
   height: 80%;
 }
 
+.bottomBox {
+  left: 17.4%;
+  top: 90.75%;
+  width: 54.8%;
+  height: 5.5%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  background-color: var(--background);
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .rightBox {
   position: absolute;
   background-image: none;
@@ -58,6 +76,9 @@
   height: 85%;
 }
 
+
+
+/* TAB LAYOUTS */
 .tabContainer {
   border-width: 0px !important;
 }
@@ -94,6 +115,9 @@
   color: black !important;
 }
 
+
+
+/* LEFT BOX */
 .scrollContainerLeft {
   position: absolute;
   left: 0.6%;
@@ -110,31 +134,8 @@
   height: 137%;
 }
 
-#nyCountyBox {
-  background-color: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-#nyCountyImg {
-  filter: drop-shadow(0px 0px 15px var(--tab1));
-  user-select: none;
-}
-
-.svgMain {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* LEFT BOX CONTAINER */
-.leftText {
-  fill: black;
+.leftText, .leftCategoryDividerText {
+  fill: var(--background);
   text-anchor: middle;
   font-size: 18px;
   cursor: default;
@@ -142,22 +143,22 @@
   pointer-events: none;
 }
 
-.leftDivider {
-  fill: var(--boxColor);
+.leftCategoryDivider { fill: var(--border); }
+
+.leftCategoryDividerText {
+  fill: var(--mainLight);
+  font-weight: bold;
 }
 
-.leftHoverBoxes {
-  fill: #dddddd;
-}
+.leftHoverBoxes { fill: var(--mainLight); }
 
-.leftHoverBoxes:hover {
-  fill: var(--buttonColor);
-}
+.leftHoverBoxes:hover { fill: var(--buttonColor); }
 
-.leftHoverBoxes:active, .leftHoverBoxesSelected, .leftHoverBoxesSelected:active {
-  fill: var(--tab1);
-}
+.leftHoverBoxes:active, .leftHoverBoxesSelected, .leftHoverBoxesSelected:active { fill: var(--tab1); }
 
+
+
+/* INFO BUTTON */
 .infoButton {
   user-select: none;
   color: var(--mainLight);
@@ -177,6 +178,9 @@
   cursor: pointer;
 }
 
+
+
+/* TOP LEFT ATTRIBUTE FILTER */
 .topLeftAttributeFilter {
   color: white;
   position: absolute;
@@ -191,6 +195,8 @@
   align-items: center;
 }
 
+
+/* LEFT BOX DIVIDER STYLINGS */
 .leftDivider, .leftSmallDivider {
   position: absolute;
   border-radius: 10px;
@@ -229,6 +235,8 @@
   left: 4.575%;
 }
 
+
+
 /* MAIN BOX UI */
 .mainBoxUI {
   height: 100%;
@@ -237,6 +245,30 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+#nyCountyBox {
+  background-color: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+#nyCountyImg {
+  filter: drop-shadow(0px 0px 15px var(--tab1));
+  user-select: none;
+}
+
+.svgMain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
 
 /* ZOOM BUTTONS */
 .zoomButtons {
@@ -254,6 +286,8 @@
   -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
   filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
 }
+
+
 
 /* STATE/COUNTY TOGGLE */
 .stateCountyToggle {
@@ -290,6 +324,7 @@
 }
 
 
+
 /* CLEAR SELECTION BUTTON */
 .clearSelectionButton {
   text-align: center;
@@ -301,6 +336,8 @@
   -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
   filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
 }
+
+
 
 /* COUNTY SEARCH BAR */
 .countyInfoContainer {
@@ -326,6 +363,8 @@
   width: 300px;
 }
 
+
+
 /* MAIN MAP UI */
 .mouseTooltip {
   height: 20px;
@@ -335,17 +374,11 @@
   filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
 }
 
-.mouseTooltipText {
-  user-select: none;
-}
+.mouseTooltipText { user-select: none; }
 
-.countyDataRows {
-  display: flex;
-}
+.countyDataRows { display: flex; }
 
-#countyDisplayTextTitle, #countyDisplayTextInfoLeft, #countyDisplayTextInfoRight {
-  user-select: none;
-}
+#countyDisplayTextTitle, #countyDisplayTextInfoLeft, #countyDisplayTextInfoRight { user-select: none; }
 
 #countyDisplayTextTitle {
   font-size: 18px;
@@ -355,13 +388,9 @@
   margin-bottom: 0%;
 }
 
-#countyTabTitle1, #countyTabTitle2, #countyTabTitle3 {
-  font-size: 14px;
-}
+#countyTabTitle1, #countyTabTitle2, #countyTabTitle3 { font-size: 14px; }
 
-#countyDisplayTextInfoLeft, #countyDisplayTextInfoRight {
-  font-size: 18px;
-}
+#countyDisplayTextInfoLeft, #countyDisplayTextInfoRight { font-size: 18px; }
 
 #countyDisplayTextInfoLeft {
   width: 65%;
@@ -377,20 +406,22 @@
   margin-bottom: -1%;
 }
 
+
+
 /* INFO SCREEN */
 .infoText {
   color: var(--mainLight);
   margin-left: 2%;
 }
 
-.downloadFilesLink:hover {
-  cursor: pointer;
-}
+.downloadFilesLink:hover { cursor: pointer; }
 
 .homeButtonInfo {
   position: absolute;
   top: 90%;
 }
+
+
 
 /* SCROLL BARS */
  /* width */
