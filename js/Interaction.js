@@ -6,7 +6,6 @@ var selectedAttributes = [];
 var numSelectedCounties = 0;
 var selectedCounties = [];
 var countyInfoString = "";
-var viewCounty = true;
 
 
 function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
@@ -46,31 +45,6 @@ function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tab
             tabHeader1.classList.add("active");
             tabBody1.classList.add("active");
             break;
-    }
-}
-
-
-// Toggle between State View and County View.
-function toggleStateOrCounty () {
-    viewCounty = !viewCounty;
-    // State View
-    if (!viewCounty) {
-        // Grey out the NYS map & clear everything.
-        document.getElementById("nyCountyImg").style.filter = "contrast(0%) drop-shadow(0px 0px 15px grey) brightness(100%)";
-        clearSelections();
-        // De-Select all selected attributes.
-        let selectedAttributeElements = document.getElementsByClassName("leftHoverBoxesSelected")
-        for (let i = 0; i < selectedAttributeElements.length; i++) {
-            let index = selectedAttributeElements[i].className.baseVal.slice(-1);
-            selectedAttributeElements[i].className.baseVal = "leftHoverBoxes " + index;
-            selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(index)]), 1);
-            numSelectedAttributes--;
-        }
-    }
-    // County View
-    else {
-        document.getElementById("nyCountyImg").style.filter = "drop-shadow(0px 0px 15px var(--tab1))";
-        clearSelections();
     }
 }
 
@@ -116,21 +90,6 @@ function toggleAttributeSelection (event) {
     }
     else if (numSelectedAttributes >= 16) {
         // Do something intuitive for when the user selects more than 16.
-    }
-    // If we're in state mode, immediately display the value.
-    if (!viewCounty) {
-        // For each selected attribute, display its respective value.
-        for (let i = 0; i < selectedAttributes.length; i++) {
-            // Build the string that displays the county's selected attribute.
-            let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoString += `<p>` + selectedAttributes[i] + " ";
-            for (let j = 45; j >= (selectedAttributes[i].length + newYorkStateCSVInfo[csvAttrName].toString().length); j--) {
-                countyInfoString += ". ";
-            }
-            countyInfoString += newYorkStateCSVInfo[csvAttrName] + `</p>`;
-        }
-        // Set the tab to display the right stuff.
-        updateTabGUI("New York State", 1, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString);
     }
 }
 
@@ -211,20 +170,18 @@ function updateTooltip (event) {
 function countyMouseOver (event) {
     let countyName = event.target.attributes.countyName.nodeValue;
     event.target.style.stroke = "black";
-    if (viewCounty) {
-        d3.selectAll(".mouseTooltip").remove();
-        d3.selectAll(".mouseTooltipText").remove();
-        drawMouseTooltip(event);
-        // If the county is selected, highlight it.
-        if (selectedCounties.indexOf(countyName) == -1) {
-            event.target.style.fill = "transparent";
-            event.target.style.strokeWidth = "6px";
-            event.target.style.opacity = 1.0;
-        }
-        if (numSelectedCounties >= 3) {
-            if (shift && selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
-            else { event.target.style.stroke = "black"; }
-        }
+    d3.selectAll(".mouseTooltip").remove();
+    d3.selectAll(".mouseTooltipText").remove();
+    drawMouseTooltip(event);
+    // If the county is selected, highlight it.
+    if (selectedCounties.indexOf(countyName) == -1) {
+        event.target.style.fill = "transparent";
+        event.target.style.strokeWidth = "6px";
+        event.target.style.opacity = 1.0;
+    }
+    if (numSelectedCounties >= 3) {
+        if (shift && selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
+        else { event.target.style.stroke = "black"; }
     }
 }
 
@@ -265,7 +222,9 @@ function clickOnACountyHitbox (event) {
     // Select county
     if (selectedCounties.indexOf(countyName) == -1) {
         // If you're not shift-selecting an additional county, erase and re-add the singular selected county.
-        if (!shift) { selectedCounties = []; }
+        if (!shift) { 
+            selectedCounties = [];
+        }
         selectedCounties.push(countyName);
         // Style the county polygon properly.
         if (numSelectedCounties == 0) { event.target.style.fill = "var(--tab1)"; }
@@ -313,11 +272,6 @@ function clickOnACountyHitbox (event) {
 
 // Handle searching for a county.
 function countySearch (event) {
-    // If we're in state mode, do not allow search.
-    if (!viewCounty) {
-        document.getElementById("countyErrorText").innerHTML = "Cannot search in state mode.";
-        return;
-    }
     // Get the text in the search field.
     let searchText = document.getElementById("countySearchField").value;
     // Make sure we only search on enter press, or by clicking the search button.

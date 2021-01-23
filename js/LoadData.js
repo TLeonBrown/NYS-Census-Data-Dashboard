@@ -129,11 +129,11 @@ function loadAllCSVData () {
                 countyCSVInfo["Yates"][data[i]["Fact"]] = data[i]["Yates County, New York"];
             }
         });
-    // State CSV Data.
+    // CSV data for New York State.
     d3.csv("./data/csv/New-York-State.csv")
         .then(function(data) {
             for (let i = 0; i < NUM_USEFUL_CSV_ROWS; i++) {
-                newYorkStateCSVInfo[data[i]["Fact"]] = data[i]["New York"];
+                countyCSVInfo["New York State"][data[i]["Fact"]] = data[i]["New York"];
             }
         });
 }

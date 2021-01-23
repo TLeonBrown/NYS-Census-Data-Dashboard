@@ -149,7 +149,5 @@ var countyCSVInfo = {
 	'Richmond': {}, 'Rockland': {}, 'Saratoga': {}, 'Schenectady': {}, 'Schoharie': {}, 'Schuyler': {},
 	'Seneca': {}, 'St. Lawrence': {}, 'Steuben': {}, 'Suffolk': {}, 'Sullivan': {}, 'Tioga': {},
 	'Tompkins': {}, 'Ulster': {}, 'Warren': {}, 'Washington': {}, 'Wayne': {}, 'Westchester': {},
-	'Wyoming': {}, 'Yates': {}
+	'Wyoming': {}, 'Yates': {}, 'New York State': {}
 };
-
-var newYorkStateCSVInfo = {}

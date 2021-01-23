@@ -290,21 +290,19 @@
 
 
 /* STATE/COUNTY TOGGLE */
-.stateCountyToggle {
-  margin-top: 1%;
-  margin-left: -1.5%;
-  margin-bottom: 2%;
-  display: flex;
+.svgNYSContainer {
+  position: absolute;
   align-items: center;
-  justify-content: center;
-  width: 25%;
-  padding: 1%;
-  font-weight: bold;
+  width: 9vw;
+  height: 3vw;
+  top: 23%;
+  left: 23%;
+  background-color: white;
 }
 
-.stateView {
-  margin-top: -1%;
-  margin-right: 6%;
+.svgNYS {
+  overflow: hidden;
+  z-index: 36;
 }
 
 .mainBoxUITop {

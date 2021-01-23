@@ -4,6 +4,7 @@ ATTR_TEXT_SPACING = 35;
 
 var svgLeft;
 var svgMain;
+var svgNYS;
 var numSelectedAttributes = 0;
 
 
@@ -30,14 +31,26 @@ function coordsAverage (list) {
 // Draw a county polygon to the screen.
 function drawCountyPolygon (name, coords) {
     svgMain.append("polygon")
-    .attr("countyName", name)
-    .attr("class", "countyHitbox")
-    .attr("points", coords)
-    .attr("opacity", 0.0)
-    .attr("stroke", "black")
-    .on("mouseover", function(d) { countyMouseOver(d); })
-    .on("mouseout", function(d) { countyMouseOut(d); })
-    .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+        .attr("countyName", name)
+        .attr("class", "countyHitbox")
+        .attr("points", coords)
+        .attr("opacity", 0.0)
+        .attr("stroke", "black")
+        .on("mouseover", function(d) { countyMouseOver(d); })
+        .on("mouseout", function(d) { countyMouseOut(d); })
+        .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+}
+
+function drawNYSRect () {
+    svgNYS.append("polygon")
+        .attr("countyName", "New York State")
+        .attr("class", "countyHitbox")
+        .attr("points", "3,3, 170,3, 170,60, 3,60")
+        .attr("opacity", 0.0)
+        .attr("stroke", "black")
+        .on("mouseover", function(d) { countyMouseOver(d); })
+        .on("mouseout", function(d) { countyMouseOut(d); })
+        .on("mousedown", function(d) { clickOnACountyHitbox(d); });
 }
 
 
@@ -87,6 +100,7 @@ function drawSelectableCountyObjects (data) {
         // Draw the object on screen.
         drawCountyPolygon(weirdCounties[i].properties.NAME, countyCoordsStr);   
     }
+    drawNYSRect();
 }
 
 
@@ -95,6 +109,8 @@ function setupSVG () {
     svgLeft = d3.select(".svgLeft");
     svgMain = d3.select(".svgMain");
     svgMain.on("mousemove", function(d) { updateTooltip(d); })
+    svgNYS = d3.select(".svgNYS");
+    svgNYS.on("mousemove", function(d) { updateTooltip(d); })
 
 }
 
