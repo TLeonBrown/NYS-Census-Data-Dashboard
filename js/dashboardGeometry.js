@@ -52,8 +52,8 @@ function drawNYSRect () {
         .on("mousedown", function(d) { clickOnACountyHitbox(d); });
     svgNYS.append("text")
         .attr("class", "viewEntireStateText")
-        .text("View Entire State")
-        .attr("x", "10px").attr("y", "27px")
+        .text("New York State")
+        .attr("x", "17px").attr("y", "28px")
         .attr("pointerEvents", "none")
 }
 

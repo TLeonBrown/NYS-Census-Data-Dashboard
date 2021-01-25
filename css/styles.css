@@ -109,7 +109,7 @@
   margin-top: 3%;
 }
 
-#tabHeader1, #tabBody1 { background-color: var(--tab1) !important; color: white !important; }
+#tabHeader1, #tabBody1 { background-color: var(--tab1) !important; }
 
 #tabHeader2, #tabBody2 { background-color: var(--tab2) !important; }
 

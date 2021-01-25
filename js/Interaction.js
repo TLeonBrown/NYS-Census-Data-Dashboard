@@ -249,7 +249,12 @@ function clickOnACountyHitbox (event) {
         for (let i = 0; i < selectedAttributes.length; i++) {
             // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            countyInfoString += `<p>` + selectedAttributes[i] + " ";
+            if (i % 2 == 0) {
+                countyInfoString += `<p style="color: white;">` + selectedAttributes[i] + " ";
+            }
+            else {
+                countyInfoString += `<p style="color: black;">` + selectedAttributes[i] + " ";
+            }
             for (let j = 45; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
                 countyInfoString += ". ";
             }
