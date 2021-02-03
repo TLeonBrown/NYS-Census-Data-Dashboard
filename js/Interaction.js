@@ -8,8 +8,8 @@ var selectedCounties = [];
 var countyInfoString = "";
 
 
-function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
-    switch (selectedCounties) {
+function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
+    switch (numSelectedCounties) {
         case 2:
             // Show Data
             tabHeader2.innerHTML = countyName;
@@ -27,6 +27,8 @@ function updateTabGUI (countyName, selectedCounties, tabHeader1, tabHeader2, tab
             tabHeader3.style.display = "block";
             tabBody3.innerHTML = countyInfoString;
             // Set Tab 2 to Active
+            tabHeader1.classList.remove("active");
+            tabBody1.classList.remove("active");
             tabHeader2.classList.remove("active");
             tabBody2.classList.remove("active");
             tabHeader3.classList.add("active");
@@ -293,7 +295,6 @@ function clickOnACountyHitbox (event) {
 
 // Handle searching for a county.
 function countySearch (event) {
-
     // Get the text in the search field.
     let searchText = document.getElementById("countySearchField").value;
     // Make sure we only search on enter press, or by clicking the search button.
@@ -325,6 +326,12 @@ function countySearch (event) {
 
 // Clear the search field.
 function clearCountySearchText () {
+    let counties = d3.selectAll(".countyHitbox")._groups[0];
+    // Clear any previous selections.
+    for (let i = 0; i < counties.length; i++) {
+        counties[i].style.fill = "transparent";
+    }
+    // Clear search field.
     document.getElementById("countySearchField").value = "";
 }
 
