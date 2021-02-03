@@ -258,7 +258,12 @@ function clickOnACountyHitbox (event) {
             for (let j = 45; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
                 countyInfoString += ". ";
             }
-            countyInfoString += countyCSVInfo[countyName][csvAttrName] + `</p>`;
+            if (countyCSVInfo[countyName][csvAttrName] === "Z") {
+                countyInfoString += "?" + `</p>`;
+            }
+            else {
+                countyInfoString += countyCSVInfo[countyName][csvAttrName] + `</p>`;
+            }
         }
         // Set the tab to display the right stuff.
         numSelectedCounties++;
@@ -302,10 +307,8 @@ function countySearch (event) {
         for (let i = 0; i < counties.length; i++) {
             // Case 1: Text matches a county name.
             if (searchText.toUpperCase() == counties[i].attributes[0].value.toUpperCase()) {
-                d3.selectAll(".countyHitbox").style("opacity", 0.0);
                 counties[i].style.fill = "red";
                 counties[i].style.strokeWidth = "0px";
-                counties[i].clicked = true;
                 counties[i].style.opacity = 1.0;
                 document.getElementById("countyErrorText").innerHTML = "";
                 return;
@@ -313,7 +316,6 @@ function countySearch (event) {
         }  
         // Case 2: Text does not match any county names.
         document.getElementById("countyErrorText").innerHTML = "Invalid county name.";
-        d3.selectAll(".countyHitbox").style("opacity", 0.0);
         return;
     }
 }
