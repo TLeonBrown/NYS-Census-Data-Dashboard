@@ -355,24 +355,13 @@
 .countyInfoContainer {
   display: flex;
   justify-content: left;
-  width: 30vw;
+  align-items: center;
+  width: 31vw;
+  user-select: none;
 }
 
-.mainCountySearchContainer {
-  color: var(--mainLight);
-  width: 25%;
-  padding-left: 1%;
-  padding-right: 1%;
-  left: 0%;
-}
-
-.countyErrorTextContainer {
-  font-size: 16px;
-  color: var(--mainLight);
-  text-align: left;
-  margin-left: 1%;
-  margin-top: 1.4%;
-  width: 300px;
+.countySearchContainer {
+  margin-right: 2%;
 }
 
 

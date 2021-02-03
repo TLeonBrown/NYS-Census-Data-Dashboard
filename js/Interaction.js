@@ -293,6 +293,7 @@ function clickOnACountyHitbox (event) {
 
 // Handle searching for a county.
 function countySearch (event) {
+
     // Get the text in the search field.
     let searchText = document.getElementById("countySearchField").value;
     // Make sure we only search on enter press, or by clicking the search button.
@@ -304,18 +305,33 @@ function countySearch (event) {
         }
         // Search through each county object and look for matching names.
         let counties = d3.selectAll(".countyHitbox")._groups[0];
+        // Clear any previous selections.
+        for (let i = 0; i < counties.length; i++) {
+            counties[i].style.fill = "transparent";
+        }
         for (let i = 0; i < counties.length; i++) {
             // Case 1: Text matches a county name.
             if (searchText.toUpperCase() == counties[i].attributes[0].value.toUpperCase()) {
                 counties[i].style.fill = "red";
                 counties[i].style.strokeWidth = "0px";
                 counties[i].style.opacity = 1.0;
-                document.getElementById("countyErrorText").innerHTML = "";
                 return;
             }
         }  
-        // Case 2: Text does not match any county names.
-        document.getElementById("countyErrorText").innerHTML = "Invalid county name.";
         return;
+    }
+}
+
+
+// Clear the search field.
+function clearCountySearchText () {
+    document.getElementById("countySearchField").value = "";
+}
+
+
+// Format the county search results to be in the proper dictionary format.
+function formatCountySearchResults () {
+    for (let i = 0; i < Object.keys(countyCSVInfo).length; i++) {
+        searchResultCountyNames.push({"title": Object.keys(countyCSVInfo)[i]});
     }
 }

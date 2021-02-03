@@ -151,3 +151,5 @@ var countyCSVInfo = {
 	'Tompkins': {}, 'Ulster': {}, 'Warren': {}, 'Washington': {}, 'Wayne': {}, 'Westchester': {},
 	'Wyoming': {}, 'Yates': {}, 'New York State': {}
 };
+
+var searchResultCountyNames = [];

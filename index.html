@@ -46,14 +46,20 @@
         <div class="mainBoxUITop">
           <!-- Search Bar -->
           <div class="countyInfoContainer">
-            <div class="ui inverted transparent icon input countySearch">
-              <input type="text" id="countySearchField" placeholder="Search for a county..." onkeypress="countySearch(event)">
-              <button class="ui icon button primary countySearchButton" onclick="countySearch(event)">
+            <div class="ui inverted transparent icon input">
+              <div class="ui search countySearchContainer">
+                <div class="ui icon input">
+                  <input id="countySearchField" class="prompt" type="text" placeholder="Search for a county..." onkeypress="countySearch(event)">
+                </div>
+                <div class="results"></div>
+              </div>
+              <div class="ui icon button countySearchButton" onclick="clearCountySearchText()" data-content="Clear Search">
+                <i class="x icon"></i> 
+              </div>
+              &nbsp;
+              <div class="ui icon button primary countySearchButton" onclick="countySearch(event)">
                 <i class="search icon"></i>
-              </button>
-            </div>
-            <div class="countyErrorTextContainer">
-              <p id="countyErrorText"></p>
+              </div>
             </div>
           </div>
 
@@ -114,11 +120,21 @@
   drawLeftAttributeBox();
   loadGeoJSONData();
   loadAllCSVData();
+  formatCountySearchResults();
 </script>
 
 <!-- jQuery Script for switching tabs. -->
 <script>
   $('.menu .item').tab();
+</script>
+
+<!-- jQuery script for creating the search results when searching for a county. -->
+<script>
+  $('.ui.search')
+  .search({
+    source: searchResultCountyNames
+  })
+;
 </script>
 
 </html>
