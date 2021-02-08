@@ -113,7 +113,7 @@ function setupSVG () {
     svgLeft = d3.select(".svgLeft");
     svgMain = d3.select(".svgMain");
     svgMain.on("mousemove", function(d) { updateTooltip(d); })
-    svgNYS = d3.select(".svgNYS");
+    svgNYS = d3.select("#svgNYS");
     svgNYS.on("mousemove", function(d) { updateTooltip(d); })
 
 }

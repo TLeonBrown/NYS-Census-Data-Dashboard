@@ -57,8 +57,6 @@ function zoomIn () {
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
-    // document.getElementById("svgNYS").style.transform = "translate(" + (-60 * zoomLevel) + "px, " + (-60 * zoomLevel) + "px";
-    console.log(zoomLevel)
 }
 
 
@@ -68,9 +66,6 @@ function zoomOut () {
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
-    // document.getElementById("svgNYS").style.transform = "translate(" + (60 * zoomLevel) + "px, " + (60 * zoomLevel) + "px";
-    console.log(zoomLevel)
-
 }
 
 
@@ -89,8 +84,6 @@ function toggleAttributeSelection (event) {
     }
     // Select
     else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
-        // Prevent user from registering a click on a divider.
-        if (attributes[Number(classValIndex)] === "------------------") { return; }
         selectedBox.attributes.class.value = "leftHoverBoxesSelected" + classValIndex;
         numSelectedAttributes++;
         selectedAttributes.push(attributes[Number(classValIndex)]);
@@ -252,10 +245,10 @@ function clickOnACountyHitbox (event) {
             // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
             if (i % 2 == 0) {
-                countyInfoString += `<p style="color: white;">` + selectedAttributes[i] + " ";
+                countyInfoString += `<p style="color: white; margin-bottom: 2%;">` + selectedAttributes[i] + " ";
             }
             else {
-                countyInfoString += `<p style="color: black;">` + selectedAttributes[i] + " ";
+                countyInfoString += `<p style="color: black; margin-bottom: 2%;">` + selectedAttributes[i] + " ";
             }
             for (let j = 45; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
                 countyInfoString += ". ";
