@@ -1,5 +1,7 @@
 // Handle user interaction with the dashboard.
 
+var MAX_ATTRIBUTE_SELECTIONS = 10;
+
 var zoomLevel = 1.0;
 var shift = false;
 var selectedAttributes = [];
@@ -53,7 +55,7 @@ function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, 
 
 // Zoom the map image in by one.
 function zoomIn () {
-    if (zoomLevel < 3) { zoomLevel *= 1.33; }
+    if (zoomLevel < 1.5) { zoomLevel *= 1.33; }
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
@@ -62,10 +64,12 @@ function zoomIn () {
 
 // Zoom the map image out by one.
 function zoomOut () {
-    if (zoomLevel > 1) { zoomLevel /= 1.33; }
+    if (zoomLevel > 0.75) { zoomLevel /= 1.33; }
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
+    console.log(zoomLevel);
+
 }
 
 
@@ -83,13 +87,13 @@ function toggleAttributeSelection (event) {
         selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(classValIndex)]), 1);
     }
     // Select
-    else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < 16) {
+    else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < MAX_ATTRIBUTE_SELECTIONS) {
         selectedBox.attributes.class.value = "leftHoverBoxesSelected" + classValIndex;
         numSelectedAttributes++;
         selectedAttributes.push(attributes[Number(classValIndex)]);
     }
-    else if (numSelectedAttributes >= 16) {
-        // Do something intuitive for when the user selects more than 16.
+    else if (numSelectedAttributes >= MAX_ATTRIBUTE_SELECTIONS) {
+        // Do something intuitive for when the user selects more than they're allowed to.
     }
 }
 

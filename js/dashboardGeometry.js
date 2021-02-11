@@ -5,6 +5,7 @@ ATTR_TEXT_SPACING = 35;
 var svgLeft;
 var svgMain;
 var svgNYS;
+var svgBottom;
 var numSelectedAttributes = 0;
 
 
@@ -44,7 +45,7 @@ function drawNYSRect () {
     svgNYS.append("polygon")
         .attr("countyName", "New York State")
         .attr("class", "countyHitbox")
-        .attr("points", "3,3, 127,3, 127,45, 3,45")
+        .attr("points", "3,3, 127,3, 127,35, 3,35")
         .attr("opacity", 0.0)
         .attr("stroke", "black")
         .on("mouseover", function(d) { countyMouseOver(d); })
@@ -53,7 +54,7 @@ function drawNYSRect () {
     svgNYS.append("text")
         .attr("class", "viewEntireStateText")
         .text("New York State")
-        .attr("x", "17px").attr("y", "28px")
+        .attr("x", "17px").attr("y", "24px")
         .attr("pointerEvents", "none")
 }
 
@@ -65,11 +66,11 @@ function drawSelectableCountyObjects (data) {
     // Fix all the polygon positions in the data dict.
     for (let i = 0; i < polygonPosRegular.length; i++) {
         polygonPosRegular[i][0] -= 17;
-        polygonPosRegular[i][1] += 111;
+        polygonPosRegular[i][1] += 40;
     }
     for (let i = 0; i < polygonPosWeird.length; i++) {
         polygonPosWeird[i][0] -= 17;
-        polygonPosWeird[i][1] += 111;
+        polygonPosWeird[i][1] += 40;
     }
     // Sort every county based on its coordinate properties.
     for (let i = 0; i < data.length; i++) {
@@ -115,18 +116,18 @@ function setupSVG () {
     svgMain.on("mousemove", function(d) { updateTooltip(d); })
     svgNYS = d3.select("#svgNYS");
     svgNYS.on("mousemove", function(d) { updateTooltip(d); })
-
+    svgBottom = d3.select(".svgBottom");
 }
 
 
 // Draw the scroll bar and other objects in the left-hand box.
 function drawLeftAttributeBox () {
-    // Left Scrolling Box
+    // Left scrolling box
     svgLeft.append("rect")
         .attr("fill", "var(--background)")
         .attr("x", 0).attr("y", 0)
         .attr("width", 325).attr("height", 500);
-    // Click-Boxes Within Scrolling Box
+    // Clickable boxes within scrolling box
     for (var i = 0; i < attributes.length; i++) {
         // Handle dividers.
         if (attributes[i][0] === "!") {
@@ -138,17 +139,37 @@ function drawLeftAttributeBox () {
                 .text(attributes[i].substring(1));
         }
         else {
-            // Draw Highlighting Rect
+            // Draw highlighting rect
             svgLeft.append("rect")
                 .attr("class", "leftHoverBoxes " + i)
                 .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
                 .attr("width", "29.5vmin").attr("height", 30)
                 .on("click", toggleAttributeSelection);
-            // Draw Text
+            // Draw text
             svgLeft.append("text")
                 .attr("class", "leftText")
                 .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
                 .text(attributes[i]);
         }
     }
+}
+
+
+// Draw the parallel coordinates display bars and text.
+function drawPCDGeometry () {
+    // Draw vertical lines and text
+    for (let i = 0; i < 6; i++) {
+        svgBottom.append("rect")
+            .attr("fill", "var(--mainLight")
+            .attr("x", (i * 202) + 20).attr("y", 6)
+            .attr("width", ".2vw").attr("height", "17.25vh")
+        svgBottom.append("text")
+            .text(1970 + (10 * i)).attr("fill", "var(--mainLight")  
+            .attr("x", (i * 202) + 20).attr("y", 185)
+            .attr("font-size", "14px").attr("text-anchor", "middle")
+
+    }
+
+
+
 }

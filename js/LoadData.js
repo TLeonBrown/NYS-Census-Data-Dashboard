@@ -11,7 +11,7 @@ function loadGeoJSONData () {
 }
 
 // Load the data from the CSV files.
-function loadAllCSVData () {
+function loadCensusCSVData () {
     d3.csv("./data/csv/Albany-Cayuga.csv")
         .then(function(data) {
             for (let i = 0; i < NUM_USEFUL_CSV_ROWS; i++) {
@@ -134,6 +134,45 @@ function loadAllCSVData () {
         .then(function(data) {
             for (let i = 0; i < NUM_USEFUL_CSV_ROWS; i++) {
                 countyCSVInfo["New York State"][data[i]["Fact"]] = data[i]["New York"];
+            }
+        });
+}
+
+// Load population estimates from the CSV file.
+function loadPopulationEstimateData () {
+    d3.csv("./data/csv/Annual_Population_Estimates_for_New_York_State_and_Counties__Beginning_1970.csv")
+        .then(function(data) {
+            // Create the lists that hold the dicts which hold the year-population data.
+            for (let i = 0; i <= NUM_USEFUL_CSV_ROWS; i++) {
+                if (data[i]["Geography"].indexOf("County") !== -1) {
+                    let endOfCountyNameIndex = data[i]["Geography"].indexOf(" C");
+                    countyPopulationEstimates[data[i]["Geography"].substring(0, endOfCountyNameIndex)] = [];
+                }
+                else {
+                    countyPopulationEstimates[data[i]["Geography"]] = [];
+                }
+            }
+            // Add the year-population data into the lists.
+            for (let i = 0; i < data.length; i++) {
+                let year = data[i]["Year"];
+                let population = data[i]["Population"];
+                // Only use either "Intercensal" or "Postcensal" population estimates to prevent one year from having multiple entries.
+                if (data[i]["Program Type"].indexOf("Population Estimate") !== -1) {
+                    // Only push into the data structure the population amounts from a decade year (or 2019).
+                    if (year === "2019" || year === "2010" || year === "2000" || year === "1990" || year === "1980" || year === "1970") {
+                        if (data[i]["Geography"].indexOf("County") !== -1) {
+                            let endOfCountyNameIndex = data[i]["Geography"].indexOf(" C");
+                            countyPopulationEstimates[data[i]["Geography"].substring(0, endOfCountyNameIndex)].push({
+                                [year]: population
+                            })
+                        }
+                        else {
+                            countyPopulationEstimates[data[i]["Geography"]].push({
+                                [year]: population
+                            })
+                        }
+                    }
+                }
             }
         });
 }
