@@ -249,7 +249,7 @@ function clickOnACountyHitbox (event) {
             // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
             if (i % 2 == 0) {
-                countyInfoString += `<p style="color: white; margin-bottom: 2%;">` + selectedAttributes[i] + " ";
+                countyInfoString += `<p style="color: var(--mainLight); margin-bottom: 2%;">` + selectedAttributes[i] + " ";
             }
             else {
                 countyInfoString += `<p style="color: black; margin-bottom: 2%;">` + selectedAttributes[i] + " ";
@@ -285,6 +285,7 @@ function clickOnACountyHitbox (event) {
 
     }
     event.target.style.opacity = 1.0;
+    drawPCDLines();
     // console.log("Number of selected counties: " + numSelectedCounties);
     // console.log("Selected counties: " + selectedCounties);
 }
@@ -338,4 +339,49 @@ function formatCountySearchResults () {
     for (let i = 0; i < Object.keys(countyCSVInfo).length; i++) {
         searchResultCountyNames.push({"title": Object.keys(countyCSVInfo)[i]});
     }
+}
+
+
+// Re-draw the lines on the parallel coordinates display to reflect the selected counties.
+function drawPCDLines () {
+    // Establish svg and its boundaries on the screen.
+    let svgBottom = d3.select(".svgBottom");
+    let topYCoord = 0;
+    let botYCoord = 193;
+    // Get the min and max of each decade.
+    let populationsByYear = [[], [], [], [], [], []];
+    let minMaxPopByYear = [[], [], [], [], [], []];
+    for (let i = 0; i < selectedCounties.length; i++) {
+        populationsByYear[0].push(Number(countyPopulationEstimates[selectedCounties[i]][0]["2019"]));
+        populationsByYear[1].push(Number(countyPopulationEstimates[selectedCounties[i]][1]["2010"]));
+        populationsByYear[2].push(Number(countyPopulationEstimates[selectedCounties[i]][2]["2000"]));
+        populationsByYear[3].push(Number(countyPopulationEstimates[selectedCounties[i]][3]["1990"]));
+        populationsByYear[4].push(Number(countyPopulationEstimates[selectedCounties[i]][4]["1980"]));
+        populationsByYear[5].push(Number(countyPopulationEstimates[selectedCounties[i]][5]["1970"]));
+    }
+    // Push the min and max of each decade into a new array.
+    for (let i = 0; i < populationsByYear.length; i++) {
+        minMaxPopByYear[i].push(Math.max(...populationsByYear[i]));
+        if (numSelectedCounties === 1) {
+            minMaxPopByYear[i].push(0);
+        }
+        else {
+            minMaxPopByYear[i].push(Math.min(...populationsByYear[i]));
+        }
+    }
+    // Create geometry TEST TEST
+    svgBottom.selectAll("*").remove();
+    drawPCDGeometry();
+    for (let i = 0; i < numSelectedCounties; i++) {
+        let fill = "var(--tab1)";
+        if (i === 1) { fill = "var(--tab2)"; }
+        else if (i === 2) { fill = "var(--tab3)"; }
+
+        svgBottom.append("circle")
+        .attr("fill", fill)
+        .attr("r", "5px").attr("cx", 10.5).attr("cy", 10 + 10 * i)
+    }
+   
+
+    console.log(minMaxPopByYear);
 }

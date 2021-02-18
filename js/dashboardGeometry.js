@@ -1,6 +1,6 @@
 // Draw the dashboard's geometry and interfaces.
 
-ATTR_TEXT_SPACING = 35;
+ATTR_TEXT_SPACING = 32.5;
 
 var svgLeft;
 var svgMain;
@@ -126,7 +126,7 @@ function drawLeftAttributeBox () {
     svgLeft.append("rect")
         .attr("fill", "var(--background)")
         .attr("x", 0).attr("y", 0)
-        .attr("width", 325).attr("height", 500);
+        .attr("width", 325).attr("height", 845);
     // Clickable boxes within scrolling box
     for (var i = 0; i < attributes.length; i++) {
         // Handle dividers.
@@ -135,7 +135,7 @@ function drawLeftAttributeBox () {
                 .attr("class", "leftCategoryDivider")
             svgLeft.append("text")
                 .attr("class", "leftCategoryDividerText")
-                .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
+                .attr('x', "154px").attr('y', 22 + ATTR_TEXT_SPACING * i)
                 .text(attributes[i].substring(1));
         }
         else {
@@ -143,12 +143,13 @@ function drawLeftAttributeBox () {
             svgLeft.append("rect")
                 .attr("class", "leftHoverBoxes " + i)
                 .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
-                .attr("width", "29.5vmin").attr("height", 30)
+                .attr("width", "31.5vmin").attr("height", 28)
                 .on("click", toggleAttributeSelection);
             // Draw text
             svgLeft.append("text")
                 .attr("class", "leftText")
-                .attr('x', "145px").attr('y', 22 + ATTR_TEXT_SPACING * i)
+                .attr('x', "154px").attr('y', 21 + ATTR_TEXT_SPACING * i)
+                .attr("font-size", "14px").attr("text-anchor", "middle")
                 .text(attributes[i]);
         }
     }
@@ -160,16 +161,13 @@ function drawPCDGeometry () {
     // Draw vertical lines and text
     for (let i = 0; i < 6; i++) {
         svgBottom.append("rect")
-            .attr("fill", "var(--mainLight")
-            .attr("x", (i * 202) + 20).attr("y", 6)
-            .attr("width", ".2vw").attr("height", "17.25vh")
+            .attr("fill", "var(--mainLight)")
+            .attr("x", (i * 201) + 8).attr("y", 0)
+            .attr("width", ".25vw").attr("height", "20.275vh");
         svgBottom.append("text")
-            .text(1970 + (10 * i)).attr("fill", "var(--mainLight")  
-            .attr("x", (i * 202) + 20).attr("y", 185)
-            .attr("font-size", "14px").attr("text-anchor", "middle")
-
+            .text((i === 5) ? "2019" : (1970 + (10 * i))).attr("fill", "var(--mainLight")  
+            .attr("x", (i * 201) + 22).attr("y", 210)
+            .attr("font-size", "14px").attr("text-anchor", "middle");
+            // .on("mouseover", )
     }
-
-
-
 }
