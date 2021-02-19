@@ -128,15 +128,15 @@ function drawLeftAttributeBox () {
         .attr("x", 0).attr("y", 0)
         .attr("width", 325).attr("height", 845);
     // Clickable boxes within scrolling box
-    for (var i = 0; i < attributes.length; i++) {
+    for (var i = 0; i < Object.keys(attributesToCSV).length; i++) {
         // Handle dividers.
-        if (attributes[i][0] === "!") {
+        if (Object.keys(attributesToCSV)[i][0] === "!") {
             svgLeft.append("rect")
                 .attr("class", "leftCategoryDivider")
             svgLeft.append("text")
                 .attr("class", "leftCategoryDividerText")
                 .attr('x', "154px").attr('y', 22 + ATTR_TEXT_SPACING * i)
-                .text(attributes[i].substring(1));
+                .text(Object.keys(attributesToCSV)[i].substring(1));
         }
         else {
             // Draw highlighting rect
@@ -150,7 +150,7 @@ function drawLeftAttributeBox () {
                 .attr("class", "leftText")
                 .attr('x', "154px").attr('y', 21 + ATTR_TEXT_SPACING * i)
                 .attr("font-size", "14px").attr("text-anchor", "middle")
-                .text(attributes[i]);
+                .text(Object.keys(attributesToCSV)[i]);
         }
     }
 }
@@ -162,11 +162,12 @@ function drawPCDGeometry () {
     for (let i = 0; i < 6; i++) {
         svgBottom.append("rect")
             .attr("fill", "var(--mainLight)")
-            .attr("x", (i * 201) + 8).attr("y", 0)
+            .attr("x", (i * 201) + 32).attr("y", 0)
             .attr("width", ".25vw").attr("height", "20.275vh");
         svgBottom.append("text")
             .text((i === 5) ? "2019" : (1970 + (10 * i))).attr("fill", "var(--mainLight")  
-            .attr("x", (i * 201) + 22).attr("y", 210)
+            .attr("class", "pcdText")
+            .attr("x", (i * 201) + 47).attr("y", 210)
             .attr("font-size", "14px").attr("text-anchor", "middle");
             // .on("mouseover", )
     }

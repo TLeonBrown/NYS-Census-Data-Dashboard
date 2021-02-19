@@ -14,7 +14,6 @@ function loadGeoJSONData () {
 function loadCensusCSVData () {
     d3.csv("./data/csv/Albany-Cayuga.csv")
         .then(function(data) {
-            console.log(data);
             for (let i = 0; i < NUM_USEFUL_CSV_ROWS; i++) {
                 countyCSVInfo["Albany"][data[i]["Fact"]] = data[i]["Albany County, New York"];
                 countyCSVInfo["Allegany"][data[i]["Fact"]] = data[i]["Allegany County, New York"];

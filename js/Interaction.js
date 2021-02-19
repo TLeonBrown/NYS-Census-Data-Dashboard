@@ -1,6 +1,6 @@
 // Handle user interaction with the dashboard.
 
-var MAX_ATTRIBUTE_SELECTIONS = 10;
+var MAX_ATTRIBUTE_SELECTIONS = 12;
 
 var zoomLevel = 1.0;
 var shift = false;
@@ -84,13 +84,13 @@ function toggleAttributeSelection (event) {
     if (selectedBox.attributes.class.value.includes("leftHoverBoxesSelected")) {
         selectedBox.attributes.class.value = "leftHoverBoxes" + classValIndex;
         numSelectedAttributes--;
-        selectedAttributes.splice(selectedAttributes.indexOf(attributes[Number(classValIndex)]), 1);
+        selectedAttributes.splice(selectedAttributes.indexOf(Object.keys(attributesToCSV)[Number(classValIndex)]), 1);
     }
     // Select
     else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < MAX_ATTRIBUTE_SELECTIONS) {
         selectedBox.attributes.class.value = "leftHoverBoxesSelected" + classValIndex;
         numSelectedAttributes++;
-        selectedAttributes.push(attributes[Number(classValIndex)]);
+        selectedAttributes.push(Object.keys(attributesToCSV)[Number(classValIndex)]);
     }
     else if (numSelectedAttributes >= MAX_ATTRIBUTE_SELECTIONS) {
         // Do something intuitive for when the user selects more than they're allowed to.
@@ -125,6 +125,9 @@ function clearSelections () {
     tabBody1.innerHTML = "";
     // Reset County Info
     countyInfoString = "";
+    // Clear SVG elements on the bottom panel.
+    svgBottom.selectAll("*").remove();
+    drawPCDGeometry();
 }
 
 
@@ -248,7 +251,7 @@ function clickOnACountyHitbox (event) {
         for (let i = 0; i < selectedAttributes.length; i++) {
             // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            if (i % 2 == 0) {
+            if (i % 2 == 0 && numSelectedCounties < 2) {
                 countyInfoString += `<p style="color: var(--mainLight); margin-bottom: 2%;">` + selectedAttributes[i] + " ";
             }
             else {
@@ -348,16 +351,13 @@ function drawPCDLines () {
     let svgBottom = d3.select(".svgBottom");
     let topYCoord = 0;
     let botYCoord = 193;
-    // Get the min and max of each decade.
+    // Get the population of each selected county, by decade    `.
     let populationsByYear = [[], [], [], [], [], []];
     let minMaxPopByYear = [[], [], [], [], [], []];
     for (let i = 0; i < selectedCounties.length; i++) {
-        populationsByYear[0].push(Number(countyPopulationEstimates[selectedCounties[i]][0]["2019"]));
-        populationsByYear[1].push(Number(countyPopulationEstimates[selectedCounties[i]][1]["2010"]));
-        populationsByYear[2].push(Number(countyPopulationEstimates[selectedCounties[i]][2]["2000"]));
-        populationsByYear[3].push(Number(countyPopulationEstimates[selectedCounties[i]][3]["1990"]));
-        populationsByYear[4].push(Number(countyPopulationEstimates[selectedCounties[i]][4]["1980"]));
-        populationsByYear[5].push(Number(countyPopulationEstimates[selectedCounties[i]][5]["1970"]));
+        for (let j = 0; j < 6; j++) {
+            populationsByYear[j].push(Number(countyPopulationEstimates[selectedCounties[i]][j][(j === 0) ? "2019" : (2020 - (10 * j))]));
+        }
     }
     // Push the min and max of each decade into a new array.
     for (let i = 0; i < populationsByYear.length; i++) {
@@ -372,16 +372,14 @@ function drawPCDLines () {
     // Create geometry TEST TEST
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
+    // Draw each county's points.
     for (let i = 0; i < numSelectedCounties; i++) {
-        let fill = "var(--tab1)";
-        if (i === 1) { fill = "var(--tab2)"; }
-        else if (i === 2) { fill = "var(--tab3)"; }
-
-        svgBottom.append("circle")
-        .attr("fill", fill)
-        .attr("r", "5px").attr("cx", 10.5).attr("cy", 10 + 10 * i)
+        let fill = "var(--tab" + (i + 1) + ")";
+        for (let i = 0; i < populationsByYear.length; i++) {
+            svgBottom.append("circle")
+                .attr("fill", fill)
+                .attr("r", "5px").attr("cx", 10.5 + (201 * i)).attr("cy", 10 + 10 * i);
+        }  
     }
-   
-
     console.log(minMaxPopByYear);
 }

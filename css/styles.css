@@ -8,7 +8,7 @@
   --mainLight: #eeeeee;
   --tab1: #17629b;
   --tab2: #4ea3e4;
-  --tab3: #b3deff;
+  --tab3: #80c8ff;
 }
 
 .background {
@@ -57,7 +57,7 @@
 .bottomBox {
   left: 17.4%;
   top: 75.75%;
-  width: 54.8%;
+  width: 53.5%;
   height: 20.5%;
   text-align: center;
   color: white;
@@ -70,6 +70,7 @@
 }
 
 .personalLink {
+  font-size: 24px;
   color: var(--mainLight);
 }
 
@@ -168,8 +169,8 @@
   user-select: none;
   color: var(--mainLight);
   position: absolute;
-  left: 0.6%;
-  top: 96%;
+  left: 69.6%;
+  top: 3%;
   font-size: 25px;
 }
 
@@ -261,10 +262,34 @@
 /* BOTTOM BOX */
 .svgBottom {
   position: absolute;
-  width: 100%;
+  width: 105%;
   height: 110%;
   margin-top: 2%;
   overflow: hidden;
+}
+
+.pcdText {
+  user-select: none;
+}
+
+.bottomDivider {
+  position: absolute;
+  width: 0.25%;
+  border-radius: 5px;
+}
+
+.dividerBig {
+  background-color: var(--tab1);
+  left: 71.3%;
+  top: 75.75%;
+  height: 20.5%;
+}
+
+.dividerSmall {
+  background-color: var(--tab2);
+  left: 72%;
+  top: 80.125%;
+  height: 10.25%;
 }
 
 
@@ -412,6 +437,16 @@
 .downloadFilesLink:hover { cursor: pointer; }
 
 .homeButtonInfo {
+  display: flex;
+  align-items: flex-end;
   position: absolute;
   top: 90%;
+  width: 100%;
+}
+
+.plugLinks {
+  display: flex;
+  width: 32%;
+  justify-content: space-between;
+  margin-left: 56.5%;
 }
