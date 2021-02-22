@@ -1,6 +1,7 @@
 // Handle user interaction with the dashboard.
 
 var MAX_ATTRIBUTE_SELECTIONS = 12;
+var LOG_SCALE_FACTOR = 80;
 
 var zoomLevel = 1.0;
 var shift = false;
@@ -351,35 +352,44 @@ function drawPCDLines () {
     let svgBottom = d3.select(".svgBottom");
     let topYCoord = 0;
     let botYCoord = 193;
-    // Get the population of each selected county, by decade    `.
-    let populationsByYear = [[], [], [], [], [], []];
-    let minMaxPopByYear = [[], [], [], [], [], []];
-    for (let i = 0; i < selectedCounties.length; i++) {
+    let populationsByYear = [[], [], []];
+    let countyMinMaxPops = [];
+    let absoluteMin = 0;
+    let absoluteMax = 0;
+    // Get the population of each selected county, by decade.
+    for (let i = 0; i < numSelectedCounties; i++) {
         for (let j = 0; j < 6; j++) {
-            populationsByYear[j].push(Number(countyPopulationEstimates[selectedCounties[i]][j][(j === 0) ? "2019" : (2020 - (10 * j))]));
+            populationsByYear[i].push(Number(countyPopulationEstimates[selectedCounties[i]][j][(j === 0) ? "2019" : (2020 - (10 * j))]));
         }
     }
-    // Push the min and max of each decade into a new array.
-    for (let i = 0; i < populationsByYear.length; i++) {
-        minMaxPopByYear[i].push(Math.max(...populationsByYear[i]));
-        if (numSelectedCounties === 1) {
-            minMaxPopByYear[i].push(0);
-        }
-        else {
-            minMaxPopByYear[i].push(Math.min(...populationsByYear[i]));
-        }
+    // Put the min and max of each county into a new array.
+    for (let i = 0; i < numSelectedCounties; i++) {
+        countyMinMaxPops.push(Math.min(...populationsByYear[i]));
+        countyMinMaxPops.push(Math.max(...populationsByYear[i]));
     }
-    // Create geometry TEST TEST
+    // Get the min and max of all selected counties.
+    absoluteMin = Math.min(...countyMinMaxPops);
+    absoluteMax = Math.max(...countyMinMaxPops);
+    // console.log(absoluteMin);
+    // console.log(absoluteMax);
+    // console.log(populationsByYear);
+    // Take the log of the absolute min and max, and translate that into a scale that fits within the SVG window.
+    console.log("min log * scale factor: " + (Math.log(absoluteMin) / Math.log(10)) * LOG_SCALE_FACTOR);
+    console.log("max log * scale factor: " + (Math.log(absoluteMax) / Math.log(10)) * LOG_SCALE_FACTOR);
+
+
+
+
+    // Draw lines to the SVG window.
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
     // Draw each county's points.
     for (let i = 0; i < numSelectedCounties; i++) {
         let fill = "var(--tab" + (i + 1) + ")";
-        for (let i = 0; i < populationsByYear.length; i++) {
+        for (let i = 0; i < populationsByYear[0].length; i++) {
             svgBottom.append("circle")
                 .attr("fill", fill)
-                .attr("r", "5px").attr("cx", 10.5 + (201 * i)).attr("cy", 10 + 10 * i);
+                .attr("r", "5px").attr("cx", 34 + (201 * i)).attr("cy", 10 + 10 * i);
         }  
     }
-    console.log(minMaxPopByYear);
 }
