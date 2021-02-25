@@ -1,7 +1,7 @@
 // Handle user interaction with the dashboard.
 
 var MAX_ATTRIBUTE_SELECTIONS = 12;
-var LOG_SCALE_FACTOR = 80;
+var LOG_SCALE_FACTOR = 70;
 
 var zoomLevel = 1.0;
 var shift = false;
@@ -184,31 +184,6 @@ function updateTooltip (event) {
 }
 
 
-// Handle mousing over a county hitbox.
-function countyMouseOver (event) {
-    let countyName = event.target.attributes.countyName.nodeValue;
-    event.target.style.stroke = "black";
-    d3.selectAll(".mouseTooltip").remove();
-    d3.selectAll(".mouseTooltipText").remove();
-    drawMouseTooltip(event);
-    // If the county is selected, highlight it.
-    if (selectedCounties.indexOf(countyName) == -1) {
-        event.target.style.fill = "transparent";
-        event.target.style.strokeWidth = "6px";
-        event.target.style.opacity = 1.0;
-    }
-}
-
-
-// Handle mousing out of a county hitbox.
-function countyMouseOut (event) {
-    let countyName = event.target.attributes.countyName.nodeValue;
-    d3.selectAll(".mouseTooltip").remove();
-    d3.selectAll(".mouseTooltipText").remove();
-    selectedCounties.indexOf(countyName) != -1 ? 'e' : event.target.style.opacity = 0.0;
-}
-
-
 // Handle pressing the shift key to select multiple counties.
 document.onkeydown = function (event) { if (event.key === "Shift" && !event.repeat) shift = true; }
 document.onkeyup = function (event) { if (event.key === "Shift") shift = false; }
@@ -321,7 +296,6 @@ function countySearch (event) {
                 return;
             }
         }  
-        return;
     }
 }
 
@@ -350,12 +324,12 @@ function formatCountySearchResults () {
 function drawPCDLines () {
     // Establish svg and its boundaries on the screen.
     let svgBottom = d3.select(".svgBottom");
-    let topYCoord = 0;
-    let botYCoord = 193;
+    let topYCoord = 3;
+    let botYCoord = 190;
     let populationsByYear = [[], [], []];
     let countyMinMaxPops = [];
-    let absoluteMin = 0;
-    let absoluteMax = 0;
+    let countyMin = 1;
+    let countyMax = 1;
     // Get the population of each selected county, by decade.
     for (let i = 0; i < numSelectedCounties; i++) {
         for (let j = 0; j < 6; j++) {
@@ -368,28 +342,75 @@ function drawPCDLines () {
         countyMinMaxPops.push(Math.max(...populationsByYear[i]));
     }
     // Get the min and max of all selected counties.
-    absoluteMin = Math.min(...countyMinMaxPops);
-    absoluteMax = Math.max(...countyMinMaxPops);
-    // console.log(absoluteMin);
-    // console.log(absoluteMax);
-    // console.log(populationsByYear);
+    if (numSelectedCounties > 1) {
+        countyMin = Math.min(...countyMinMaxPops);
+    }
+    countyMax = Math.max(...countyMinMaxPops);
     // Take the log of the absolute min and max, and translate that into a scale that fits within the SVG window.
-    console.log("min log * scale factor: " + (Math.log(absoluteMin) / Math.log(10)) * LOG_SCALE_FACTOR);
-    console.log("max log * scale factor: " + (Math.log(absoluteMax) / Math.log(10)) * LOG_SCALE_FACTOR);
-
-
-
-
+    let logmaxPerc = ((Math.log(countyMax) / Math.log(10)));
     // Draw lines to the SVG window.
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
     // Draw each county's points.
     for (let i = 0; i < numSelectedCounties; i++) {
-        let fill = "var(--tab" + (i + 1) + ")";
-        for (let i = 0; i < populationsByYear[0].length; i++) {
+        for (let j = 0; j < 6; j++) {
             svgBottom.append("circle")
-                .attr("fill", fill)
-                .attr("r", "5px").attr("cx", 34 + (201 * i)).attr("cy", 10 + 10 * i);
+                .attr("fill", "var(--tab" + (i + 1) + ")")
+                .attr("popValue", populationsByYear[i][j])
+                .attr("r", "5px").attr("cx", 32.25 + (192 * j)).attr("cy", 
+                    (botYCoord + topYCoord) - ((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * botYCoord
+                )
+                .on("mouseover", function(d) { pcdDotMouseOver(d); })
+                .on("mouseout", function(d) { pcdDotMouseOut(d); });
         }  
     }
+}
+
+
+// MOUSE EVENTS ---------------------------
+
+// Handle mousing over a county hitbox.
+function countyMouseOver (event) {
+    let countyName = event.target.attributes.countyName.nodeValue;
+    event.target.style.stroke = "black";
+    d3.selectAll(".mouseTooltip").remove();
+    d3.selectAll(".mouseTooltipText").remove();
+    drawMouseTooltip(event);
+    // If the county is selected, highlight it.
+    if (selectedCounties.indexOf(countyName) == -1) {
+        event.target.style.fill = "transparent";
+        event.target.style.strokeWidth = "6px";
+        event.target.style.opacity = 1.0;
+    }
+}
+
+
+// Handle mousing out of a county hitbox.
+function countyMouseOut (event) {
+    let countyName = event.target.attributes.countyName.nodeValue;
+    d3.selectAll(".mouseTooltip").remove();
+    d3.selectAll(".mouseTooltipText").remove();
+    selectedCounties.indexOf(countyName) != -1 ? 'e' : event.target.style.opacity = 0.0;
+}
+
+
+// Handle mousing over a value point in the parallel coordinates display.
+function pcdDotMouseOver (event) {
+    console.log(event.target.attributes.popValue.value);
+    d3.selectAll(".pcdToolTip").remove();
+    d3.selectAll(".pcdToolTipText").remove();
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    svgBottom.append("text")
+        .text(event.target.attributes.popValue.value)
+        .attr("class", "pcdTooltipText")
+        .attr("x", mouseX + 5).attr("y", mouseY + 2)
+        .attr("font-weight", "bold").attr("fill", "white");
+}
+
+
+// Handle mousing off of a value point in the parallel coordinates display.
+function pcdDotMouseOut () {
+    d3.selectAll(".pcdTooltip").remove();
+    d3.selectAll(".pcdTooltipText").remove();
 }

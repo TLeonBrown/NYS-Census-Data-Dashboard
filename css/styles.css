@@ -57,12 +57,11 @@
 .bottomBox {
   left: 17.4%;
   top: 75.75%;
-  width: 53.5%;
+  width: 52%;
   height: 20.5%;
   text-align: center;
   color: white;
   font-weight: bold;
-  font-size: 20px;
   background-color: var(--background);
   display: flex;
   justify-content: space-evenly;
@@ -290,6 +289,12 @@
   left: 72%;
   top: 80.125%;
   height: 10.25%;
+}
+
+.pcdTooltipText { 
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
 }
 
 
