@@ -69,7 +69,6 @@ function zoomOut () {
     Math.round(zoomLevel * 100) / 100;
     document.getElementById("nyCountyImg").style.transform = "scale(" + zoomLevel + ")";
     document.getElementById("svgMain").style.transform = "scale(" + zoomLevel + ")";
-    console.log(zoomLevel);
 
 }
 
@@ -129,58 +128,6 @@ function clearSelections () {
     // Clear SVG elements on the bottom panel.
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
-}
-
-
-// Draw county name tooltip that hovers by the mouse.
-function drawMouseTooltip (event) {
-    // Get the name of the county we're hovering over.
-    let countyName = event.target.attributes.countyName.nodeValue;
-    if (countyName === "New York State") { return; }
-    svgMain = d3.select(".svgMain");
-    // Get mouse position.
-    mouseX = d3.pointer(event)[0];
-    mouseY = d3.pointer(event)[1];
-    // Generate the tooltip box.
-    svgMain.append("rect")
-        .attr("class", "mouseTooltip")
-        .attr("x", mouseX + 10).attr("y", mouseY - 10)
-        .attr("width", countyName.length * 10);
-    svgMain.append("text")
-        .text(countyName)
-        .attr("class", "mouseTooltipText")
-        .attr("x", mouseX + 13).attr("y", mouseY + 3)
-        .attr("font-weight", "bold").attr("fill", "white");
-}
-
-
-// Update the hovering tooltip that stays near the mouse when it is above a county.
-function updateTooltip (event) {
-    // Get the county's name, if possible.
-    let countyName = undefined;
-    if (event.target.attributes.countyName === undefined) { return; }
-    else { countyName = event.target.attributes.countyName.nodeValue; }
-    // Update tooltip position.
-    if (event.target.tagName == "polygon") {
-        // Get mouse coordinates.
-        mouseX = Math.round(d3.pointer(event)[0]);
-        mouseY = Math.round(d3.pointer(event)[1]);
-        // Update the tooltip position.
-        d3.select(".mouseTooltip").attr("x", mouseX + 10).attr("y", mouseY - 10);
-        d3.select(".mouseTooltipText").attr("x", mouseX + 13).attr("y", mouseY + 3);
-
-    } 
-    // Make tooltip a lighter grey if you cannot select the county.
-    if (shift && numSelectedCounties >= 3 && selectedCounties.indexOf(countyName) == -1) {
-        // Make county outline grey if it cannot be selected.
-        if (selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
-        d3.select(".mouseTooltip").attr("fill", "grey");
-    }
-    else {
-        // Keep tooltip & county color normal if you can select it.
-        d3.select(".mouseTooltip").attr("fill", "var(--background)");
-        event.target.style.stroke = "black";
-    }
 }
 
 
@@ -354,20 +301,22 @@ function drawPCDLines () {
     // Draw each county's points.
     for (let i = 0; i < numSelectedCounties; i++) {
         for (let j = 0; j < 6; j++) {
+            let svgYPosition = (botYCoord + topYCoord) - ((((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * botYCoord * 2.2) - 230);
             svgBottom.append("circle")
                 .attr("fill", "var(--tab" + (i + 1) + ")")
                 .attr("popValue", populationsByYear[i][j])
-                .attr("r", "5px").attr("cx", 32.25 + (192 * j)).attr("cy", 
-                    (botYCoord + topYCoord) - ((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * botYCoord
-                )
+                .attr("r", "5px").attr("cx", 32.25 + (192 * j)).attr("cy", svgYPosition)
                 .on("mouseover", function(d) { pcdDotMouseOver(d); })
-                .on("mouseout", function(d) { pcdDotMouseOut(d); });
+                .on("mouseout", function(d) { pcdDotMouseOut(d); })
+                .on("mousemove", function(d) { updatePcdDot(d); });
         }  
     }
+    // Draw lines connecting each point on the county.
 }
 
 
-// MOUSE EVENTS ---------------------------
+// MOUSE EVENTS ---------------------------------------------------------------------------------------------------
+
 
 // Handle mousing over a county hitbox.
 function countyMouseOver (event) {
@@ -394,23 +343,80 @@ function countyMouseOut (event) {
 }
 
 
+// Draw county name tooltip that hovers by the mouse.
+function drawMouseTooltip (event) {
+    // Get the name of the county we're hovering over.
+    let countyName = event.target.attributes.countyName.nodeValue;
+    if (countyName === "New York State") { return; }
+    svgMain = d3.select(".svgMain");
+    // Get mouse position.
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    // Generate the tooltip box.
+    svgMain.append("rect")
+        .attr("class", "mouseTooltip")
+        .attr("x", mouseX + 10).attr("y", mouseY - 10)
+        .attr("width", countyName.length * 10);
+    svgMain.append("text")
+        .text(countyName)
+        .attr("class", "mouseTooltipText")
+        .attr("x", mouseX + 13).attr("y", mouseY + 3)
+        .attr("font-weight", "bold").attr("fill", "white");
+}
+
+
+// Update the hovering tooltip that stays near the mouse when it is above a county.
+function updateTooltip (event) {
+    // Get the county's name, if possible.
+    let countyName = undefined;
+    if (event.target.attributes.countyName === undefined) { return; }
+    else { countyName = event.target.attributes.countyName.nodeValue; }
+    // Update tooltip position.
+    if (event.target.tagName == "polygon") {
+        // Get mouse coordinates.
+        mouseX = Math.round(d3.pointer(event)[0]);
+        mouseY = Math.round(d3.pointer(event)[1]);
+        // Update the tooltip position.
+        d3.select(".mouseTooltip").attr("x", mouseX + 10).attr("y", mouseY - 10);
+        d3.select(".mouseTooltipText").attr("x", mouseX + 13).attr("y", mouseY + 3);
+
+    } 
+    // Make tooltip a lighter grey if you cannot select the county.
+    if (shift && numSelectedCounties >= 3 && selectedCounties.indexOf(countyName) == -1) {
+        // Make county outline grey if it cannot be selected.
+        if (selectedCounties.indexOf(countyName) == -1) { event.target.style.stroke = "grey"; }
+        d3.select(".mouseTooltip").attr("fill", "grey");
+    }
+    else {
+        // Keep tooltip & county color normal if you can select it.
+        d3.select(".mouseTooltip").attr("fill", "var(--background)");
+        event.target.style.stroke = "black";
+    }
+}
+
+
 // Handle mousing over a value point in the parallel coordinates display.
 function pcdDotMouseOver (event) {
-    console.log(event.target.attributes.popValue.value);
-    d3.selectAll(".pcdToolTip").remove();
     d3.selectAll(".pcdToolTipText").remove();
     mouseX = d3.pointer(event)[0];
     mouseY = d3.pointer(event)[1];
     svgBottom.append("text")
-        .text(event.target.attributes.popValue.value)
+        .text(parseFloat(event.target.attributes.popValue.value).toLocaleString('en'))
         .attr("class", "pcdTooltipText")
-        .attr("x", mouseX + 5).attr("y", mouseY + 2)
+        .attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8))
         .attr("font-weight", "bold").attr("fill", "white");
 }
 
 
 // Handle mousing off of a value point in the parallel coordinates display.
 function pcdDotMouseOut () {
-    d3.selectAll(".pcdTooltip").remove();
     d3.selectAll(".pcdTooltipText").remove();
+}
+
+
+// Update the position of the value text for the currently selected PCD dot.
+function updatePcdDot (event) {
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    d3.select(".pcdTooltipText").attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8));
 }
