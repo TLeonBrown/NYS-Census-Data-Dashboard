@@ -271,8 +271,7 @@ function formatCountySearchResults () {
 function drawPCDLines () {
     // Establish svg and its boundaries on the screen.
     let svgBottom = d3.select(".svgBottom");
-    let topYCoord = 3;
-    let botYCoord = 190;
+    let svgBottomY = 190;
     let populationsByYear = [[], [], []];
     let countyMinMaxPops = [];
     let countyMin = 1;
@@ -295,27 +294,39 @@ function drawPCDLines () {
     countyMax = Math.max(...countyMinMaxPops);
     // Take the log of the absolute min and max, and translate that into a scale that fits within the SVG window.
     let logmaxPerc = ((Math.log(countyMax) / Math.log(10)));
-    // Draw lines to the SVG window.
+    // Draw the decade dividing lines to the SVG window.
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
     // Draw each county's points.
     for (let i = 0; i < numSelectedCounties; i++) {
         for (let j = 0; j < 6; j++) {
-            let svgYPosition = (botYCoord + topYCoord) - ((((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * botYCoord * 2.2) - 230);
+            let svgYPos = (svgBottomY + 3) - ((((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * svgBottomY * 2.2) - 230);
             svgBottom.append("circle")
                 .attr("fill", "var(--tab" + (i + 1) + ")")
                 .attr("popValue", populationsByYear[i][j])
-                .attr("r", "5px").attr("cx", 32.25 + (192 * j)).attr("cy", svgYPosition)
+                .attr("r", "5px").attr("cx", 32.25 + (192 * j)).attr("cy", svgYPos)
+                .attr("stroke", "black").attr("stroke-width", "0px")
                 .on("mouseover", function(d) { pcdDotMouseOver(d); })
                 .on("mouseout", function(d) { pcdDotMouseOut(d); })
                 .on("mousemove", function(d) { updatePcdDot(d); });
         }  
     }
-    // Draw lines connecting each point on the county.
+    // Draw lines connecting each county's points in the PCD.
+    let dotObjects = svgBottom.selectAll("circle")._groups[0];
+    for (let i = 0; i < dotObjects.length - 1; i++) {
+        if ((i + 1) % 6 !== 0) {
+            let strokeColor = (i > 5) ? ((i > 11) ? "var(--tab3)" : "var(--tab2)") : "var(--tab1)";
+            svgBottom.append("line")
+                .attr("pointer-events", "none")
+                .attr("stroke", strokeColor).attr("stroke-width", 2)
+                .attr("x1", dotObjects[i].attributes.cx.nodeValue).attr("y1", dotObjects[i].attributes.cy.nodeValue)
+                .attr("x2", dotObjects[i+1].attributes.cx.nodeValue).attr("y2", dotObjects[i+1].attributes.cy.nodeValue);
+        } 
+    }
 }
 
 
-// MOUSE EVENTS ---------------------------------------------------------------------------------------------------
+// MOUSE EVENTS ------------------------------------------------ MOUSE EVENTS ------------------------------------------------- MOUSE EVENTS
 
 
 // Handle mousing over a county hitbox.
@@ -405,12 +416,15 @@ function pcdDotMouseOver (event) {
         .attr("class", "pcdTooltipText")
         .attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8))
         .attr("font-weight", "bold").attr("fill", "white");
+    // Outline the selected point in black.
+    event.target.style.strokeWidth = "4px";
 }
 
 
 // Handle mousing off of a value point in the parallel coordinates display.
 function pcdDotMouseOut () {
     d3.selectAll(".pcdTooltipText").remove();
+    svgBottom.selectAll("circle").style("stroke-width", "0px");
 }
 
 
