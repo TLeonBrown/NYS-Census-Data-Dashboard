@@ -288,28 +288,40 @@ function drawPCDLines () {
         countyMinMaxPops.push(Math.max(...populationsByYear[i]));
     }
     // Get the min and max of all selected counties.
-    if (numSelectedCounties > 1) {
-        countyMin = Math.min(...countyMinMaxPops);
-    }
+    if (numSelectedCounties > 1) { countyMin = Math.min(...countyMinMaxPops); }
     countyMax = Math.max(...countyMinMaxPops);
     // Take the log of the absolute min and max, and translate that into a scale that fits within the SVG window.
     let logmaxPerc = ((Math.log(countyMax) / Math.log(10)));
     // Draw the decade dividing lines to the SVG window.
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
-    // Draw each county's points.
+    // Draw each county's points, and their text labels on the right of the PCD.
     for (let i = 0; i < numSelectedCounties; i++) {
+        // Circle points
         for (let j = 0; j < 6; j++) {
             let svgYPos = (svgBottomY + 3) - ((((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * svgBottomY * 2.2) - 230);
             svgBottom.append("circle")
                 .attr("fill", "var(--tab" + (i + 1) + ")")
                 .attr("popValue", populationsByYear[i][j])
-                .attr("r", "5px").attr("cx", 32.25 + (192 * j)).attr("cy", svgYPos)
+                .attr("index", j)
+                .attr("r", "5px").attr("cx", 112.25 + (172 * j)).attr("cy", svgYPos)
                 .attr("stroke", "black").attr("stroke-width", "0px")
                 .on("mouseover", function(d) { pcdDotMouseOver(d); })
                 .on("mouseout", function(d) { pcdDotMouseOut(d); })
                 .on("mousemove", function(d) { updatePcdDot(d); });
-        }  
+        }
+        // Right-hand-side labels
+        let countyRightPoints = [];
+        for (let j = 0; j < svgBottom.selectAll("circle")._groups[0].length; j++) {
+            if (svgBottom.selectAll("circle")._groups[0][j].attributes.index.nodeValue === "0") {
+                countyRightPoints.push(svgBottom.selectAll("circle")._groups[0][j]);
+            }
+        }
+        svgBottom.append("text")
+            .text(selectedCounties[i])
+            .attr("fill", "var(--mainLight)")
+            .attr("x", 105).attr("y", parseFloat(countyRightPoints[i].attributes.cy.nodeValue) + 4)
+            .attr("text-anchor", "end")
     }
     // Draw lines connecting each county's points in the PCD.
     let dotObjects = svgBottom.selectAll("circle")._groups[0];
