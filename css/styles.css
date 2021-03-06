@@ -161,6 +161,16 @@
 
 .leftHoverBoxes:active, .leftHoverBoxesSelected, .leftHoverBoxesSelected:active { fill: var(--tab1); }
 
+#attributeSelectErrorText {
+  color: red;
+  text-align: center !important;
+  font-weight: bold;
+  user-select: none;
+  margin-top: 292%;
+  margin-left: 5%;
+  font-size: 17px;
+}
+
 
 
 /* INFO BUTTON */

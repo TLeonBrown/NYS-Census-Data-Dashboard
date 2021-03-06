@@ -1,6 +1,6 @@
 // Handle user interaction with the dashboard.
 
-var MAX_ATTRIBUTE_SELECTIONS = 12;
+var MAX_ATTRIBUTE_SELECTIONS = 10;
 var LOG_SCALE_FACTOR = 70;
 
 var zoomLevel = 1.0;
@@ -9,6 +9,8 @@ var selectedAttributes = [];
 var numSelectedCounties = 0;
 var selectedCounties = [];
 var countyInfoString = "";
+// Set up attribute error text.
+let attributeErrorText = undefined;
 
 
 function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
@@ -75,6 +77,9 @@ function zoomOut () {
 
 // Toggle the selection status of objects in the left-hand box.
 function toggleAttributeSelection (event) {
+    // Declare attribute error text.
+    attributeErrorText = document.getElementById("attributeSelectErrorText");
+    attributeErrorText.innerHTML = "Cannot select more than " + MAX_ATTRIBUTE_SELECTIONS + " attributes.";
     // Clear all selected counties to avoid user confusion.
     clearSelections();
     var selectedBox = event.target;
@@ -85,15 +90,18 @@ function toggleAttributeSelection (event) {
         selectedBox.attributes.class.value = "leftHoverBoxes" + classValIndex;
         numSelectedAttributes--;
         selectedAttributes.splice(selectedAttributes.indexOf(Object.keys(attributesToCSV)[Number(classValIndex)]), 1);
+        attributeErrorText.style.display = "none";
     }
     // Select
     else if (selectedBox.attributes.class.value.includes("leftHoverBoxes") && numSelectedAttributes < MAX_ATTRIBUTE_SELECTIONS) {
         selectedBox.attributes.class.value = "leftHoverBoxesSelected" + classValIndex;
         numSelectedAttributes++;
         selectedAttributes.push(Object.keys(attributesToCSV)[Number(classValIndex)]);
+        attributeErrorText.style.display = "none";
     }
     else if (numSelectedAttributes >= MAX_ATTRIBUTE_SELECTIONS) {
-        // Do something intuitive for when the user selects more than they're allowed to.
+        // Show error text if user is trying to select more attributes than they are allowed to.
+        attributeErrorText.style.display = "block";
     }
 }
 
@@ -138,6 +146,8 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
+    // Remove attribute error text, if it is visible.
+    attributeErrorText.style.display = "none";
     // Tab stuff.
     let tabHeader1 = document.getElementById("tabHeader1");
     let tabHeader2 = document.getElementById("tabHeader2");
@@ -274,7 +284,6 @@ function drawPCDLines () {
     let svgBottomY = 190;
     let populationsByYear = [[], [], []];
     let countyMinMaxPops = [];
-    let countyMin = 1;
     let countyMax = 1;
     // Get the population of each selected county, by decade.
     for (let i = 0; i < numSelectedCounties; i++) {
@@ -299,7 +308,7 @@ function drawPCDLines () {
     for (let i = 0; i < numSelectedCounties; i++) {
         // Circle points
         for (let j = 0; j < 6; j++) {
-            let svgYPos = (svgBottomY + 3) - ((((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * svgBottomY * 2.2) - 230);
+            let svgYPos = (svgBottomY + 10) - ((((Math.log(populationsByYear[i][j]) / Math.log(10)) / logmaxPerc) * svgBottomY * 2.1) - 210);
             svgBottom.append("circle")
                 .attr("fill", "var(--tab" + (i + 1) + ")")
                 .attr("popValue", populationsByYear[i][j])
@@ -317,9 +326,12 @@ function drawPCDLines () {
                 countyRightPoints.push(svgBottom.selectAll("circle")._groups[0][j]);
             }
         }
+        // County name label text on the left-hand side
         svgBottom.append("text")
             .text(selectedCounties[i])
+            .attr("class", "pcdTextLabel " + i)
             .attr("fill", "var(--mainLight)")
+            .attr("stroke", "black").attr("stroke-width", "0px")
             .attr("x", 105).attr("y", parseFloat(countyRightPoints[i].attributes.cy.nodeValue) + 4)
             .attr("text-anchor", "end")
     }
@@ -430,6 +442,9 @@ function pcdDotMouseOver (event) {
         .attr("font-weight", "bold").attr("fill", "white");
     // Outline the selected point in black.
     event.target.style.strokeWidth = "4px";
+    // Make the county name label text the highlighted color.
+    let countyCount = (event.target.attributes.fill.value.slice(-2, -1));
+    document.getElementsByClassName("pcdTextLabel " + (countyCount - 1))[0].style.fill = "var(--tab" + countyCount + ")";
 }
 
 
@@ -437,6 +452,9 @@ function pcdDotMouseOver (event) {
 function pcdDotMouseOut () {
     d3.selectAll(".pcdTooltipText").remove();
     svgBottom.selectAll("circle").style("stroke-width", "0px");
+    // Make the county name label text white.
+    let countyCount = (event.target.attributes.fill.value.slice(-2, -1));
+    document.getElementsByClassName("pcdTextLabel " + (countyCount - 1))[0].style.fill = "white";
 }
 
 
