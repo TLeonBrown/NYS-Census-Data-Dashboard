@@ -80,7 +80,16 @@
   left: 73%;
   top: 4.1%;
   width: 26%;
-  height: 65%;
+  height: 45%;
+}
+
+.bottomRightBox {
+  position: absolute;
+  background-color: var(--tab1);
+  left: 73%;
+  top: 55.25%;
+  width: 26%;
+  height: 37%;
 }
 
 
@@ -195,7 +204,7 @@
 
 
 
-/* LEFT BOX DIVIDER STYLINGS */
+/* DIVIDER STYLINGS */
 .leftDivider, .leftSmallDivider {
   position: absolute;
   border-radius: 10px;
@@ -232,6 +241,40 @@
   top: 93.8%;
   width: 8.15%;
   left: 4.575%;
+}
+
+.bottomDivider {
+  position: absolute;
+  width: 0.25%;
+  border-radius: 5px;
+}
+
+.dividerBig {
+  background-color: var(--tab1);
+  left: 71.3%;
+  top: 75.75%;
+  height: 20.5%;
+}
+
+.dividerSmall {
+  background-color: var(--tab2);
+  left: 72%;
+  top: 80.125%;
+  height: 10.25%;
+}
+
+.dividerBottom3 {
+  top: 91.5%;
+  width: 26%;
+  left: 73%;
+  height: 0.6% !important;
+}
+
+.dividerBottom4 {
+  top: 93%;
+  width: 13%;
+  left: 79.5%;
+  height: 0.6% !important;
 }
 
 
@@ -282,30 +325,19 @@
   user-select: none;
 }
 
-.bottomDivider {
-  position: absolute;
-  width: 0.25%;
-  border-radius: 5px;
-}
-
-.dividerBig {
-  background-color: var(--tab1);
-  left: 71.3%;
-  top: 75.75%;
-  height: 20.5%;
-}
-
-.dividerSmall {
-  background-color: var(--tab2);
-  left: 72%;
-  top: 80.125%;
-  height: 10.25%;
-}
-
 .pcdTooltipText { 
   user-select: none;
   pointer-events: none;
   filter: drop-shadow( 4px 4px 3px rgba(0, 0, 0, .5));
+}
+
+
+
+/* BOTTOM RIGHT BOX */
+.svgBottomRight {
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 

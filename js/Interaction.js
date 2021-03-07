@@ -14,6 +14,7 @@ let attributeErrorText = undefined;
 
 
 function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
+    let bottomRightBox = document.getElementById("svgBottomRight");
     switch (numSelectedCounties) {
         case 2:
             // Show Data
@@ -31,7 +32,7 @@ function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, 
             tabHeader3.innerHTML = countyName;
             tabHeader3.style.display = "block";
             tabBody3.innerHTML = countyInfoString;
-            // Set Tab 2 to Active
+            // Set Tab 3 to Active
             tabHeader1.classList.remove("active");
             tabBody1.classList.remove("active");
             tabHeader2.classList.remove("active");
@@ -53,6 +54,7 @@ function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, 
             tabBody1.classList.add("active");
             break;
     }
+    bottomRightBox.style.backgroundColor = "var(--tab" + numSelectedCounties + ")";
 }
 
 
@@ -187,13 +189,13 @@ function clickOnACountyHitbox (event) {
             // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
             if (i % 2 == 0 && numSelectedCounties < 2) {
-                countyInfoString += `<p style="color: var(--mainLight); margin-bottom: 2%;">` + selectedAttributes[i] + " ";
+                countyInfoString += `<p style="color: var(--mainLight); margin-bottom: 5%;">` + selectedAttributes[i] + " ";
             }
             else {
-                countyInfoString += `<p style="color: black; margin-bottom: 2%;">` + selectedAttributes[i] + " ";
+                countyInfoString += `<p style="color: black; margin-bottom: 5%;">` + selectedAttributes[i] + " ";
             }
-            for (let j = 45; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
-                countyInfoString += ". ";
+            for (let j = 50; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
+                countyInfoString += "\xa0\xa0";
             }
             if (countyCSVInfo[countyName][csvAttrName] === "Z") {
                 countyInfoString += "?" + `</p>`;

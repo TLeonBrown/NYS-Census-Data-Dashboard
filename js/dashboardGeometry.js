@@ -6,6 +6,7 @@ var svgLeft;
 var svgMain;
 var svgNYS;
 var svgBottom;
+var svgBottomRight;
 var numSelectedAttributes = 0;
 
 
@@ -41,6 +42,7 @@ function drawCountyPolygon (name, coords) {
         .on("mouseout", function(d) { countyMouseOut(d); })
         .on("mousedown", function(d) { clickOnACountyHitbox(d); });
 }
+
 function drawNYSRect () {
     svgNYS.append("polygon")
         .attr("countyName", "New York State")
@@ -117,6 +119,7 @@ function setupSVG () {
     svgNYS = d3.select("#svgNYS");
     svgNYS.on("mousemove", function(d) { updateTooltip(d); })
     svgBottom = d3.select(".svgBottom");
+    svgBottomRight = d3.select(".svgBottomRight");
 }
 
 
@@ -170,4 +173,13 @@ function drawPCDGeometry () {
             .attr("x", (i * 172) + 125).attr("y", 210)
             .attr("font-size", "14px").attr("text-anchor", "middle");
     }
+}
+
+
+// Draw the bar graph geometry in the bottom right box.
+function drawBarGraphGeometry () {
+    svgBottomRight.append("rect")
+        .attr("fill", "black")
+        .attr("x", 20).attr("y", 20)
+        .attr("width", 100).attr("height", 100)
 }
