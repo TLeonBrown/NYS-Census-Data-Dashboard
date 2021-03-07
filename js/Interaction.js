@@ -147,7 +147,7 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
     // Remove attribute error text, if it is visible.
-    attributeErrorText.style.display = "none";
+    // attributeErrorText.style.display = "none";
     // Tab stuff.
     let tabHeader1 = document.getElementById("tabHeader1");
     let tabHeader2 = document.getElementById("tabHeader2");
