@@ -1,6 +1,6 @@
 // Handle user interaction with the dashboard.
 
-var MAX_ATTRIBUTE_SELECTIONS = 10;
+var MAX_ATTRIBUTE_SELECTIONS = 8;
 var LOG_SCALE_FACTOR = 70;
 
 var zoomLevel = 1.0;
@@ -147,7 +147,9 @@ document.onkeyup = function (event) { if (event.key === "Shift") shift = false; 
 // Handle clicking on a county hitbox.
 function clickOnACountyHitbox (event) {
     // Remove attribute error text, if it is visible.
-    // attributeErrorText.style.display = "none";
+    if (attributeErrorText != undefined) {
+        attributeErrorText.style.display = "none";
+    }
     // Tab stuff.
     let tabHeader1 = document.getElementById("tabHeader1");
     let tabHeader2 = document.getElementById("tabHeader2");
