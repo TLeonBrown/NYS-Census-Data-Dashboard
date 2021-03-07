@@ -13,7 +13,9 @@ In this project, I will be creating an intuitive, interactive dashboard that loo
 
 **INSTALLATION**
 
-Download or clone the git repository. In order to view the dashboard, open up a terminal in the root directory and execute the command `http-server -c-1`. Then, open up an internet browser (preferably Chrome or Firefox) and navigate to `http://127.0.0.1:8080`. 
+Download or clone the git repository. In order to view the dashboard, open up a terminal in the root directory and install a node.js http server via the command `npm install --global http-server`. After installation of the server has finished, execute the command `http-server -c-1`. Then, open up an internet browser (preferably Chrome or Firefox) and navigate to `http://127.0.0.1:8080`. 
+
+Node.js http server: https://www.npmjs.com/package/http-server
 
 
 **FEEDBACK**
