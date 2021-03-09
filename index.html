@@ -88,7 +88,49 @@
       <div class="ui divider leftSmallDivider dividerBottom2"></div>
       <p id="attributeSelectErrorText"></p>
     </div>
-    <a class="infoButton" href="/info"><i class="info circle icon large"></i></a>
+    <!-- Info Button and Info Modal -->
+    <a class="infoButton" onClick="$('.ui.modal').modal('show');"><i class="info circle icon large"></i></a>
+    <div class="ui modal infoModal">
+      <h1>TUTORIAL</h1>
+      <a style="font-weight: bold" target="_blank" href="https://www.youtube.com/channel/UCuJ5lpoWhRlQeiC3eUBw4Ng">Click here for a quick tutorial on using this dashboard!</a></h5>
+      <h1>INFO</h1>
+      This dashboard was developed in order to create a clean, intuitive dashboard, capable of displaying census data for
+      every county in New York State.
+      <br><br>
+      It uses census data taken from the U.S. Census Bureau, as well as geographic coordinate data to create the outlines of counties.
+      <br><br>
+      With this dashboard, I hope that users can gain a deeper understanding into the population and demographics of New York State.
+      <br><br>
+      <h1>CREDITS</h1>
+      <h5>Created By: <a style="font-weight: bold" target="_blank" href="https://tleonbrown.github.io/">Tian Brown</a></h5>
+      CSE 495 & CSE 496
+      <br><br>
+      Stony Brook University Class of 2021
+      <br><br>
+      Faculty Advisor: Professor <a style="font-weight: bold" target="_blank" href="https://www.cs.stonybrook.edu/people/faculty/PaulFodor">Paul Fodor</a>
+      <br><br>
+      <h1>DATA SOURCES</h1>
+      County census data was taken from:
+      <a href="https://www.census.gov/quickfacts/fact/table/US/PST045219" target="_blank">https://www.census.gov/quickfacts/fact/table/US/PST045219</a>
+      <br><br>
+      Geographic coordinate data used for drawing county outlines taken from: 
+      <a href="https://github.com/plotly/datasets/blob/master/geojson-counties-fips.json" target="_blank">https://github.com/plotly/datasets/blob/master/geojson-counties-fips.json</a>
+      <br><br>
+      Population statistics from 1970-2019 were taken from:
+      <a href="https://data.ny.gov/Government-Finance/Annual-Population-Estimates-for-New-York-State-and/krt9-ym2k" target="_blank">https://data.ny.gov/Government-Finance/Annual-Population-Estimates-for-New-York-State-and/krt9-ym2k</a>
+      <br><br>
+      <a class="downloadFilesLink" target="_blank" onclick="downloadFiles()" download>Download All Source Data Files (zipped)</a>
+      <br><br>
+
+      <div class="homeButtonInfo" onclick="$('.ui.modal').modal('hide');">
+          <div><button class="ui button massive primary">Close</button></div>
+          <div class="plugLinks">
+              <a class="personalLink" href="mailto:tian-xin.brown@stonybrook.edu"><i class="envelope icon"></i> tian-xin.brown@stonybrook.edu</a>
+              <a class="personalLink" target="_blank" href="https://github.com/TLeonBrown"><i class="github icon"></i> TLeonBrown</a>
+          </div>
+      </div>
+    </div>
+
 
     <!-- Bottom Box -->
     <div class="border bottomBox">

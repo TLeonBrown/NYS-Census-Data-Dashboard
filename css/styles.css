@@ -85,7 +85,7 @@
 
 .bottomRightBox {
   position: absolute;
-  background-color: var(--tab1);
+  background-image: linear-gradient(var(--boxColor), var(--background));
   left: 73%;
   top: 55.25%;
   width: 26%;
@@ -128,6 +128,20 @@
 #tabHeader1:hover, #tabHeader2:hover, #tabHeader3:hover {
   background-color: white !important;
   color: black !important;
+}
+
+.dataText {
+  background-color: var(--buttonColor);
+  color: var(--mainLight);
+  margin-bottom: 2%;
+  border-radius: 4px;
+  padding: 3px 0 5px 0;
+  filter: drop-shadow( 2px 2px 2px rgba(0, 0, 0, .1)) !important;
+}
+
+.dataText:hover {
+  cursor: pointer;
+  filter: drop-shadow( 3px 3px 4px rgba(0, 0, 0, .5)) !important;
 }
 
 
@@ -477,9 +491,12 @@
 
 
 /* INFO SCREEN */
-.infoText {
+.infoModal {
+  background-color: var(--backgroundButDarker) !important;
+  display: flex;
   color: var(--mainLight);
-  margin-left: 2%;
+  padding: 2%;
+  width: 80vw !important;
 }
 
 .downloadFilesLink:hover { cursor: pointer; }
@@ -487,14 +504,13 @@
 .homeButtonInfo {
   display: flex;
   align-items: flex-end;
-  position: absolute;
-  top: 90%;
   width: 100%;
+  margin-top: 2%;
 }
 
 .plugLinks {
   display: flex;
-  width: 32%;
   justify-content: space-between;
-  margin-left: 56.5%;
+  margin-left: 50%;
+  width: 40%;
 }

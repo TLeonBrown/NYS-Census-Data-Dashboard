@@ -14,7 +14,6 @@ let attributeErrorText = undefined;
 
 
 function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, tabHeader3, tabBody1, tabBody2, tabBody3, countyInfoString) {
-    let bottomRightBox = document.getElementById("svgBottomRight");
     switch (numSelectedCounties) {
         case 2:
             // Show Data
@@ -54,7 +53,6 @@ function updateTabGUI (countyName, numSelectedCounties, tabHeader1, tabHeader2, 
             tabBody1.classList.add("active");
             break;
     }
-    bottomRightBox.style.backgroundColor = "var(--tab" + numSelectedCounties + ")";
 }
 
 
@@ -188,12 +186,7 @@ function clickOnACountyHitbox (event) {
         for (let i = 0; i < selectedAttributes.length; i++) {
             // Build the string that displays the county's selected attribute.
             let csvAttrName = attributesToCSV[selectedAttributes[i]];
-            if (i % 2 == 0 && numSelectedCounties < 2) {
-                countyInfoString += `<p style="color: var(--mainLight); margin-bottom: 5%;">` + selectedAttributes[i] + " ";
-            }
-            else {
-                countyInfoString += `<p style="color: black; margin-bottom: 5%;">` + selectedAttributes[i] + " ";
-            }
+            countyInfoString += `<p class="dataText" onClick="drawComparisonGraph()">` + selectedAttributes[i] + " ";
             for (let j = 50; j >= (selectedAttributes[i].length + countyCSVInfo[countyName][csvAttrName].toString().length); j--) {
                 countyInfoString += "\xa0\xa0";
             }
@@ -467,4 +460,10 @@ function updatePcdDot (event) {
     mouseX = d3.pointer(event)[0];
     mouseY = d3.pointer(event)[1];
     d3.select(".pcdTooltipText").attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8));
+}
+
+
+// Show the comparison graph for a certain attribute in the bottom right corner.
+function drawComparisonGraph () {
+    console.log("show comparison graph");
 }
