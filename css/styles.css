@@ -137,6 +137,7 @@
   border-radius: 4px;
   padding: 3px 0 5px 0;
   filter: drop-shadow( 2px 2px 2px rgba(0, 0, 0, .1)) !important;
+  user-select: none;
 }
 
 .dataText:hover {
@@ -352,6 +353,10 @@
   width: 100%;
   height: 100%;
   position: absolute;
+}
+
+.bottomRightGraphTitle {
+  font-weight: bold;
 }
 
 

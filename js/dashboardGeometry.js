@@ -178,8 +178,22 @@ function drawPCDGeometry () {
 
 // Draw the bar graph geometry in the bottom right box.
 function drawBarGraphGeometry () {
-    // svgBottomRight.append("rect")
-        // .attr("fill", "black")
-        // .attr("x", 20).attr("y", 20)
-        // .attr("width", 100).attr("height", 100)
+    // Bar graph title and subtitle.
+    svgBottomRight.append("text")
+        .attr("class", "bottomRightGraphTitle")
+        .attr("fill", "var(--mainLight)").attr("font-size", "30px").attr("text-anchor", "middle")
+        .attr("x", 250).attr("y", 32.5)
+    svgBottomRight.append("text")
+        .attr("class", "bottomRightGraphSubtitle")
+        .attr("fill", "var(--mainLight)").attr("font-size", "20px").attr("text-anchor", "middle")
+        .attr("x", 250).attr("y", 57.5)
+    // X and Y axes.
+    svgBottomRight.append("rect")
+        .attr("x", 50).attr("y", 85)
+        .attr("width", ".25vw").attr("height", "25vh")
+        .attr("fill", "var(--mainLight)")
+    svgBottomRight.append("rect")
+        .attr("x", 50).attr("y", 205)
+        .attr("width", "20.75vw").attr("height", ".25vw")
+        .attr("fill", "var(--mainLight)")
 }
