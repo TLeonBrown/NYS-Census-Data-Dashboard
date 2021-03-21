@@ -310,7 +310,7 @@ function drawPCDLines () {
                 .attr("fill", "var(--tab" + (i + 1) + ")")
                 .attr("popValue", populationsByYear[i][j])
                 .attr("index", j)
-                .attr("r", "5px").attr("cx", 112.25 + (172 * j)).attr("cy", svgYPos)
+                .attr("r", "5px").attr("cx", 111.75 + (169 * j)).attr("cy", svgYPos)
                 .attr("stroke", "black").attr("stroke-width", "0px")
                 .on("mouseover", function(d) { pcdDotMouseOver(d); })
                 .on("mouseout", function(d) { pcdDotMouseOut(d); })

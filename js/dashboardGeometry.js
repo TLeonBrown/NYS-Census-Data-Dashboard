@@ -165,12 +165,12 @@ function drawPCDGeometry () {
     for (let i = 0; i < 6; i++) {
         svgBottom.append("rect")
             .attr("fill", "var(--mainLight)")
-            .attr("x", (i * 172) + 110).attr("y", 0)
-            .attr("width", ".25vw").attr("height", "20.275vh")
+            .attr("x", (i * 169) + 110).attr("y", 0)
+            .attr("width", ".15vw").attr("height", "20.275vh")
         svgBottom.append("text")
             .text((i === 5) ? "2019" : (1970 + (10 * i))).attr("fill", "var(--mainLight")  
             .attr("class", "pcdText")
-            .attr("x", (i * 172) + 125).attr("y", 210)
+            .attr("x", (i * 169) + 111).attr("y", 210)
             .attr("font-size", "14px").attr("text-anchor", "middle");
     }
 }

@@ -55,14 +55,14 @@
 }
 
 .bottomBox {
-  left: 17.4%;
+  left: 18.7%;
   top: 75.75%;
-  width: 53.5%;
+  width: 52.2%;
   height: 20.5%;
   text-align: center;
   color: white;
   font-weight: bold;
-  background-color: var(--background);
+  background-image: linear-gradient(var(--background), var(--backgroundButDarker));
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -264,14 +264,28 @@
   border-radius: 5px;
 }
 
-.dividerBig {
+.dividerBigL {
+  background-color: var(--tab1);
+  left: 18.1%;
+  top: 75.75%;
+  height: 20.5%;
+}
+
+.dividerSmallL {
+  background-color: var(--tab2);
+  left: 17.4%;
+  top: 80.125%;
+  height: 10.25%;
+}
+
+.dividerBigR {
   background-color: var(--tab1);
   left: 71.3%;
   top: 75.75%;
   height: 20.5%;
 }
 
-.dividerSmall {
+.dividerSmallR {
   background-color: var(--tab2);
   left: 72%;
   top: 80.125%;
