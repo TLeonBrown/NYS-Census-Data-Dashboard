@@ -178,22 +178,16 @@ function drawPCDGeometry () {
 
 // Draw the bar graph geometry in the bottom right box.
 function drawBarGraphGeometry () {
-    // Bar graph title and subtitle.
+    // Rectangle that highlights title.
+    svgBottomRight.append("rect")
+        .attr("class", "bottomRightHighlightRect")
+        .attr("fill", "transparent")
+        .attr("x", 25).attr("y", 10).attr("rx", "4px").attr("ry", "4px")
+        .attr("width", 450).attr("height", 60)
+    // Bar graph title.
     svgBottomRight.append("text")
         .attr("class", "bottomRightGraphTitle")
-        .attr("fill", "var(--mainLight)").attr("font-size", "30px").attr("text-anchor", "middle")
-        .attr("x", 250).attr("y", 32.5)
-    svgBottomRight.append("text")
-        .attr("class", "bottomRightGraphSubtitle")
-        .attr("fill", "var(--mainLight)").attr("font-size", "20px").attr("text-anchor", "middle")
-        .attr("x", 250).attr("y", 57.5)
-    // X and Y axes.
-    svgBottomRight.append("rect")
-        .attr("x", 50).attr("y", 85)
-        .attr("width", ".25vw").attr("height", "25vh")
-        .attr("fill", "var(--mainLight)")
-    svgBottomRight.append("rect")
-        .attr("x", 50).attr("y", 205)
-        .attr("width", "20.75vw").attr("height", ".25vw")
-        .attr("fill", "var(--mainLight)")
+        .attr("fill", "var(--mainLight)").attr("font-size", "18px").attr("text-anchor", "middle")
+        .attr("x", 250).attr("y", 46)
+
 }

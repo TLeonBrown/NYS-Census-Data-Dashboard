@@ -136,6 +136,10 @@ function clearSelections () {
     // Clear SVG elements on the bottom panel.
     svgBottom.selectAll("*").remove();
     drawPCDGeometry();
+    // Clear bottom right panel.
+    svgBottomRight.selectAll("*").remove();
+    svgBottomRight._groups[0][0].style.backgroundColor = "var(--backgroundButDarker)";
+    drawBarGraphGeometry();
 }
 
 
@@ -310,7 +314,7 @@ function drawPCDLines () {
                 .attr("fill", "var(--tab" + (i + 1) + ")")
                 .attr("popValue", populationsByYear[i][j])
                 .attr("index", j)
-                .attr("r", "5px").attr("cx", 111.75 + (169 * j)).attr("cy", svgYPos)
+                .attr("r", "6px").attr("cx", 111.75 + (169 * j)).attr("cy", svgYPos)
                 .attr("stroke", "black").attr("stroke-width", "0px")
                 .on("mouseover", function(d) { pcdDotMouseOver(d); })
                 .on("mouseout", function(d) { pcdDotMouseOut(d); })
@@ -353,7 +357,19 @@ function drawComparisonGraph (event) {
     let statName = event.target.innerHTML.substring(0, event.target.innerHTML.indexOf("&") - 1);
     let statValue = event.target.innerHTML.substring(event.target.innerHTML.lastIndexOf(";") + 1, event.target.innerHTML.length);
     let selectedCountyTab = document.getElementsByClassName("tabHeader active")[0].innerHTML;
-    console.log(statValue);   
-    svgBottomRight.select(".bottomRightGraphTitle").text(statName);
-    svgBottomRight.select(".bottomRightGraphSubtitle").text("- " + selectedCountyTab + " County -")
+    // Draw the bottom right box properly now that we have the selected info.
+    svgBottomRight.select(".bottomRightGraphTitle").text(statName + ", " + selectedCountyTab + " County");
+    svgBottomRight.select("rect").attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
+    svgBottomRight._groups[0][0].style.backgroundColor = "var(--background)";
+    // Render vertical lines to signify y axis and markings.
+    for (let i = 0; i < 7; i++) {
+        svgBottomRight.append("rect")
+            .attr("x", (62.5 * i) + 62.5).attr("y", 110)
+            .attr("width", ".05vw").attr("height", 200)
+            .attr("fill", "var(--mainLight)")
+    }
+    svgBottomRight.append("rect")
+        .attr("x", 249).attr("y", 97.5)
+        .attr("width", ".15vw").attr("height", 225)
+        .attr("fill", "var(--mainLight)")
 }
