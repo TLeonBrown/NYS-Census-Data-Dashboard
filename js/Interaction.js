@@ -2,6 +2,7 @@
 
 var MAX_ATTRIBUTE_SELECTIONS = 8;
 var LOG_SCALE_FACTOR = 70;
+var NUM_BAR_GRAPH_TICKS = 7;
 
 var zoomLevel = 1.0;
 var shift = false;
@@ -353,16 +354,32 @@ function drawPCDLines () {
 
 // Show the comparison graph for a certain attribute in the bottom right corner.
 function drawComparisonGraph (event) {
-    // Get stat name, stat value, and county name.
+    // Clear all previous text on the axes and ticks.
+    svgBottomRight.selectAll(".axisLineText").remove()
+    // Get stat name, NYS's stat value, and county name.
     let statName = event.target.innerHTML.substring(0, event.target.innerHTML.indexOf("&") - 1);
-    let statValue = event.target.innerHTML.substring(event.target.innerHTML.lastIndexOf(";") + 1, event.target.innerHTML.length);
+    let statValue = countyCSVInfo["New York State"][attributesToCSV[statName]];
+    // Calculate the stat's number from its string value - have to deal with multiple different number formats.
+    let statValueData = [0, ''];
+    if (statValue.substring(statValue.length - 1) === "%") {
+        // Remove % symbols.
+        statValueData = [Number(statValue.substring(0, statValue.length - 1)), '%'];
+    }
+    else if (statValue.substring(0, 1) === "$") {
+        // Remove dollar signs and commas.
+        statValueData = [Number(statValue.substring(1, statValue.length).replace(/,/g, '')), '$'];
+    }
+    else {
+        // Remove commas.
+        statValueData = [Number(statValue.replace(/,/g, '')), ','];
+    }
     let selectedCountyTab = document.getElementsByClassName("tabHeader active")[0].innerHTML;
     // Draw the bottom right box properly now that we have the selected info.
     svgBottomRight.select(".bottomRightGraphTitle").text(statName + ", " + selectedCountyTab + " County");
     svgBottomRight.select("rect").attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
     svgBottomRight._groups[0][0].style.backgroundColor = "var(--background)";
     // Render vertical lines to signify y axis and markings.
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < NUM_BAR_GRAPH_TICKS; i++) {
         svgBottomRight.append("rect")
             .attr("x", (62.5 * i) + 62.5).attr("y", 110)
             .attr("width", ".05vw").attr("height", 200)
@@ -372,4 +389,23 @@ function drawComparisonGraph (event) {
         .attr("x", 249).attr("y", 97.5)
         .attr("width", ".15vw").attr("height", 225)
         .attr("fill", "var(--mainLight)")
+    // Use the stat value to draw appropriate axes numbers.
+    for (let i = 0; i < NUM_BAR_GRAPH_TICKS; i++) {
+        let axisLineText = ((i - Math.floor(NUM_BAR_GRAPH_TICKS / 2)) / 2 * statValueData[0]);
+        if (statValueData[1] === '%') {
+            axisLineText = axisLineText.toFixed(1).toString() + "%";
+        }
+        else if (statValueData[1] === '$') {
+            axisLineText = "$" + Math.round(axisLineText).toString();
+        }
+        else {
+            axisLineText = Math.round(axisLineText);
+        }
+        svgBottomRight.append("text")
+            .attr("class", "axisLineText")
+            .text(axisLineText)
+            .attr("fill", "var(--mainLight")
+            .attr("x", (62.5 * i) + 62.5).attr("y", ((i === 3) ? 337 : 325))
+            .attr("text-anchor", "middle").attr("font-size", "12px")
+    }
 }
