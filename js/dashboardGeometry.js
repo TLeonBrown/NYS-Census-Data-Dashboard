@@ -189,5 +189,17 @@ function drawBarGraphGeometry () {
         .attr("class", "bottomRightGraphTitle")
         .attr("fill", "var(--mainLight)").attr("font-size", "18px").attr("text-anchor", "middle")
         .attr("x", 250).attr("y", 46)
-
+    // Render vertical lines to signify y axis and markings.
+    for (let i = 0; i < NUM_BAR_GRAPH_TICKS; i++) {
+        svgBottomRight.append("rect")
+            .attr("class", "barGraphAxisMarks")
+            .attr("x", (62.5 * i) + 62.5).attr("y", 110)
+            .attr("width", ".05vw").attr("height", 200)
+            .attr("fill", "transparent")
+    }
+    svgBottomRight.append("rect")
+        .attr("class", "barGraphAxisMarks")
+        .attr("x", 249).attr("y", 97.5)
+        .attr("width", ".15vw").attr("height", 225)
+        .attr("fill", "transparent")
 }

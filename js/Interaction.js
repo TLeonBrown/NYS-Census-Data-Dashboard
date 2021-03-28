@@ -355,42 +355,21 @@ function drawPCDLines () {
 // Show the comparison graph for a certain attribute in the bottom right corner.
 function drawComparisonGraph (event) {
     // Clear all previous text on the axes and ticks.
-    svgBottomRight.selectAll(".axisLineText").remove()
-    // Get stat name, NYS's stat value, and county name.
+    svgBottomRight.selectAll(".axisLineText").remove();
+    svgBottomRight.selectAll("*").remove();
+    // Get stat name.
     let statName = event.target.innerHTML.substring(0, event.target.innerHTML.indexOf("&") - 1);
-    let statValue = countyCSVInfo["New York State"][attributesToCSV[statName]];
-    // Calculate the stat's number from its string value - have to deal with multiple different number formats.
-    let statValueData = [0, ''];
-    if (statValue.substring(statValue.length - 1) === "%") {
-        // Remove % symbols.
-        statValueData = [Number(statValue.substring(0, statValue.length - 1)), '%'];
-    }
-    else if (statValue.substring(0, 1) === "$") {
-        // Remove dollar signs and commas.
-        statValueData = [Number(statValue.substring(1, statValue.length).replace(/,/g, '')), '$'];
-    }
-    else {
-        // Remove commas.
-        statValueData = [Number(statValue.replace(/,/g, '')), ','];
-    }
+    // Calculate the county's stat's number, and the state's stat's number, from their string values. 
+    let countyStatValueData = computeNumberFromStat(
+        event.target.innerHTML.substring(event.target.innerHTML.lastIndexOf(";") + 1,
+        event.target.innerHTML.length
+    ));
+    let statValueData = computeNumberFromStat(countyCSVInfo["New York State"][attributesToCSV[statName]]);
+    // Get the currently selected county's name.
     let selectedCountyTab = document.getElementsByClassName("tabHeader active")[0].innerHTML;
-    // Draw the bottom right box properly now that we have the selected info.
-    svgBottomRight.select(".bottomRightGraphTitle").text(statName + ", " + selectedCountyTab + " County");
-    svgBottomRight.select("rect").attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
-    svgBottomRight._groups[0][0].style.backgroundColor = "var(--background)";
-    // Render vertical lines to signify y axis and markings.
-    for (let i = 0; i < NUM_BAR_GRAPH_TICKS; i++) {
-        svgBottomRight.append("rect")
-            .attr("x", (62.5 * i) + 62.5).attr("y", 110)
-            .attr("width", ".05vw").attr("height", 200)
-            .attr("fill", "var(--mainLight)")
-    }
-    svgBottomRight.append("rect")
-        .attr("x", 249).attr("y", 97.5)
-        .attr("width", ".15vw").attr("height", 225)
-        .attr("fill", "var(--mainLight)")
     // Use the stat value to draw appropriate axes numbers.
     for (let i = 0; i < NUM_BAR_GRAPH_TICKS; i++) {
+        // Based on the symbols included in the stat value, determine how the number should be displayed on screen.
         let axisLineText = ((i - Math.floor(NUM_BAR_GRAPH_TICKS / 2)) / 2 * statValueData[0]);
         if (statValueData[1] === '%') {
             axisLineText = axisLineText.toFixed(1).toString() + "%";
@@ -407,5 +386,55 @@ function drawComparisonGraph (event) {
             .attr("fill", "var(--mainLight")
             .attr("x", (62.5 * i) + 62.5).attr("y", ((i === 3) ? 337 : 325))
             .attr("text-anchor", "middle").attr("font-size", "12px")
+    }
+    // Draw the actual bars.
+    console.log("county: " + countyStatValueData[0]);
+    console.log("state: " + statValueData[0]);
+    console.log
+    let countyBar = svgBottomRight.append("rect")
+        .attr("class", "countyBar")
+        .attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
+        .attr("y", 130).attr("height", 100)
+    let stateBar = svgBottomRight.append("rect")
+        .attr("class", "nysBar")
+        .attr("fill", "var(--border")
+        .attr("y", 230).attr("height", 60)
+    if (countyStatValueData[0] > 0) {
+        // If the county value is positive.
+        countyBar.attr("x", 250).attr("width", (countyStatValueData[0] / statValueData[0]) * 125)
+    }
+    else {
+        // If the county value is negative.
+
+    }
+    if (statValueData[0] > 0) {
+        // If the state value is positive.
+        stateBar.attr("x", 250).attr("width", 125)
+    }
+    else {
+        // If the state value is negative.
+    }
+    // Draw the bottom right box properly now that we have done everything else.
+    drawBarGraphGeometry();
+    svgBottomRight.select(".bottomRightGraphTitle").text(statName + ", " + selectedCountyTab + " County");
+    svgBottomRight.select(".bottomRightHighlightRect").attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
+    svgBottomRight.selectAll(".barGraphAxisMarks").attr("fill", "var(--mainLight)");
+    svgBottomRight._groups[0][0].style.backgroundColor = "var(--background)";
+}
+
+
+// Given a attribute stat value, compute the raw number and the type (%, money value, raw number).
+function computeNumberFromStat (statValue) {
+    if (statValue.substring(statValue.length - 1) === "%") {
+        // Remove % symbols.
+        return [Number(statValue.substring(0, statValue.length - 1)), '%'];
+    }
+    else if (statValue.substring(0, 1) === "$") {
+        // Remove dollar signs and commas.
+        return [Number(statValue.substring(1, statValue.length).replace(/,/g, '')), '$'];
+    }
+    else {
+        // Remove commas.
+        return [Number(statValue.replace(/,/g, '')), ','];
     }
 }
