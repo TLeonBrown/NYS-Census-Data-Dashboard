@@ -369,8 +369,12 @@ function drawComparisonGraph (event) {
     let selectedCountyTab = document.getElementsByClassName("tabHeader active")[0].innerHTML;
     // Use the stat value to draw appropriate axes numbers.
     for (let i = 0; i < NUM_BAR_GRAPH_TICKS; i++) {
-        // Based on the symbols included in the stat value, determine how the number should be displayed on screen.
+        // If the county's stat is larger, use it. Otherwise, use state. 
         let axisLineText = ((i - Math.floor(NUM_BAR_GRAPH_TICKS / 2)) / 2 * statValueData[0]);
+        if (Math.abs(statValueData[0] < Math.abs(countyStatValueData[0]))) {
+            axisLineText = ((i - Math.floor(NUM_BAR_GRAPH_TICKS / 2)) / 2 * countyStatValueData[0]);
+        }
+        // Based on the symbols included in the stat value, determine how the number should be displayed on screen.
         if (statValueData[1] === '%') {
             axisLineText = axisLineText.toFixed(1).toString() + "%";
         }
@@ -388,9 +392,6 @@ function drawComparisonGraph (event) {
             .attr("text-anchor", "middle").attr("font-size", "12px")
     }
     // Draw the actual bars.
-    console.log("county: " + countyStatValueData[0]);
-    console.log("state: " + statValueData[0]);
-    console.log
     let countyBar = svgBottomRight.append("rect")
         .attr("class", "countyBar")
         .attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
@@ -399,20 +400,17 @@ function drawComparisonGraph (event) {
         .attr("class", "nysBar")
         .attr("fill", "var(--border")
         .attr("y", 230).attr("height", 60)
-    if (countyStatValueData[0] > 0) {
-        // If the county value is positive.
-        countyBar.attr("x", 250).attr("width", (countyStatValueData[0] / statValueData[0]) * 125)
+    // Case 1: County's val has larger magnitude. 
+    if (Math.abs(statValueData[0] < Math.abs(countyStatValueData[0]))) {
+        countyBar.attr("width", 125).attr("x", (countyStatValueData[0] > 0) ? 250 : 250 - countyBar._groups[0][0].attributes.width.value);
+        // State never has a negative value, so we can ignore that case.
+        stateBar.attr("width", Math.abs((statValueData[0] / countyStatValueData[0]) * 125)).attr("x", 250);
     }
+    // Case 2: State's val has larger magnitude.
     else {
-        // If the county value is negative.
-
-    }
-    if (statValueData[0] > 0) {
-        // If the state value is positive.
-        stateBar.attr("x", 250).attr("width", 125)
-    }
-    else {
-        // If the state value is negative.
+        countyBar.attr("width", Math.abs((countyStatValueData[0] / statValueData[0]) * 125)).attr("x", (countyStatValueData[0] > 0) ? 250 : 250 - countyBar._groups[0][0].attributes.width.value);
+        // State never has a negative value, so we can ignore that case.
+        stateBar.attr("width", 125).attr("x", 250);
     }
     // Draw the bottom right box properly now that we have done everything else.
     drawBarGraphGeometry();
