@@ -38,9 +38,9 @@ function drawCountyPolygon (name, coords) {
         .attr("points", coords)
         .attr("opacity", 0.0)
         .attr("stroke", "black")
-        .on("mouseover", function(d) { countyMouseOver(d); })
-        .on("mouseout", function(d) { countyMouseOut(d); })
-        .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+            .on("mouseover", function(d) { countyMouseOver(d); })
+            .on("mouseout", function(d) { countyMouseOut(d); })
+            .on("mousedown", function(d) { clickOnACountyHitbox(d); });
 }
 
 function drawNYSRect () {
@@ -50,9 +50,9 @@ function drawNYSRect () {
         .attr("points", "3,3, 127,3, 127,35, 3,35")
         .attr("opacity", 0.0)
         .attr("stroke", "black")
-        .on("mouseover", function(d) { countyMouseOver(d); })
-        .on("mouseout", function(d) { countyMouseOut(d); })
-        .on("mousedown", function(d) { clickOnACountyHitbox(d); });
+            .on("mouseover", function(d) { countyMouseOver(d); })
+            .on("mouseout", function(d) { countyMouseOut(d); })
+            .on("mousedown", function(d) { clickOnACountyHitbox(d); });
     svgNYS.append("text")
         .attr("class", "viewEntireStateText")
         .text("New York State")
@@ -147,7 +147,7 @@ function drawLeftAttributeBox () {
                 .attr("class", "leftHoverBoxes " + i)
                 .attr("x", "0.45vmin").attr("y", 1.5 + ATTR_TEXT_SPACING * i)
                 .attr("width", "31.5vmin").attr("height", 28)
-                .on("click", toggleAttributeSelection);
+                    .on("click", toggleAttributeSelection);
             // Draw text
             svgLeft.append("text")
                 .attr("class", "leftText")

@@ -316,10 +316,10 @@ function drawPCDLines () {
                 .attr("popValue", populationsByYear[i][j])
                 .attr("index", j)
                 .attr("r", "6px").attr("cx", 111.75 + (169 * j)).attr("cy", svgYPos)
-                .attr("stroke", "black").attr("stroke-width", "0px")
-                .on("mouseover", function(d) { pcdDotMouseOver(d); })
-                .on("mouseout", function(d) { pcdDotMouseOut(d); })
-                .on("mousemove", function(d) { updatePcdDot(d); });
+                .attr("stroke", "white").attr("stroke-width", "0px")
+                    .on("mouseover", function(d) { pcdDotMouseOver(d); })
+                    .on("mouseout", function(d) { pcdDotMouseOut(d); })
+                    .on("mousemove", function(d) { updatePcdDot(d); });
         }
         // Right-hand-side labels
         let countyRightPoints = [];
@@ -394,12 +394,22 @@ function drawComparisonGraph (event) {
     // Draw the actual bars.
     let countyBar = svgBottomRight.append("rect")
         .attr("class", "countyBar")
+        .attr("value", event.target.innerHTML.substring(event.target.innerHTML.lastIndexOf(";") + 1, event.target.innerHTML.length))
         .attr("fill", "var(--tab" + (selectedCounties.indexOf(selectedCountyTab) + 1) + ")")
         .attr("y", 130).attr("height", 100)
+        .attr("stroke", "white").attr("stroke-width", "0px")
+            .on("mouseover", countyBarMouseOver)
+            .on("mousemove", function(e) { countyBarMouseMove(e); })
+            .on("mouseout", countyBarMouseOut)
     let stateBar = svgBottomRight.append("rect")
-        .attr("class", "nysBar")
+        .attr("class", "stateBar")
+        .attr("value", countyCSVInfo["New York State"][attributesToCSV[statName]])
         .attr("fill", "var(--border")
         .attr("y", 230).attr("height", 60)
+        .attr("stroke", "white").attr("stroke-width", "0px")
+            .on("mouseover", stateBarMouseOver)
+            .on("mousemove", function(e) { stateBarMouseMove(e); })
+            .on("mouseout", stateBarMouseOut)
     // Case 1: County's val has larger magnitude. 
     if (Math.abs(statValueData[0] < Math.abs(countyStatValueData[0]))) {
         countyBar.attr("width", 125).attr("x", (countyStatValueData[0] > 0) ? 250 : 250 - countyBar._groups[0][0].attributes.width.value);

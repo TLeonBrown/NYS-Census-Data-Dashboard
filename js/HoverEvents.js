@@ -89,7 +89,7 @@ function pcdDotMouseOver (event) {
         .attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8))
         .attr("font-weight", "bold").attr("fill", "white");
     // Outline the selected point in black.
-    event.target.style.strokeWidth = "4px";
+    event.target.style.strokeWidth = "3px";
     // Make the county name label text the highlighted color.
     let countyCount = (event.target.attributes.fill.value.slice(-2, -1));
     document.getElementsByClassName("pcdTextLabel " + (countyCount - 1))[0].style.fill = "var(--tab" + countyCount + ")";
@@ -111,4 +111,62 @@ function updatePcdDot (event) {
     mouseX = d3.pointer(event)[0];
     mouseY = d3.pointer(event)[1];
     d3.select(".pcdTooltipText").attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8));
+}
+
+
+// Handle mousing onto the bottom right bar graph for the selected county.
+function countyBarMouseOver () {
+    let countyBar = svgBottomRight.select(".countyBar")._groups[0][0].attributes;
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    svgBottomRight.append("text")
+        .attr("class", "countyBarHoverText")
+        .text(countyBar.value.nodeValue)
+        .attr("font-weight", "bold").attr("fill", "white")
+        .attr("x", mouseX + 7).attr("y", mouseY + 2)
+    svgBottomRight.select(".countyBar").attr("stroke-width", "3px");
+}
+
+
+// Update the position of the value text for the currently selected county bar.
+function countyBarMouseMove (event) {
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    d3.select(".countyBarHoverText").attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8));
+}
+
+
+// Handle mousing off of the bottom right bar graph for the selected county.
+function countyBarMouseOut () {
+    svgBottomRight.selectAll(".countyBarHoverText").remove();
+    svgBottomRight.select(".countyBar").attr("stroke-width", "0px");
+}
+
+
+// Handle mousing onto the bottom right bar graph for new york state.
+function stateBarMouseOver () {
+    let stateBar = svgBottomRight.select(".stateBar")._groups[0][0].attributes;
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    svgBottomRight.append("text")
+        .attr("class", "stateBarHoverText")
+        .text(stateBar.value.nodeValue)
+        .attr("font-weight", "bold").attr("fill", "white")
+        .attr("x", mouseX + 7).attr("y", mouseY + 2)
+    svgBottomRight.select(".stateBar").attr("stroke-width", "3px");
+}
+
+
+// Update the position of the value text for the currently selected state bar.
+function stateBarMouseMove (event) {
+    mouseX = d3.pointer(event)[0];
+    mouseY = d3.pointer(event)[1];
+    d3.select(".stateBarHoverText").attr("x", mouseX + 7).attr("y", mouseY + (mouseY > 100 ? 2 : 8));
+}
+
+
+// Handle mousing off of the bottom right bar graph for new york state.
+function stateBarMouseOut () {
+    svgBottomRight.selectAll(".stateBarHoverText").remove();
+    svgBottomRight.select(".stateBar").attr("stroke-width", "0px");
 }
