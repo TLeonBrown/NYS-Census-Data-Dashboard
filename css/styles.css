@@ -404,31 +404,7 @@
 
 
 
-/* STATE/COUNTY TOGGLE */
-.svgNYSContainer {
-  position: absolute;
-  width: 12.5%;
-  height: 6.5%;
-  left: 25%;
-  top: 25%;
-  border: 1px solid var(--background);
-  filter: drop-shadow(0px 0px 15px var(--tab1));
-}
-
-#svgNYS {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: white;
-}
-
-.viewEntireStateText {
-  user-select: none;
-  pointer-events: none;
-  font-weight: bold;
-}
-
+/* MAIN BOX TOP/BOTTOM UI ELEMENT CONTAINERS */
 .mainBoxUITop {
   padding: 1%;
   width: 100%;

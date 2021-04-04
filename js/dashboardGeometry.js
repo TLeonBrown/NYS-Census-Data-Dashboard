@@ -43,23 +43,6 @@ function drawCountyPolygon (name, coords) {
             .on("mousedown", function(d) { clickOnACountyHitbox(d); });
 }
 
-function drawNYSRect () {
-    svgNYS.append("polygon")
-        .attr("countyName", "New York State")
-        .attr("class", "countyHitbox")
-        .attr("points", "3,3, 127,3, 127,35, 3,35")
-        .attr("opacity", 0.0)
-        .attr("stroke", "black")
-            .on("mouseover", function(d) { countyMouseOver(d); })
-            .on("mouseout", function(d) { countyMouseOut(d); })
-            .on("mousedown", function(d) { clickOnACountyHitbox(d); });
-    svgNYS.append("text")
-        .attr("class", "viewEntireStateText")
-        .text("New York State")
-        .attr("x", "17px").attr("y", "24px")
-        .attr("pointerEvents", "none")
-}
-
 
 // Draw all of the county objects in the screen through the GeoJSON coordinates.
 function drawSelectableCountyObjects (data) {
@@ -107,7 +90,6 @@ function drawSelectableCountyObjects (data) {
         // Draw the object on screen.
         drawCountyPolygon(weirdCounties[i].properties.NAME, countyCoordsStr);   
     }
-    drawNYSRect();
 }
 
 
@@ -116,8 +98,6 @@ function setupSVG () {
     svgLeft = d3.select(".svgLeft");
     svgMain = d3.select(".svgMain");
     svgMain.on("mousemove", function(d) { updateTooltip(d); })
-    svgNYS = d3.select("#svgNYS");
-    svgNYS.on("mousemove", function(d) { updateTooltip(d); })
     svgBottom = d3.select(".svgBottom");
     svgBottomRight = d3.select(".svgBottomRight");
 }
