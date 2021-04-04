@@ -25,6 +25,7 @@ Lastly, execute the command `http-server -c-1`. Then, open up an internet browse
 
 
 **DEPENDENCIES**
+
 Node.js http server: https://www.npmjs.com/package/http-server
 jQuery: https://www.npmjs.com/package/jquery
 Fomantic UI: https://fomantic-ui.com/introduction/getting-started.html
