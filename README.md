@@ -13,9 +13,22 @@ This is an interactive dashboard built to visualize New York State census data a
 
 **INSTALLATION**
 
-Download or clone the git repository. In order to view the dashboard, open up a terminal in the root directory and install a node.js http server via the command `npm install --global http-server`. After installation of the server has finished, execute the command `http-server -c-1`. Then, open up an internet browser (preferably Chrome or Firefox) and navigate to `http://127.0.0.1:8080`. 
+Download or clone the git repository. Open up a terminal in the root directory and run the following commands:
+1. npm install --global http-server
+2. npm install jquery
+3. npm install fomantic-ui
+4. cd /semantic
+5. npx gulp build
+6. cd ..
+
+Lastly, execute the command `http-server -c-1`. Then, open up an internet browser (preferably Chrome or Firefox) and navigate to `http://127.0.0.1:8080`. 
+
+
+**DEPENDENCIES**
 
 Node.js http server: https://www.npmjs.com/package/http-server
+jQuery: https://www.npmjs.com/package/jquery
+Fomantic UI: https://fomantic-ui.com/introduction/getting-started.html
 
 
 **FEEDBACK**
